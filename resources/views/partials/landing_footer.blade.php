@@ -53,6 +53,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route('kyc')}}">KYC</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('grc-assurance')}}">GRC &amp; Assurance</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
