@@ -379,7 +379,6 @@ class AddressController extends Controller
 
 
   public function ViewCandidateAddresses($verification_id){
-
     $verification = AddressVerificationDetail::where('address_verification_id', decrypt($verification_id))->get();
     // dd(decrypt($verification_id));
     $data['candidate'] =  $verification[0]->addressVerification->first_name . $verification[0]->addressVerification->last_name;

@@ -8,7 +8,7 @@ use App\Models\Candidate;
 use App\Models\CandidateVerification;
 use Illuminate\Support\Facades\Session;
 
-class AdminCandidateController extends Controller
+class CandidateController extends Controller
 {
     //
     public function CandidateIndex(){

@@ -8,7 +8,7 @@ use App\Models\Verification;
 use App\Models\{BankVerification, BvnVerification,NipVerification, PvcVerification, NinVerification, NdlVerification, PhoneVerification, ImageVerification};
 use App\Models\IdentityVerification;
 
-class AdminIdentityController extends Controller
+class IdentityController extends Controller
 {
     //
     public function getVerify($slug){

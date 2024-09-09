@@ -10,7 +10,7 @@ use App\Models\TinVerification;
 use App\Models\BusinessVerification;
 use App\Models\BusinessVerificationDetail;
 
-class AdminBusinessController extends Controller
+class BusinessController extends Controller
 {
     //
 
