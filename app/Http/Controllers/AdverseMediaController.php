@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Session;
 use App\Traits\GenerateRef;
 use App\Traits\sandbox;
 use App\Models\Wallet;
+use Carbon\Carbon;
+
 class AdverseMediaController extends Controller
 {
     //
@@ -77,13 +79,15 @@ class AdverseMediaController extends Controller
   }
         $dates = explode('-', $request->daterange);
 
-    // dd(trim(str_replace('/','-',$dates[1])));
+       $start = trim(str_replace('/','-',$dates[0]));
+       $end =  trim(str_replace('/','-',$dates[1]));
+        // dd($end);
       $requestData = [
           'query' => $request->query_name,
           'type' => $request->query_type,
           'country' => $request->queryCountry,
-          'startDate' => trim(str_replace('/','-',$dates[0])),
-          'endDate' => trim(str_replace('/','-',$dates[1])),
+          'startDate' => Carbon::createFromFormat('m-d-Y', $start)->format('Y-m-d'),
+          'endDate' => Carbon::createFromFormat('m-d-Y', $end)->format('Y-m-d'),
           'tags' => $request->queryTags,
           "isSubjectConsent" => "true"
       ];
@@ -177,10 +181,10 @@ class AdverseMediaController extends Controller
           'external_ref' => $ext_ref,
           'purpose' => $reason,
           'service_type' => $account,
-          'total_amount_payable' => $amount,
+          'total_amount_payable' => $amount??0,
           'payment_method' => 'Wallet Payment',
           'type'  => 'DEBIT',
-          'amount' => $amount,
+          'amount' => $amount??0,
           'prev_balance' => $wallet->avail_balance,
           'avail_balance' => $newWallet
       ]);

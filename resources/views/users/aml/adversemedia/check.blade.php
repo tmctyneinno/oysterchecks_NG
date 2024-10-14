@@ -107,7 +107,7 @@
                                  
                                         <label class="form-label" for="exampleInputEmai">Select Search Date Range</label> <br>
                                         <div class="input-group">  
-                                            <input type="text" name="daterange"  id="reportrange" class="form-control" value="2022-10-23">
+                                            <input type="text" name="daterange"  id="reportrange" class="form-control" value="2024-01-01">
                                             <span class="input-group-text"><i class="ti ti-calendar font-16"></i></span>
                                         </div>
                                     </div>
@@ -181,12 +181,11 @@
 
  $(function() {
     $('#reportrange').daterangepicker({
-        // minDate: new Date('2018/11/2'),
+        minDate: new Date('2018-11-2'),
         locale: {
-            format: 'YYYY/MM/DD',
+            format: minDate
         }
     });
 });
-
     </script>
     @endsection
