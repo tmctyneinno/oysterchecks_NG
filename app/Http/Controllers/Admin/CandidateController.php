@@ -8,8 +8,8 @@ use App\Models\Candidate;
 use App\Models\CandidateVerification;
 use Illuminate\Support\Facades\Session;
 
-class CandidateController extends Controller
-{
+class AdminCandidateController extends Controller
+{ 
     //
     public function CandidateIndex(){
         $candidate['candidate'] = Candidate::get();
