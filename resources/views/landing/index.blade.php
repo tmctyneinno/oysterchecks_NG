@@ -9,7 +9,7 @@
             <div class="row align-items-center">
                 <div class="col-md-12 col-lg-6">
                     <div class="hero-slider-content z-index position-relative">
-                        <span className="text-white text-uppercase">Digital Verifications</span>
+                        <span class="text-white text-uppercase">Digital Verifications</span>
                         <h1 class="text-white">Background Checking Services
                         </h1>
                         <p class="text-white">Comprehensive and Exceptional background<br/> checks, KYC & AML compliance Solutions </p>
