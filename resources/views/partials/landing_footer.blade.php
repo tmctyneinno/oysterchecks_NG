@@ -63,14 +63,34 @@
                         <div class="col-12">
                             <div class="footer-nav-wrap text-white">
                                 <h4 class="text-white">GET IN TOUCH</h4>
+                                <h5 style="color:#fff">Locations</h5>
                                 <ul class="get-in-touch-list">
-                                    <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> UK Address: International House 24 Holborn Viaduct London EC1A 2BN United Kingdom, 
-                                    <br> Nigeria Address: 2nd Floor, 1 Adeola Adeoye Street, Off Toyin Street, Ikeja, Lagos Nigeria
-                                <br>21 Gillabbey Terrace, Gillabbey Street, Cork, T12 KPN4, Republic of Ireland</li>
+                                    <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 
+                                        International House 24 Holborn Viaduct</br> 
+                                        London EC1A 2BN</br> 
+                                        United Kingdom</br> 
+                                           +44 74665 88324, </br> 
+                                        </li>
+                                        
+                                        <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 
+                                            Africa:  Nigeria</br> 
+                                            2nd Floor, 1 Adeola Adeoye Street,</br> 
+                                            Off Toyin Street,</br> 
+                                            Ikeja, Lagos Nigeria </br> 
+                                           +234- 915-341-4314 </li>
+                                        <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span>
+                                            Europe - Ireland</br> 
+                                            21 Gillabbey Terrace, Gillabbey Street,</br> 
+                                            Cork, T12 KPN4</br> 
+                                            Republic of Ireland</br> 
+                                             +353 877123968
+                                             </li>
 
-                                    <li class="d-flex align-items-center py-2"><span class="fas fa-envelope mr-2"></span> enquiries@oysterchecks.com, support@oysterchecks.com</li>
-                                    <li class="d-flex align-items-center py-2"><span class="fas fa-phone-alt mr-2"></span>UK Number: +447466588324 <br> Nigeria Number: 234(1)700-1770, 
-                                    234(0)915-341-4314</li>
+                                    <li class="d-flex align-items-center py-2"><span class="fas fa-envelope mr-2"></span> 
+                                        All enquiries:   </br>  enquiries@oysterchecks.com </br> 
+                                        Technical Assistance & Support </br>  support@oysterchecks.com</li>
+                                    {{-- <li class="d-flex align-items-center py-2"><span class="fas fa-phone-alt mr-2"></span>UK Number: +447466588324 <br> Nigeria Number: 234(1)700-1770, 
+                                    234(0)915-341-4314</li> --}}
                                 </ul>
                             </div>
                         </div>
