@@ -351,7 +351,7 @@
 
     
 
-    <section class="pricing-section ptb-100 gray-light-bg">
+    {{-- <section class="pricing-section ptb-100 gray-light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
@@ -438,7 +438,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     
  
 

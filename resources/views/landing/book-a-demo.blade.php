@@ -19,7 +19,7 @@
                             global standard for device identification.</p>
                        
                         <ul class="list-unstyled  text-sm mb-4 pricing-feature-list" style="font-size: 16px">
-                            <li style="d-flex flex-row; color:#fff; line-height:15px">
+                            {{-- <li style="d-flex flex-row; color:#fff; line-height:15px">
                                 <img class="mr-2" src="{{asset('/landing_assets/img/Check_icon.png')}}" 
                                 style="width:18px; height:18px; padding-top:3px; line-height:15px" > Stay ahead of new and unknown fraud</li>
 
@@ -34,7 +34,7 @@
                                 style="width:18px; height:18px; padding-top:3px; line-height:15px" > Stay ahead of new and unknown fraud</li>
                             <li style="d-flex flex-row; color:#fff">
                                 <img class="mr-2" src="{{asset('/landing_assets/img/Check_icon.png')}}" 
-                                style="width:18px; height:18px; padding-top:3px; line-height:15px" > Stay ahead of new and unknown fraud</li>
+                                style="width:18px; height:18px; padding-top:3px; line-height:15px" > Stay ahead of new and unknown fraud</li> --}}
                         </ul>
                         {{-- <p style="font-size: 12px">Trusted by</p> --}}
                         <style>
