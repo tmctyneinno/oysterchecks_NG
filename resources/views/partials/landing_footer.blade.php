@@ -65,7 +65,9 @@
                                 <h4 class="text-white">GET IN TOUCH</h4>
                                 <ul class="get-in-touch-list">
                                     <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> UK Address: International House 24 Holborn Viaduct London EC1A 2BN United Kingdom, 
-                                    <br> Nigeria Address: 2nd Floor, 1 Adeola Adeoye Street, Off Toyin Street, Ikeja, Lagos Nigeria</li>
+                                    <br> Nigeria Address: 2nd Floor, 1 Adeola Adeoye Street, Off Toyin Street, Ikeja, Lagos Nigeria
+                                <br>21 Gillabbey Terrace, Gillabbey Street, Cork, T12 KPN4, Republic of Ireland</li>
+
                                     <li class="d-flex align-items-center py-2"><span class="fas fa-envelope mr-2"></span> enquiries@oysterchecks.com, support@oysterchecks.com</li>
                                     <li class="d-flex align-items-center py-2"><span class="fas fa-phone-alt mr-2"></span>UK Number: +447466588324 <br> Nigeria Number: 234(1)700-1770, 
                                     234(0)915-341-4314</li>
