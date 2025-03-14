@@ -1,0 +1,53 @@
+<?php 
+
+namespace App\Services;
+use GuzzleHttp\Client;
+class Base 
+{
+
+
+    public function baseUrl($method, $url, $body, $token)
+    {
+
+        $client = new Client();
+      $req =  $client->request($method, $url, [
+            'headers' => [
+                'accept' => 'application/json',
+                'authorization' => "Bearer $token",
+                'content-type' => 'application/json',
+            ],
+            'body' => json_encode($body)
+        ]);
+
+        return $req->getBody();
+    }
+
+
+
+    public function generateToken()
+    {
+        $url = 'https://api.qoreid.com/token';
+        $secret = getenv('verifyMeSecret');
+        $clientId = getenv('verifyMeClientId');
+
+        $body = [
+            'clientId' =>  $clientId,
+            'secret' =>  $secret
+        ];
+
+        $client = new Client();
+        $req = $client->request('POST', $url, [
+            'body' => json_encode($body),
+            'headers'=>[
+                'accept' => 'application/json',
+                'content-type' => 'application/json',
+            ]
+        ]);
+
+        if($req)
+        {
+           return json_decode($req->getBody(), true);
+
+        }
+    }
+}

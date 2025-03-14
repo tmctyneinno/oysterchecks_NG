@@ -17,21 +17,28 @@ use App\Models\Transaction;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\FieldInput;
+use App\Models\Lga;
 use App\Models\States;
 use App\Traits\sandbox;
 use App\Models\Wallet;
+use App\Services\Base;
+use App\Services\verifyMeAddress;
 
 class AddressController extends Controller
 {
   use GenerateRef;
   use generateHeaderReports;
   use sandbox;
-
-    public function __construct()
+private $token;
+    public function __construct(
+      public readonly verifyMeAddress $verifyMeAddress,
+      public readonly Base $base
+    )
     {
+      $this->token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIzaVgtaEFrS3RmNUlsYWhRcElrNWwwbFBRVlNmVnpBdG9WVWQ4UXZ1OHJFIn0.eyJleHAiOjE3NDE4ODQ1MjgsImlhdCI6MTc0MTg3NzMyOCwianRpIjoiNjcwZWQ0MTYtM2RkOS00NWM2LWE5ZGUtZWJhNDcyZjc1NTYwIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLnFvcmVpZC5jb20vYXV0aC9yZWFsbXMvcW9yZWlkIiwiYXVkIjpbInFvcmVpZGFwaSIsImFjY291bnQiXSwic3ViIjoiNWFiNTZhZjAtNzM2OC00MzMzLTk0ZDUtMzVkNzNlZTE0YTA5IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiNDFLQ0xXN09VTDkxQk41MDJWT0wiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLXFvcmVpZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InFvcmVpZGFwaSI6eyJyb2xlcyI6WyJ2ZXJpZnlfdmVyaWZpbmRfNGRfc3ViIiwidmVyaWZ5X2J1c2luZXNzX2FkZHJlc3Nfc3ViIiwidmVyaWZ5X25pbl9zdWIiLCJ2ZXJpZnlfaW5kaXZpZHVhbF9hZGRyZXNzX3N1YiIsInZlcmlmeV9ndWFyYW50b3Jfc3ViIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbnZpcm9ubWVudCI6InNhbmRib3giLCJjbGllbnRIb3N0IjoiMTkyLjE2OC4yMTYuMTQxIiwiY2xpZW50SWQiOiI0MUtDTFc3T1VMOTFCTjUwMlZPTCIsIm9yZ2FuaXNhdGlvbklkIjoxMDIzNjksImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LTQxa2NsdzdvdWw5MWJuNTAydm9sIiwiYXBwbGljYXRpb25JZCI6MjM4NDAsImNsaWVudEFkZHJlc3MiOiIxOTIuMTY4LjIxNi4xNDEifQ.ldXlz54yCzc6fIa3nE3V_ls76WHsXUfTIKNHuiOKo3_2c3Zt8QGH3ykxWNHoD3g5WYzdRr-odydKJJ70HyJ2yEYq39dnQpykVlOU96Yb05N9zlhJ1EazIT4eY3N4JPh94-MS1kYzQ5jo6vtBWrFp153AiCwXUcuUOln9Xup6qBjlMJvJHLPLg7Grkyg8GKAkmaJ7ui-gJPYfx87jZkcp_WAp9rAd7_74H38HJZbUmdpKfywh0QcDkSLxgBsl7xfGhU5xAdBp3LhNKtro0ZR6XJadnjHzKjbYAJpIpWKtkLeYj1qishgFAhx_UWehymrg6yT39juFzxW09IhcaUuASw";
       return $this->middleware('clients');
     }
-  //
+  
 
   public function AddressIndex($slug)
   {
@@ -56,87 +63,15 @@ class AddressController extends Controller
       'phone' => 'required|min:11|max:11',
       'email' => 'nullable|email',
       'dob' => 'nullable|date_format:"Y-m-d"',
-      'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+      // 'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
     ]);
     if ($valid->fails()) {
       Session::flash('alert', 'error');
       Session::flash('message', $valid->errors()->first());
       return redirect()->back()->withErrors($valid)->withInput($request->all());
     }
-    //  dd($request->all());
-    if ($request->file('image')) {
-
-      $candidate_image = cloudinary()->upload($request->file('image')->getRealPath(), [
-        'folder' => 'oysterchecks/candidates'
-      ])->getSecurePath();
-    }
-
-    $ref = $this->GenerateRef();
-    DB::beginTransaction();
     try {
-      $curl = curl_init();
-      $data = [
-        "firstName" => $request->first_name,
-        "middleName" => $request->middle_name != null ? $request->middle_name : "",
-        "lastName" => $request->last_name,
-        "mobile" => $request->phone,
-        "email" => $request->email != null ? $request->email : "user@gmail.com",
-        "dateOfBirth" =>$request->dob??"2000-12-15",
-        "image" => $candidate_image
-      ];
-      $datas = json_encode($data, true);
-      // return $datas;
-      curl_setopt_array($curl, [
-         CURLOPT_URL => $this->ReqUrl()."addresses/candidates",
-       // CURLOPT_URL => "https://api.sandbox.youverify.co/v2/api/addresses/candidates",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 2180,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => $datas,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_HTTPHEADER => [
-          "Content-Type: application/json",
-          "Token: ".$this->ReqToken()
-        ],
-      ]);
-      $response = curl_exec($curl);
-        $res = json_decode($response, true);
-        if ($res['success'] == true && $res['statusCode'] == 201) {
-          // dd($res);
-          AddressVerification::create([
-            'verification_id' => $slug->id,
-            'ref' => $res['data']['id'],
-            'user_id' => auth()->user()->id,
-            'status' => 'pending',
-            'slug' => $slug->slug,
-            'service_reference' => $res['data']['id'],
-            'candidate_id' => $res['data']['youverifyCandidateId'],
-            'first_name' => $request->first_name,
-            "middle_name" => $res['data']['middleName']??"",
-            'last_name' => $request->last_name,
-            "phone" => $res['data']['mobile'],
-            "email" => $res['data']['email']??"",
-            "dob" => $res['data']['dateOfBirth']??'',
-            "image" => $candidate_image,
-            'is_sandbox' => $this->sandbox(),
-            'expected_report_date' => Carbon::now()->addDays(4)
-          ]);
-      
-          // $data = $this->generateAddressReportVerify($slug);
-          // $data['service_ref'] = $service_ref;
-          DB::commit();
-          Session::flash('alert', 'success');
-          Session::flash('message', 'Candidate Created Successfully');
-          //  return view('users.address.verifyAddress', $data);
-
-          //  dd($service_ref);
-          return back()->with([
-           'states' => States::get()
-           ]);
-        }
+      return $this->verifyMeAddress->createCandidate($request, $slug);
     } catch (\Exception $e) {
       DB::rollBack();
       Session::flash('alert', 'error');
@@ -150,9 +85,11 @@ class AddressController extends Controller
     if($slug == ' '){
       $slug = $req->slug;
     }
-
    
+    // $token = $this->base->generateToken();
+    // dd($token);
     $data = $this->generateAddressReportVerify(decrypt($slug));
+
     $data['service_ref'] = $service_ref;
     $data['states'] = States::get();
     $data['address'] = Verification::where('report_type', '=', 'address')->get();
@@ -167,214 +104,7 @@ class AddressController extends Controller
       return redirect()->back()->withInput($request->all());
     }
 
-    $slug = Verification::whereSlug($request->slug)->first();
-      $userWallet = Wallet::where('user_id', auth()->user()->id)->first();
-      // if (isset($slug->discount) && $slug->discount > 0) {
-      //     $amount = ($slug->fee - $slug->discount);
-      // } else {
-      //     $amount = $slug->fee;
-      // }
-      if($this->sandbox() == 1){
-      if ($userWallet->avail_balance < $slug->fee) {
-          Session::flash('alert', 'error');
-          Session::flash('message', 'Your walllet is too low for this transaction');
-          return redirect()->back()->withInput($request->all());
-      }
-    }
-      $get_address_verification = AddressVerification::where('service_reference', $service_ref)->first();
-    if ($get_address_verification){
-      $get_address_verification_id = $get_address_verification->id;
-    }
-
-    //  $logo_image = base64_encode(asset('/images/logo.png'));
-    if ($request->slug == 'individual-address') {
-      $valid = Validator::make($request->all(), [
-        'flat_number' => 'nullable',
-        'building_name' => 'nullable',
-        'building_number' => 'required|string',
-        'landmark' => 'required|string',
-        'street' => 'required|string',
-        'sub_street' => 'nullable',
-        'state' => 'required|string',
-        'city' => 'required|string',
-        'lga' => 'nullable',
-        'subject_consent' => 'required|accepted'
-      ]);
-      if ($valid->fails()) {
-        Session::flash('alert', 'error');
-        Session::flash('message', $valid->errors()->first());
-        return redirect()->back()->withErrors($valid)->withInput($request->all());
-      }
-
-      // dd($service_ref);
-     // $host = 'https://api.sandbox.youverify.co/v2/api/addresses/individual/request';
-      $host = $this->ReqUrl().'addresses/individual/request';
-      $data = [
-        "candidateId" => $service_ref,
-        "description" => "Verify the candidate",
-        "address" => [
-          "flatNumber" => $request->flat_number?? "",
-          "buildingName" => $request->building_name??"",
-          "buildingNumber" => $request->building_number,
-          "landmark" => $request->landmark,
-          "street" => $request->street,
-          "subStreet" => $request->sub_street??"",
-          "state" => $request->state,
-          "city" => $request->city,
-          "lga" => $request->lga??"",
-        ],
-        "subjectConsent" => $request->subject_consent ? true : false,
-
-      ];
-    } elseif ($request->slug == 'reference-address') {
-      $valid = Validator::make($request->all(), [
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'phone' => 'required',
-        'email' => 'required|email',
-        'image' => 'required',
-        'flat_number' => 'nullable',
-        'building_name' => 'nullable',
-        'building_number' => 'required|string',
-        'landmark' => 'required|string',
-        'street' => 'required|string',
-        'sub_street' => 'nullable',
-        'state' => 'required|string',
-        'city' => 'required|string',
-        'lga' => 'nullable|string',
-        'subject_consent' => 'required'
-      ]);
-      if ($valid->fails()) {
-        Session::flash('alert', 'error');
-        Session::flash('message', $valid->errors()->first());
-        return redirect()->back()->withErrors($valid)->withInput($request->all());
-      }
-      $image = '';
-      if (request()->file('image')) {
-        $image = request()->file('image');
-        $name =  $image->getClientOriginalName();
-        $FileName = \pathinfo($name, PATHINFO_FILENAME);
-        $ext =  $image->getClientOriginalExtension();
-        $time = time() . $FileName;
-        $dd = md5($time);
-        $fileName = $dd . '.' . $ext;
-        if ($image->move('assets/guarantors', $fileName)) {
-          $image = $fileName;
-        }
-      }
-
-      $host = $this->ReqUrl().'addresses/guarantor/request';
-      $data = [
-        "candidateId" => $service_ref,
-        "description" => "Verify the candidtate guarantor",
-        "guarantor" => [
-          "firstName" => $request->first_name,
-          'lastName' => $request->last_name,
-          'mobile' => $request->phone,
-          'email' => $request->email,
-          'image' =>  'https://oysterchecks.com/assets/images/logo.png',
-        ],
-        "address" => [
-          "flatNumber" => $request->flat_number != null ? $request->flat_number : "",
-          "buildingName" => $request->building_name != null ? $request->building_name : "",
-          "buildingNumber" => $request->building_number,
-          "landmark" => $request->landmark,
-          "street" => $request->street,
-          "subStreet" => $request->sub_street != null ? $request->sub_street : "",
-          "state" => $request->state,
-          "city" => $request->city,
-          "lga" => $request->lga != null ? $request->lga : "",
-        ],
-        "subjectConsent" => true,
-      ];
-    } else {
-      $host = $this->ReqUrl().'addresses/business/request';
-      $data = [
-        "candidateId" => $service_ref,
-        "description" => "Verify the candidate and business",
-        "business" => [
-          "name" => $request->name,
-          "email" => $request->email,
-          "mobile" => $request->phone,
-          "registrationNumber" => $request->registration_number,
-        ],
-        "address" => [
-          "flatNumber" => $request->flat_number != null ? $request->flat_number : "",
-          "buildingName" => $request->building_name != null ? $request->building_name : "",
-          "buildingNumber" => $request->building_number,
-          "landmark" => $request->landmark,
-          "street" => $request->street,
-          "subStreet" => $request->sub_street != null ? $request->sub_street : "",
-          "state" => $request->state,
-          "city" => $request->city,
-          "lga" => $request->local_govt != null ? $request->local_govt : "",
-        ],
-        "subjectConsent" => true,
-      ];
-    }
-    DB::beginTransaction();
-    try {
-      $datas = json_encode($data, true);
-
-     // dd($datas);
-      // dd($datas);
-      //  $res = executeCurl($datas,$host,"POST");
-     
-      $curl = curl_init();
-      curl_setopt_array($curl, [
-        CURLOPT_URL => $host,
-       CURLOPT_RETURNTRANSFER => true,
-       CURLOPT_ENCODING => "",
-       CURLOPT_MAXREDIRS => 10,
-       CURLOPT_TIMEOUT => 2180,
-       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-       CURLOPT_CUSTOMREQUEST => "POST",
-       CURLOPT_POSTFIELDS => $datas,
-       CURLOPT_SSL_VERIFYPEER => false,
-       CURLOPT_HTTPHEADER => [
-         "Content-Type: application/json",
-         "Token: ".$this->ReqToken()
-       ],
-     ]);
-
-      $response_data = curl_exec($curl);
-      if (curl_errno($curl)) {
-        Session::flash('alert', 'error');
-        Session::flash('message', 'An error occured, please try again later');
-        return redirect()->back()->withErrors($valid)->withInput($request->all());
-      } else {
-        $res = json_decode($response_data, true);
-        curl_close($curl);
-
-        if ($res['success'] == true && $res['statusCode'] == 201) {
-
-        
-         event(new AddressVerificationCreated($res, $get_address_verification_id));
-
-        //  AddressVerification::where('service_reference', $service_ref)->update(['reference_key' => $res['data']['referenceId'], 'is_reference' => 1]);
-        
-          DB::commit();
-          if($this->sandbox() == 1){
-            $reference = $res['data']['id'];
-            $reasons = 'Payment for '.$slug->name;
-            $account = $request->pin ;
-            $this->chargeUser($slug->fee, $reference , $reasons, $account);
-        }
-        Session::flash('alert', 'success');
-        Session::flash('message', 'Address submitted for verification');
-          return redirect()->back();
-        } else {
-          Session::flash('alert', 'error');
-          Session::flash('message', $res['message']);
-          return redirect()->back()->withInput($request->all());
-        }
-      }
-    } catch (\Exception $e) {
-      DB::rollBack();
-      Session::flash('alert', 'error');
-      Session::flash('message', $e->getMessage());
-      return redirect()->back()->withErrors($valid)->withInput($request->all());
-    }
+      dd($this->verifyMeAddress->submitAddressVerify($request,$service_ref));
   }
 
 
@@ -447,5 +177,11 @@ class AddressController extends Controller
           'avail_balance' => $newWallet
       ]);
       return $update;
+  }
+
+  public function getLga(Request $req)
+  {
+    $lga = Lga::where('state_id', $req->states)->pluck('name');
+    return response()->json(['data' => $lga]);
   }
 }

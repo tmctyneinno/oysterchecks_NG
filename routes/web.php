@@ -141,9 +141,12 @@ Route::get('user/aml/adversemedia/{slug}',[AdverseMediaController::class, 'Adver
 Route::get('user/aml/adversemedia/{slug}/check',[AdverseMediaController::class, 'AdverseMediaCheck'])->name('user.aml_adverse_media_check');
 Route::post('user/aml/adversemedia/{slug}/verify',[AdverseMediaController::class, 'AdverseMediaVerify'])->name('user.aml_adverse_media_verify');
 Route::get('user/aml/adversemedia/report/{ref}',[AdverseMediaController::class, 'AdverseMediaGetReport'])->name('user.aml_adverse_media_get_report');
+Route::post('/get/lga', [AddressController::class,'getLga'])->name('getLga');
+
 // Route::get('/addressReport', function(){
 //     return view('users.address.addressReport');
 // });
+
 });
 
 require __DIR__.'/admin.php';

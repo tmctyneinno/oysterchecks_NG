@@ -14,16 +14,16 @@ class AddressVerificationCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $res, $address_verification_id;
+    public $res, $address_verification;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($res, $address_verification_id)
+    public function __construct($res, $address_verification)
     {
         $this->res = $res;
-        $this->address_verification_id = $address_verification_id;
+        $this->address_verification = $address_verification;
     }
 
     /**

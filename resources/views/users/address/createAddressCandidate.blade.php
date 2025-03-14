@@ -61,19 +61,24 @@
                          @csrf
                          <div class="card-body bootstrap-select-1">
                              <div class="row">
-                                 @foreach($fields as $input)
-                                 <div class="col-md-6">
-                                     <label class="mb-3" style="font-weight:500">{{$input->label}}</label> 
+                                 @foreach($fields as $input)  
+                                 @if($input->is_required != 0)
+                                 <div class="col-md-6 mb-3">
+                                     <label class="mb-0" style="font-weight:500">{{$input->label}}</label> 
                                      @if($input->is_required == 1) 
                                      <span style="color:red; font-weight:500"> * </span> @endif
+                                    
                                      <input type="{{$input->type}}" value="{{old($input->name)}}" 
                                      id="{{$input->inputid}}" 
                                      name="{{$input->name}}" 
-                                     class="form-control mb-3 custom-select" 
-                                     placeholder="{{$input->placeholder}}" 
+                                     class="form-control mb-0 custom-select" 
+                                     placeholder="" 
                                      @if($input->is_required == 1) required @endif>
+                                     <small >{{$input->placeholder}}</small>
+                                    
                                  </div><!-- end col -->
                                  <!-- end col -->
+                                 @endif
                                  @endforeach
 
                                  <div class="col-md-12">
@@ -83,14 +88,14 @@
                                      </span>
                                      @endif
                                      <div class="col-md-6 p-3">
-                                         <span style="color:red; font-size:11px;"> Note: You will be charged ₦{{number_format($slug->fee, 2)}} for each {{$slug->name}}</span> <br>
-                                         <span style="color:darkblue; font-size:11px;">Your wallet Balance is ₦{{number_format($wallet->avail_balance, 2)}}</span> <br>
+                                         {{-- <span style="color:red; font-size:12px; mb-2"> Note: You will be charged ₦{{number_format($slug->fee, 2)}} for each {{$slug->name}}</span> <br> --}}
+                                         {{-- <span style="color:darkblue; font-size:11px;">Your wallet Balance is ₦{{number_format($wallet->avail_balance, 2)}}</span> <br> --}}
 
                                          <input type="checkbox" required>
 
-                                         <span style="font-size:11px;"> By checking this box you acknowledge that you have gotten consent from that data subject to use their data for verification purposes on our platform in accourdance to our <a href="#"> Privacy Policy</a></span>
+                                         <span style="font-size:13px;"> By checking this box you acknowledge that you have gotten consent from that data subject to use their data for verification purposes on Oysterchecks in accourdance to our <a href="{{route('terms')}}"> Privacy Policy</a></span>
                                      </div>
-                                     <span class="float-center p-2"><button type="submit" class="btn btn-primary w-23">Create Candidate</button> </span>
+                                     <span class="float-center p-2"><button type="submit" class="btn btn-primary w-23"> <i class="fa fa-user"> </i> Create Candidate</button> </span>
                                  </div>
 
                              </div><!-- end row -->
