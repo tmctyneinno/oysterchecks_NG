@@ -104,7 +104,8 @@ private $token;
       return redirect()->back()->withInput($request->all());
     }
 
-      dd($this->verifyMeAddress->submitAddressVerify($request,$service_ref));
+      return $this->verifyMeAddress->submitAddressVerify($request,$service_ref);
+
   }
 
 
@@ -115,12 +116,13 @@ private $token;
     $data['verified'] = AddressVerificationDetail::where(['address_verification_id' => decrypt($verification_id), 'status' => 'completed'])->get();
     $data['not_verified']  = AddressVerificationDetail::where(['address_verification_id' => decrypt($verification_id), 'status' => 'pending'])->get();
     $data['verification'] = $verification;
-    // dd($data);
     return view('users.address.verifications', $data);
   }
   public function verificationReport($slug, $addressId)
   {
-    
+
+    $slug = explode('-', $slug)['0'];
+  
     if($slug == 'guarantor')
     {
       $slug = 'reference-address';
@@ -130,7 +132,6 @@ private $token;
 
 
     $slug = Verification::where('slug', $slug)->first();
-  
 
    
     $address_verification = AddressVerificationDetail::where(['id' => decrypt($addressId)])->first();

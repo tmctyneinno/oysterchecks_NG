@@ -182,21 +182,23 @@
                                     <td>{{$verifications->reference_id}}</td>
                                     <td>
                                         @if($verifications->status == 'pending')
-                                        <span class="badge badge-soft-purple">Pending</span>
-                                        @elseif($verifications->status == 'completed' && $verifications->task_status == 'VERIFIED')
-                                        <span class="badge badge-soft-success">Completed & Verified</span>
-                                        @elseif($verifications->status == 'awaiting_reschedule')
-                                        <span class="badge badge-soft-dark">Awaiting Reschedule</span>
-                                        @elseif($verifications->status == 'completed' && $verifications->task_status == 'NOT_VERIFIED')
-                                        <span class="badge badge-soft-warning">Completed but Not Verified</span>
-                                        @elseif($verifications->status == 'canceled')
-                                        <span class="badge badge-soft-danger"> {{$verifications->status}}</span>
+                                        <span class="badge badge-soft-purple">PENDING</span>
+                                        @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'verified')
+                                        <span class="badge badge-soft-success">COMPLETED & VERIFIED</span>
+                                        @elseif($verifications->status == 'awaiting_reschedule' || strtolower($verifications->status) == 'in_progress' )
+                                        <span class="badge badge-soft-dark">AWAITING RESCHEDULE</span>
+                                        @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'not_verified')
+                                        <span class="badge badge-soft-warning">COMPLETED  NOT VERIFIED</span>
+                                        @elseif(strtolower($verifications->status) == 'INVALID_ADDRESS')
+                                        <span class="badge badge-soft-danger"> INVALID ADDRESS</span>
+                                        @elseif(strtolower($verifications->status) == 'WRONG_ADDRESS')
+                                        <span class="badge badge-soft-danger"> WRONG ADDRESS</span>
                                         @else
-                                        <span class="badge badge-soft-danger"> {{$verifications->status}}</span>
+                                        <span class="badge badge-soft-danger"> UNVERIFIED</span>
                                         @endif
                                     </td>
                                     <td>
-                                    @if($verifications->guarantor != null) Guarantor Address @elseif($verifications->business != null) Business Address
+                                    @if($verifications->type =='guarantor') Guarantor Address @elseif($verifications->type == 'business') Business Address
                                       @else Individual Address
                                     @endif</td>
                                     <td>{{$verifications->created_at}}</td>

@@ -31,7 +31,7 @@
             <div class="row ">
                 <div class="col-lg-12">
                     <div class="row justify-content-left">
-                        <div class="col-md-6 col-lg-4">
+                        {{-- <div class="col-md-6 col-lg-4">
                             <div class="card report-card ">
                                 <div class="card-body" >
                                     <div class="row d-flex justify-content-center">
@@ -46,9 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--end card-body-->
                             </div>
-                            <!--end card-->
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="card report-card">
@@ -65,9 +63,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--end card-body-->
                             </div>
-                            <!--end card-->
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="card report-card">
@@ -84,30 +80,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--end card-body-->
                             </div>
-                            <!--end card-->
-                        </div>
-                        <!--end col-->
+                        </div> --}}
                        <div class="col-md-12 col-lg-12">
                             <div class="card report-card">
                                 <div class="card-body" >
                                     <div class="row d-flex justify-content-center">
                                         <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-md-4 col-lg-4 col-12 ">
                                             {{-- <p class="text-black mb-0 fw-semibold">Select Verification Type</p> --}}
-                                            <h4 class="m-0 text-black">Selected Verification Type</h4>
-                                          <strong> {{$slug->name}} </strong> 
+                                            <h4 class="m-0 text-black">Selected Verification Type: <br> <strong style="color:red">{{$slug->name}} </strong> </h4>
+                                           
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-12 col-lg-4 col-md-4">
                                             <div class="bg-light-alt" style="font-size: 30px">
                                                 <form method="get" id="verify" action="{{route('showVerificationDetailsForm', ['slug' => ' ', 'service_ref' => $service_ref])}}" >
                                                     @csrf
                                               <select class="form-control" name="slug" onChange="document.getElementById('verify').submit()" >
-                                                <option readonly>Select Verification Type</option>
+                                             <option> Select Verification Type</option>
                                                 @foreach ($address as $addresses)
-                                                <option value="{{encrypt($addresses->slug)}}"> 
-                                                     <a     class="dropdown-itemb tn btn-info">{{ucfirst($addresses->slug)}} Address Verifications</a> 
+                                                <option value="{{encrypt($addresses->slug)}}"  @if($addresses->slug !== $slug->name)  @endif> 
+                                                     <a class="dropdown-item tn btn-info">{{ucfirst($addresses->slug)}} Address Verifications</a> 
                                                     </option>
                                                 @endforeach
                                               </select>

@@ -4,10 +4,8 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IdentityController;
-use App\Http\Controllers\LandingPages;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CandidateController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IdentityIndexController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TransactionController;
@@ -18,7 +16,6 @@ use App\Http\Controllers\CustomVerification;
 use App\Http\Controllers\SanctionPepController;
 use App\Http\Controllers\AdverseMediaController;
 use App\Http\Controllers\EmployeeRefController;
-use App\Http\Middleware\ClientMiddleware;
 
 // use App\Models\Transaction;
 
@@ -44,14 +41,13 @@ Route::get('pdf/', function(){
 
 
 require __DIR__.'/auth.php';
-
 Route::get('/logouts', [HomeController::class, 'Logouts'])->name('logouts');
-
 require __DIR__.'/landing.php';
 
 // Route::get('email', [LandingPages::class, 'email'])->name('email');
 Route::get('/user/verification/employee-reference/questions/{user_id}/{candidate_verification_id}/', [EmployeeRefController::class,'RedirectToQuestions'])->name('candidate.employer-reference.questions');
 Route::post('/user/verifications/employee-reference/questions/{user_id}/{candidate_verification_id}/', [EmployeeRefController::class,'StoreAnswers'])->name('candidate.employer-reference.store.answers');
+
 
 #===================== USERS ROUTE ===============================
 Route::group(['middleware' => ['clients', 'auth']], function() { 
@@ -79,7 +75,6 @@ Route::get('/user/address/verification/{slug}/candidate/{service_ref}', [Address
 Route::get('/user/address/verifications/{verification_id}', [AddressController::class, 'ViewCandidateAddresses'])->name('ViewCandidateAddresses');
 Route::post('/user/address/verification/candidate/create/{slug}', [AddressController::class,'createCandidate'])->name('createCandidate');
 
-//candidate previous employer routes 
 Route::get('/user/verification/employee-reference/{user_id}/{id}', [EmployeeRefController::class,'create'])->name('candidate.employer-reference');
 Route::post('/user/verification/employee-reference/store/{user_id}/{id}', [EmployeeRefController::class,'store'])->name('candidate.employer-reference.store');
 Route::get('/user/pdf/generate/{candidate_verification_id}/{user_id}', [EmployeeRefController::class,'PDFGenerator'])->name('candidate.employer-reference.PDF');
