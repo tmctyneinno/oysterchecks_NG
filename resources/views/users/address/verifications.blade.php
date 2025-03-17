@@ -189,12 +189,12 @@
                                         <span class="badge badge-soft-dark">AWAITING RESCHEDULE</span>
                                         @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'not_verified')
                                         <span class="badge badge-soft-warning">COMPLETED  NOT VERIFIED</span>
-                                        @elseif(strtolower($verifications->status) == 'INVALID_ADDRESS')
+                                        @elseif(strtolower($verifications->status) == 'invalid_address')
                                         <span class="badge badge-soft-danger"> INVALID ADDRESS</span>
-                                        @elseif(strtolower($verifications->status) == 'WRONG_ADDRESS')
+                                        @elseif(strtolower($verifications->status) == 'wrong_address')
                                         <span class="badge badge-soft-danger"> WRONG ADDRESS</span>
                                         @else
-                                        <span class="badge badge-soft-danger"> UNVERIFIED</span>
+                                        <span class="badge badge-soft-danger"> {{$verifications->status}}</span>
                                         @endif
                                     </td>
                                     <td>

@@ -1,8 +1,6 @@
 @php 
  use Illuminate\Support\Carbon;
-
 @endphp
-
 @extends('layouts.app')
 @section('content')
 <div class="page-content">
@@ -17,7 +15,6 @@
                                 <li class="breadcrumb-item"></li>
                             </ol>
                         </div>
-                        <!--end col-->
                         <div class="col-auto align-self-center">
                             <a href="#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
                                 <span class="ay-name" id="Day_Name">Today:</span>&nbsp;
@@ -28,13 +25,9 @@
                                 <i data-feather="download" class="align-self-center icon-xs"></i>
                             </a>
                         </div>
-                        <!--end col-->
                     </div>
-                    <!--end row-->
                 </div>
-                <!--end page-title-box-->
             </div>
-            <!--end col-->
         </div>
         <div class="row">
             <div class="col-12">
@@ -45,7 +38,6 @@
                             <span class="card-title">Back</span>
                         </a>
                     </div>
-                    <!--end card-header-->
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
@@ -60,7 +52,7 @@
                         </div>
                         <div class="row"  id="pdfContent">
                             <div class="col-12">
-                                @if($address_verification->status == 'pending')
+                                @if(strtolower($address_verification->status == "pending"))
                                 <div class="alert custom-alert alert-purple icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-clock-outline alert-icon text-purple align-self-center font-30 me-3"></i>
@@ -70,7 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif($address_verification->status == 'completed' && $address_verification->task_status == 'VERIFIED')
+                                @elseif(strtolower($address_verification->status) == 'completed' && strtolower($address_verification->task_status) == 'verified')
                                 <div class="alert custom-alert alert-success icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-check-outline alert-icon text-success align-self-center font-30 me-3"></i>
@@ -80,22 +72,52 @@
                                         </div>
                                     </div>
                                 </div>
+                                @elseif(strtolower($address_verification->status) == 'in_progress' )
+                                <div class="alert custom-alert alert-info icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                    <div class="media">
+                                        <i class="fas fa-hourglass-start alert-icon text-info align-self-center font-30 me-3"></i>
+                                        <div class="media-body align-self-center">
+                                            <h5 class="mb-1 fw-bold mt-0 text-info">Verification in Progress</h5>
+                                            <span>Your Address verification request is still in progress, details will be updated once its completed.</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 @elseif($address_verification->status == 'awaiting_reschedule')
                                 <div class="alert custom-alert alert-info icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="fas fa-hourglass-start alert-icon text-info align-self-center font-30 me-3"></i>
                                         <div class="media-body align-self-center">
-                                            <h5 class="mb-1 fw-bold mt-0 text-info">Awaitiing Reschedule</h5>
-                                            <span>Your Address verification request is awaiting schedule as agent wasn't able to access the location due to violence in that area.</span>
+                                            <h5 class="mb-1 fw-bold mt-0 text-info">Awaiting Reschedule</h5>
+                                            <span>Your Address verification request is awaiting schedule as agent wasn't able to access the location at the moment.</span>
                                         </div>
                                     </div>
                                 </div>
-                                @elseif($address_verification->status == 'completed' && $address_verification->task_status == 'NOT_VERIFIED')
+                                @elseif(strtolower($address_verification->status) == 'completed' && strtolower($address_verification->task_status) == 'not_verified')
                                 <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
                                         <div class="media-body align-self-center">
                                             <h5 class="mb-1 fw-bold mt-0 text-warning">Completed and Not Verified</h5>
+                                            <span>Your Address verification request have been completed and marked not verified. Candidate does not live here or address does not exist or is not accessible.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @elseif(strtolower($address_verification->status) == 'INVALID_ADDRESS')
+                                <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                    <div class="media">
+                                        <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
+                                        <div class="media-body align-self-center">
+                                            <h5 class="mb-1 fw-bold mt-0 text-warning">Address not valid</h5>
+                                            <span>Your Address verification request have been completed and marked not verified. Candidate does not live here or address does not exist or is not accessible.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @elseif(strtolower($address_verification->status) == 'WRONG_ADDRESS')
+                                <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                    <div class="media">
+                                        <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
+                                        <div class="media-body align-self-center">
+                                            <h5 class="mb-1 fw-bold mt-0 text-warning">Wrong Address</h5>
                                             <span>Your Address verification request have been completed and marked not verified. Candidate does not live here or address does not exist or is not accessible.</span>
                                         </div>
                                     </div>
@@ -176,15 +198,15 @@
                                         </h5>
                                         <div id="collapseOne" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#personalInformation">
                                             <div class="accordion-body">
-                                                <div class="row">
+                                                {{-- <div class="row">
                                                     <div class="col-lg-4 align-self-center py-4 mb-3 mb-lg-0">
                                                         <div class="dastone-profile-main">
                                                             <div class="dastone-profile-main-pic">
-                                                                {{-- <img src="{{$address_verification->candidate['photo']}}" alt="" height="110" class="rounded-circle"> --}}
+                                                                <img src="{{$address_verification->candidate['photo']}}" alt="" height="110" class="rounded-circle">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>  --}}
                                                 <div class="row border-bottom mb-5">
 
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
@@ -383,27 +405,22 @@
                                                             <div style="text-decoration:none; overflow:hidden">
                                                             <div id="embedded-map-display" style="height:100%; width:100%;max-width:100%;">
                                                             <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q={{$address_verification->address['buildingNumber']}}+{{$address_verification->address['street']}}+{{$address_verification->address['city']}}+{{$address_verification->address['lga']}},&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
-                                                            </div><a class="my-codefor-googlemap" href="https://www.bootstrapskins.com/themes" id="make-map-data"> </a>
+                                                            </div><a class="my-codefor-googlemap" href="" id="make-map-data"> </a>
                                                             </div>
                                                             @else 
-                                                            <iframe src="{{$address_verification->address['locationUrl']}}" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                                            <iframe src="{{$address_verification->map_address_url}}" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                                                             </iframe> 
-
                                                             @endif
-
                                                         </div>
-                                                           
                                                     </div>
-
-
 
                                                     <div class="col-6 d-block col-sm-3 col-xl-3 d-sm-flex">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted">Longitude : </div>
-                                                        <div class="fw-normal font-15">{{$address_verification->address['latlong']['lon']??$address_verification->address['longitude']}}</div>
+                                                        <div class="fw-normal font-15">{{$address_verification->address['latlong']['lon']??$address_verification->address['longitude']??''}}</div>
                                                     </div>
                                                     <div class="col-6 d-block col-sm-3 col-xl-3 d-sm-flex">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted">Latitude : </div>
-                                                        <div class="fw-normal font-15">{{$address_verification->address['latlong']['lat']??$address_verification->address['latitude']}}</div>
+                                                        <div class="fw-normal font-15">{{$address_verification->address['latlong']['lat']??$address_verification->address['latitude']??''}}</div>
                                                     </div>
                                                     @endif
                                                 </div>
@@ -433,7 +450,7 @@
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#imageView{{$loop->iteration}}">
                                                            @if(isset($image['filePath'])) <img src="{{$image['filePath']}}" alt="" class="img-fluid rounded">
                                                            @else 
-                                                           <img src="{{$image['photo1']}}" alt="" class="img-fluid rounded">
+                                                           <img src="{{$image}}" alt="" class="img-fluid rounded">
                                                            @endif
                                                         </a>
                                                     </div>
@@ -458,7 +475,7 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-lg-12 text-center align-self-center">
-                                                    <img src="{{$image['filePath']}}" alt="" class="img-fluid" width="{{$image['width']}}" height="{{$image['height']}}">
+                                                    {{-- <img src="{{isset($image['filePath'])}}" alt="" class="img-fluid" width="{{$image['width']}}" height="{{$image['height']}}"> --}}
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -482,8 +499,18 @@
                                         <div id="collapseFour" class="accordion-collapse" aria-labelledby="headingFour" data-bs-parent="#notes">
                                             <div class="accordion-body">
                                                 <div class="row mb-5">
-                                                    @empty($address_verification->notes)
-                                                    <div class="col-12 text-center py-3">No Notes Available</div>
+                                                    @if(!is_array($address_verification->notes))
+                                                    <div class="col-12 py-2">
+                                                        <div class="media">
+                                                            <div class="me-3 align-self-center">
+                                                                <i class="far fa-sticky-note font-20"></i>
+                                                            </div>
+                                                            <div class="media-body align-self-center">
+                                                                <h6 class="m-0 font-15">{{$address_verification->notes}} </h6>
+                                                            </div>
+                                                            <!--end media body-->
+                                                        </div>
+                                                    </div>
                                                     @else
                                                     @foreach($address_verification->notes as $note)
                                                     <div class="col-12 py-2">
@@ -518,10 +545,10 @@
                                             <div class="accordion-body pt-0">
                                                 <div class="row mb-5">
 
-                                                    <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
+                                                    {{-- <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building has Gate : </div>
                                                         <div class="fw-normal font-15 col-8">{{$address_verification->gate_present == true ? 'Yes' : 'No'}}</div>
-                                                    </div>
+                                                    </div> --}}
                                                     @if($address_verification->gate_present == true)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Color of Gate : </div>
@@ -573,8 +600,7 @@
                                                     </div>
                                                     @elseif($address_verification->reasons != null)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Reason for Incompletion : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->reasons}}</div>
+                                                        <div class="fw-normal font-15 col-12">{{$address_verification->reasons}}</div>
                                                     </div>
                                                     @else
                                                     <div class="col-12 text-center py-3">No Other Information Available</div>

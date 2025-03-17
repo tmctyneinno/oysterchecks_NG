@@ -22,7 +22,6 @@ class InsertAddressVerificationPayload implements ShouldQueue
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -34,13 +33,18 @@ class InsertAddressVerificationPayload implements ShouldQueue
     public function handle(AddressVerificationCreated $event)
     {
         $res = $event->res;
-        // return $res;
-        $get_address_verification_id = $event->address_verification;
+        $get_address_verification = $event->address_verification;
+
+        $candidate = [
+            'first_name' => $get_address_verification->firt_name,
+            'last_name' => $get_address_verification->last_name,
+            'phone' => $get_address_verification->phone,
+        ];
         AddressVerificationDetail::create([
-            'address_verification_id' => $get_address_verification_id,
+            'address_verification_id' => $get_address_verification->id,
             'reference_id' => $res['customerReference'],
-            'candidate' => json_encode($res['applicant']),
-            'guarantor' => isset($res['applicant']) ? json_encode($res['applicant']) : null,
+            'candidate' => $res['type'] == 'guarantor'?json_encode(json_encode($candidate)):json_encode($res['applicant']),
+            'guarantor' => $res['type'] == 'guarantor'?json_encode($res['applicant']):'',
             'address' => json_encode($res['address']['location']),
             'status' => $res['summary']['address_check'],
             'task_status' => $res['summary']['address_check'],
@@ -57,7 +61,5 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'links' =>$res['customerReference'],
             'description'=>$res['customerReference'],
           ]);
-
-        
     }
 }

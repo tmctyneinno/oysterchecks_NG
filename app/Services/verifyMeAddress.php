@@ -92,7 +92,7 @@ class verifyMeAddress
                     'lastname'=> $address_verification->last_name,
                     'phone'=> $address_verification->phone,
                     'dob'=> $address_verification->dob,
-                    'gender'=> $address_verification->first_name,
+                    'gender'=> $address_verification->gender,
                            ],
                 "street" => $request->street??"",
                 "customerReference" => $service_ref,
@@ -107,14 +107,61 @@ class verifyMeAddress
           if($res['customerReference'])
           {
             $res['type'] = $request->slug;
-            $address_verification = $address_verification->id;
             event(new AddressVerificationCreated($res, $address_verification));
           }
           Session::flash('alert', 'success');
           Session::flash('message', 'Address successfully sent for verifications');
-          return back()->with('
-          ');
-        }
+          return back();
+        }elseif ($request->slug == 'reference-address') {
+            $valid = Validator::make($request->all(), [
+              'first_name' => 'required|string',
+              'last_name' => 'required|string',
+              'phone' => 'required',
+              'landmark' => 'required|string',
+              'street' => 'required|string',
+              'state' => 'required|string',
+              'city' => 'required|string',
+              'lga' => 'required',
+            ]);
+            if ($valid->fails()) {
+              Session::flash('alert', 'error');
+              Session::flash('message', $valid->errors()->first());
+              return redirect()->back()->withErrors($valid)->withInput($request->all());
+            }
+
+            $body = [
+              "description" => "Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name,
+              'applicant' => [
+                'firstname' => $request->first_name,
+                'lastname'=> $request->last_name,
+                'phone'=> $request->phone,
+                'dob'=> $request->dob,
+                'gender'=> $request->gender,
+                       ],
+                       "street" => $request->street??"",
+                       "customerReference" => $service_ref,
+                       "lgaName" => $request->lga??"",
+                       "stateName" => $request->state??"",
+                       "landmark" => $request->landmark??"",
+                       "city" => $request->city
+            ];
+            $token = $this->base->generateToken()['accessToken'];
+            $resp =   $this->base->baseUrl('post', 'https://api.qoreid.com/v1/addresses', $body, $token);
+            $res = json_decode($resp,true);
+            if($res['customerReference'])
+            {
+            $res['type'] = $request->slug;
+            event(new AddressVerificationCreated($res, $address_verification));
+            Session::flash('alert', 'success');
+            Session::flash('message', 'Address successfully sent for verifications');
+            return back();
+            }
+          }else{
+            Session::flash('alert', 'error');
+            Session::flash('message', 'This service is not available at the moment');
+            return back()->withInput($request->all());
+            
+          }
         Session::flash('alert', 'error');
         Session::flash('message', 'Something went wrong');
         return back()->withInput($request->all());

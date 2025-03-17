@@ -217,15 +217,13 @@
                                                      {{ $message }}
                                                  </span>
                                              @enderror
-                                         </div><!-- end col -->
-
+                                         </div>
                                          @endif
-                                         <!-- end col -->
                                      @endforeach
                                      <input type="text" value="{{ $slug->slug }}" name="slug" hidden>
                                      <div class="col-md-12">
                                          @if (Session::has('message'))
-                                             <span class="btn btn-{{ Session::get('alert') }}">
+                                             <span class="badge bg-{{ Session::get('alert') }}">
                                                  {{ Session::get('message') }}
                                              </span>
                                          @endif
@@ -236,7 +234,6 @@
                                              <br>
                                              {{-- <span style="color:darkblue; font-size:11px;">Your wallet Balance is
                                                  ₦{{ number_format($wallet->avail_balance, 2) }}</span> <br> --}}
-
                                              <input type="checkbox" required name="subject_consent" id="subject_consent">
                                              <span style="font-size:13px;"> By checking this box you acknowledge that you
                                                  have gotten consent from that data subject to use their data for

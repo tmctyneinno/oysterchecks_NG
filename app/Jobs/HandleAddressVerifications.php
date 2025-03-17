@@ -54,6 +54,7 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
             $get_verification_details->reasons = $webhookCallData['data']['address']['neighbor']['comment'];
             $get_verification_details->images = json_encode($webhookCallData['data']['address']['exteriorPhotos']);
             $get_verification_details->closest_landmark = $webhookCallData['data']['address']['location']['landmark'];
+            $get_verification_details->address = json_encode($webhookCallData['data']['address']['location']);
             $get_verification_details->save();
 
 
