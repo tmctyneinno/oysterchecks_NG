@@ -28,6 +28,7 @@ class verifyMeAddress
 
     public function createCandidate($request, $slug)
     {
+      $this->storeStates();
         $ref = $this->GenerateRef();
         AddressVerification::create([
                   'verification_id' => $slug->id,
