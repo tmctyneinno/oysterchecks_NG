@@ -60,6 +60,7 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'yv_id' => $res['customerReference'],
             'links' =>$res['customerReference'],
             'description'=>$res['customerReference'],
+            'agent' => json_encode($res['applicant'])
           ]);
     }
 }
