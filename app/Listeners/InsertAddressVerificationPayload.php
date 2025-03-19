@@ -53,7 +53,7 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'accepted_at' => isset($res['data'])?$res['data']['acceptedAt']:'',
             'revalidation_date'=> isset($res['data'])?$res['data']['revalidationDate']:'',
             'notes'=> isset($res['data'])?json_encode($res['data']['notes']):'',
-            'is_flagged'=> isset($res['data'])?$res['data']['isFlagged']:'',
+            'is_flagged'=> isset($res['data'])?$res['data']['isFlagged']:1,
             'subject_consent' =>  true,
             'agent_submitted_longitude' => isset($res['data'])?$res['data']['agentSubmittedLongitude']:'',
             'agent_submitted_latitude' => isset($res['data'])?$res['data']['agentSubmittedLatitude']:'',
