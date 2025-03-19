@@ -24,6 +24,7 @@ use App\Traits\sandbox;
 use App\Models\Wallet;
 use App\Services\Base;
 use App\Services\verifyMeAddress;
+use Illuminate\Support\Facades\File;
 use Vinkla\Hashids\Facades\Hashids;
 
 class AddressController extends Controller
@@ -45,6 +46,8 @@ private $token;
   public function AddressIndex($slug)
   {
     
+    
+  $this->storeStates();
     $data = $this->generateAddressReport($slug);
     return view('users.address.index', $data); 
   }
@@ -198,5 +201,29 @@ private $token;
   {
     $lga = Lga::where('state_id', $req->states)->pluck('name');
     return response()->json(['data' => $lga]);
+  }
+
+  public function storeStates()
+  {
+      $states = File::get(base_path('app/services/states.json'));
+      $states = json_decode($states, true);
+      $states = States::get();
+      if(count($states) > 5) return;
+      foreach($states as $state)
+      {
+         $ss = States::create([
+              'name' => $state['state']
+          ]);
+          if($ss)
+          foreach($state['lgas'] as $lgs)
+          {
+              Lga::create([
+                  'state_id' => $ss->id,
+                  'name' => $lgs
+              ]);
+          }
+      }
+
+
   }
 }

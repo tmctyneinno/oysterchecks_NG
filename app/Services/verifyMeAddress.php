@@ -28,7 +28,7 @@ class verifyMeAddress
 
     public function createCandidate($request, $slug)
     {
-         $this->storeStates();
+        
         $ref = $this->GenerateRef();
         AddressVerification::create([
                   'verification_id' => $slug->id,
@@ -39,7 +39,7 @@ class verifyMeAddress
                   'service_reference' => $ref,
                   'candidate_id' => $ref,
                   'first_name' => $request->first_name,
-                  "middle_name" => $res['data']['middleName']??"",
+                  "middle_name" => $request->middlename??"",
                   'last_name' => $request->last_name,
                   "phone" => $request->phone,
                   "email" => $request->email,
@@ -49,9 +49,7 @@ class verifyMeAddress
                 ]);
         Session::flash('alert', 'success');
         Session::flash('message', 'Candidate Created Successfully');
-        return back()->with([
-            'states' => States::get()
-            ]);
+        return back();
     }
 
 
@@ -168,30 +166,7 @@ class verifyMeAddress
         return back()->withInput($request->all());
     }
 
-
-    public function storeStates()
-    {
-        $states = File::get(base_path('app/services/states.json'));
-        $states = json_decode($states, true);
-        $states = States::get();
-        if(count($states) > 5) return;
-        foreach($states as $state)
-        {
-           $ss = States::create([
-                'name' => $state['state']
-            ]);
-            if($ss)
-            foreach($state['lgas'] as $lgs)
-            {
-                Lga::create([
-                    'state_id' => $ss->id,
-                    'name' => $lgs
-                ]);
-            }
-        }
-
-
-    }
+   
 
 
 }
