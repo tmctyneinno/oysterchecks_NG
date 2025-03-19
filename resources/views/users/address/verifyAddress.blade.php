@@ -197,6 +197,7 @@
                                             @if($input->name == "state")
                                             <select class="form-control " id="select-state"  name="state" value="{{old('state')}}" id="state" autocomplete="off">
                                             {{-- <datalist id="states"> --}}
+                                                <option value="" > Select State</option>
                                              @foreach ($states as $item)
                                              <option value="{{$item->name}}" data-lga="{{$item->id}}"> {{$item->name}}</option>
                                              @endforeach
