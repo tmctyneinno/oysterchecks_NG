@@ -37,7 +37,9 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')){
             URL::forceScheme('https');
         }
+
         //
+        // if(Schema::hasTable('sidebars')){
         view()->composer('*', function($view){
             if (Auth::check()) {
                 $data['notify'] = Notification::where(['user_id' => auth()->user()->id])->latest()->take(4)->get();
@@ -66,5 +68,6 @@ class AppServiceProvider extends ServiceProvider
         $data['aml'] = Verification::where('report_type', '=', 'aml')->get();
         
         view::share($data);
+    // }
     }
 }

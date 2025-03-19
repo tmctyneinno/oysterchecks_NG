@@ -23,6 +23,7 @@ use App\Traits\sandbox;
 use App\Models\Wallet;
 use App\Services\Base;
 use App\Services\verifyMeAddress;
+use Vinkla\Hashids\Facades\Hashids;
 
 class AddressController extends Controller
 {
@@ -42,14 +43,17 @@ private $token;
 
   public function AddressIndex($slug)
   {
+    
     $data = $this->generateAddressReport($slug);
     return view('users.address.index', $data); 
   }
 
   public function showCreateCandidate($slug)
   {
+
    
     $data = $this->generateCreateCandidateData($slug);
+
     return view('users.address.createAddressCandidate', $data);
   }
 
@@ -85,10 +89,11 @@ private $token;
     if($slug == ' '){
       $slug = $req->slug;
     }
-   
+    // dd($slug);
     // $token = $this->base->generateToken();
     // dd($token);
-    $data = $this->generateAddressReportVerify(decrypt($slug));
+
+    $data = $this->generateAddressReportVerify($slug);
 
     $data['service_ref'] = $service_ref;
     $data['states'] = States::get();
@@ -110,12 +115,20 @@ private $token;
 
 
   public function ViewCandidateAddresses($verification_id){
-    $verification = AddressVerificationDetail::where('address_verification_id', decrypt($verification_id))->get();
+
+
+    $id = Hashids::connection('verify')->decode($verification_id)[0];
+    $verification = AddressVerificationDetail::where('address_verification_id', $id)->get();
+    foreach($verification as $verify)
+    {
+      $verify->hashid = encodeId($verify->id);
+    }
     // dd(decrypt($verification_id));
     $data['candidate'] =  $verification[0]->addressVerification->first_name . $verification[0]->addressVerification->last_name;
-    $data['verified'] = AddressVerificationDetail::where(['address_verification_id' => decrypt($verification_id), 'status' => 'completed'])->get();
-    $data['not_verified']  = AddressVerificationDetail::where(['address_verification_id' => decrypt($verification_id), 'status' => 'pending'])->get();
+    $data['verified'] = AddressVerificationDetail::where(['address_verification_id' => $id, 'status' => 'completed'])->get();
+    $data['not_verified']  = AddressVerificationDetail::where(['address_verification_id' => $id, 'status' => 'pending'])->get();
     $data['verification'] = $verification;
+
     return view('users.address.verifications', $data);
   }
   public function verificationReport($slug, $addressId)
@@ -132,9 +145,9 @@ private $token;
 
 
     $slug = Verification::where('slug', $slug)->first();
-
-   
-    $address_verification = AddressVerificationDetail::where(['id' => decrypt($addressId)])->first();
+    
+   $addressId = decodeId($addressId);
+    $address_verification = AddressVerificationDetail::where(['id' => $addressId])->first();
     $address_verification->candidate = json_decode($address_verification->candidate,true);
     if ($address_verification->business != null) $address_verification->business = json_decode($address_verification->business);
     if ($address_verification->guarantor != null) $address_verification->guarantor = json_decode($address_verification->guarantor, true);

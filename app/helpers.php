@@ -1,6 +1,7 @@
 <?php
 use App\Models\User;
 use App\Models\Client;
+use Vinkla\Hashids\Facades\Hashids;
 
 function moneyFormat($data, $currency){
     $data = number_format($data);
@@ -98,6 +99,17 @@ function crypto_rand_secure($min, $max)
 
         }
     }
+
+
+ function encodeId($id)
+ {
+   return Hashids::connection('verify')->encode($id);
+ }
+ 
+  function decodeId($id)
+ {
+    return Hashids::connection('verify')->decode($id)[0];
+ }
 
 
 

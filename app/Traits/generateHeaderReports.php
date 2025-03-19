@@ -13,6 +13,7 @@ use App\Models\AddressVerification;
 use App\Models\AddressVerificationDetail;
 use App\Models\States;
 use App\Traits\sandbox;
+use Vinkla\Hashids\Facades\Hashids;
 
 Trait generateHeaderReports
 {
@@ -51,9 +52,15 @@ public function generateHeaderReports($slug){
         $user = User::where('id', auth()->user()->id)->first();
         $slug = Verification::where(['slug' => $slug])->first();
         $address_verifications = AddressVerification::where(['user_id' => $user->id, 'verification_id'=>$slug->id, 'is_sandbox' => $this->sandbox()])->latest()->get();
+   
+        foreach($address_verifications as $address) 
+        {
+            $address->hashid = encodeId($address->id);
+        }
         // dd($address_verifications[0]?->user_id);
 
         $data['verifications'] = $address_verifications;
+        $slug->hashid =  encodeId($slug->id);
         $data['slug'] = $slug;
         if(count($address_verifications) > 0){
         $data['address_verifications'] = $address_verifications->load('addressVerificationDetail');
@@ -68,6 +75,7 @@ public function generateHeaderReports($slug){
     public function generateCreateCandidateData($slug){
         $user = User::where('id', auth()->user()->id)->first();
         $slug = Verification::where(['slug' => $slug])->first();
+        $slug->hashid = encodeId($slug->id);
         $data['slug'] = $slug;
         // $data['success'] = AddressVerification::where(['status'=>'successful', 'verification_id'=>$slug->id, 'user_id'=> $user->id])->get();
         // $data['failed'] = AddressVerification::where(['status'=>'failed', 'verification_id'=>$slug->id, 'user_id'=> $user->id])->get();
@@ -81,6 +89,7 @@ public function generateHeaderReports($slug){
     public function generateAddressReportVerify($slug){
         $user = User::where('id', auth()->user()->id)->first();
         $slug = Verification::where(['slug' => $slug])->first();
+        $slug->hashid = encodeId($slug->id);
         $data['slug'] = $slug;
         // $data['success'] = AddressVerification::where(['status'=>'successful', 'verification_id'=>$slug->id, 'user_id'=> $user->id])->get();
         // $data['failed'] = AddressVerification::where(['status'=>'failed', 'verification_id'=>$slug->id, 'user_id'=> $user->id])->get();
@@ -90,6 +99,8 @@ public function generateHeaderReports($slug){
         // $data['logs'] = AddressVerification::where(['user_id' => $user->id, 'verification_id'=>$slug->id])->latest()->get();
     return $data;   
     }
+
+  
 }
 
 

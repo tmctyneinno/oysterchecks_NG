@@ -19,7 +19,7 @@
         "laravelcollective/html": "^6.2",
         "spatie/laravel-webhook-client": "^3.1",
         "unicodeveloper/laravel-paystack": "^1.0",
-        "vinkla/hashids": "9.1.0"
+        "vinkla/hashids": "^9.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
