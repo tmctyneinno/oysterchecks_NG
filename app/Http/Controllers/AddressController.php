@@ -138,6 +138,7 @@ private $token;
   public function verificationReport($slug, $addressId)
   {
 
+    dd($addressId);
     $slug = explode('-', $slug)['0'];
   
     if($slug == 'guarantor')
