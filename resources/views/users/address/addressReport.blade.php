@@ -177,10 +177,10 @@
                             </div>
                             @endif
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Initiated At :</span> {{Auth()->user()->name}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Initiated by :</span> {{Auth()->user()->name}}</div>
                             </div>
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Estimated Turn Around Time :</span> 3 days</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Estimated Turn Around Time :</span> 72 Hours</div>
                             </div>
                             <div class="col-12">
                                 <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Task Description :</span> {{$address_verification->description}}</div>

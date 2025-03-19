@@ -99,7 +99,7 @@
                                               <select class="form-control" name="slug" onChange="document.getElementById('verify').submit()" >
                                              <option> Select Verification Type</option>
                                                 @foreach ($address as $addresses)
-                                                <option value="{{encrypt($addresses->slug)}}"  @if($addresses->slug !== $slug->name)  @endif> 
+                                                <option value="{{$addresses->slug}}"  @if($addresses->slug !== $slug->name)  @endif> 
                                                      <a class="dropdown-item tn btn-info">{{ucfirst($addresses->slug)}} Address Verifications</a> 
                                                     </option>
                                                 @endforeach

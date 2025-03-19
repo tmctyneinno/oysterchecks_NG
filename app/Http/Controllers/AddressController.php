@@ -89,7 +89,7 @@ private $token;
     if($slug == ' '){
       $slug = $req->slug;
     }
-    // dd($slug);
+    //  dd($slug);
     // $token = $this->base->generateToken();
     // dd($token);
 
