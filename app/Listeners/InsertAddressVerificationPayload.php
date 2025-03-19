@@ -55,6 +55,7 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'notes'=> isset($res['data'])?json_encode($res['data']['notes']):'',
             'is_flagged'=> isset($res['data'])?$res['data']['isFlagged']:1,
             'subject_consent' =>  true,
+            'agent' => "null",
             'agent_submitted_longitude' => isset($res['data'])?$res['data']['agentSubmittedLongitude']:'',
             'agent_submitted_latitude' => isset($res['data'])?$res['data']['agentSubmittedLatitude']:'',
             'report_geolocation_url' => isset($res['data'])?$res['data']['reportGeolocationUrl']:'',
