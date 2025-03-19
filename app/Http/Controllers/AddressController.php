@@ -205,7 +205,7 @@ private $token;
 
   public function storeStates()
   {
-      $states = File::get(base_path('app/services/states.json'));
+      $states = File::get(base_path('app/Services/States.json'));
       $states = json_decode($states, true);
       $states = States::get();
       if(count($states) > 5) return;
