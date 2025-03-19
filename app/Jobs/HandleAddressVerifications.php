@@ -29,9 +29,13 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
     {
 
     
-        if(!empty($this->webhookCal)){
+        // dd($this->webhookCall);
         $webhookCallData = json_decode($this->webhookCall,true)['payload'];
+        if(!empty($webhookCallData)){
+        // dd($webhookCallData['data']['customerReference']);
         if(in_array($webhookCallData['data']['customerReference'],$webhookCallData) ){
+            
+           
         // dd($webhookCallData['data']);
         // die();
         //  logger($webhookCallData);
