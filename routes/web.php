@@ -32,17 +32,17 @@ use App\Http\Controllers\EmployeeRefController;
 
 
 
-Route::get('pdf/', function(){
+// Route::get('pdf/', function(){
 
-    return view('pdf');
-});
+//     return view('pdf');
+// });
 
-
+require __DIR__.'/landing.php';
 
 
 require __DIR__.'/auth.php';
 Route::get('/logouts', [HomeController::class, 'Logouts'])->name('logouts');
-require __DIR__.'/landing.php';
+
 
 // Route::get('email', [LandingPages::class, 'email'])->name('email');
 Route::get('/user/verification/employee-reference/questions/{user_id}/{candidate_verification_id}/', [EmployeeRefController::class,'RedirectToQuestions'])->name('candidate.employer-reference.questions');
