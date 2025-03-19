@@ -80,6 +80,7 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
             // $get_verification->update(['status' => $webhookCallData['data']['task_status']]);
     
         }
+        return true;
     
     }
 }

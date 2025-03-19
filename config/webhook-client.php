@@ -18,7 +18,7 @@ return [
             /*
              * The name of the header containing the signature.
              */
-            'signature_header_name' => 'X-Verifyme-Signature',
+            'signature_header_name' => 'x-verifyme-signature',
 
             /*
              *  This class will verify that the content of the signature header is valid.
@@ -57,6 +57,7 @@ return [
              * This should be set to a class that extends \Spatie\WebhookClient\Jobs\ProcessWebhookJob.
              */
             'process_webhook_job' => \App\Jobs\HandleAddressVerifications::class,
+            'log_webhook_calls' => true,
         ],
     ],
 ];
