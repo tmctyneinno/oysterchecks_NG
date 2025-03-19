@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Client;
 use App\Traits\generateHeaderReports;
+use Illuminate\Support\Str;
 use App\Traits\GenerateRef;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
@@ -59,7 +60,7 @@ private $token;
 
   public function createCandidate(Request $request, $slug)
   {
-    $slug = Verification::where('slug', decrypt($slug))->first();
+    $slug = Verification::where('slug', $slug)->first();
     $valid = Validator::make($request->all(), [
       'first_name' => 'required|string',
       'middle_name' => 'nullable|string',

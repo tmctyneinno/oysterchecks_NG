@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
  @section('content')
  <div class="page-content">
@@ -56,7 +57,7 @@
                      <div class="card-header">
                          <h4 class="card-title">Create a Candidate</h4>
                      </div>
-                     <form method="post" action="{{route('createCandidate',encrypt($slug->slug))}}" enctype="multipart/form-data">
+                     <form method="post" action="{{route('createCandidate',$slug->slug)}}" enctype="multipart/form-data">
                          @csrf
                          <div class="card-body bootstrap-select-1">
                              <div class="row">
