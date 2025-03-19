@@ -208,7 +208,6 @@ private $token;
       $states = File::get(base_path('app/Services/states.json'));
       $states = json_decode($states, true);
       $getState = States::get();
-      dd($getState);
       if(count($getState) > 5) return $states;
       foreach($states as $state)
       {
@@ -224,6 +223,7 @@ private $token;
               ]);
           }
       }
+      dd($ss);
 
       return $states;
 
