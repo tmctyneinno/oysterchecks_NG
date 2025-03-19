@@ -110,8 +110,7 @@ function crypto_rand_secure($min, $max)
  {
 
     $hashid = Hashids::connection('verify')->decode($id);
-    dd($hashid);
-    if(in_array($hashid[0], $hashid)) return $hashid[0];
+    if(!empty($hashid)) return $hashid[0];
  }
 
 
