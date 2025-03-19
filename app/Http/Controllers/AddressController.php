@@ -47,7 +47,7 @@ private $token;
   {
     
     
-  $this->storeStates();
+  return $this->storeStates();
     $data = $this->generateAddressReport($slug);
     return view('users.address.index', $data); 
   }
@@ -208,7 +208,8 @@ private $token;
       $states = File::get(base_path('app/Services/states.json'));
       $states = json_decode($states, true);
       $getState = States::get();
-      if(count($getState) > 5) return;
+      dd($getState);
+      if(count($getState) > 5) return $states;
       foreach($states as $state)
       {
          $ss = States::create([
@@ -224,6 +225,7 @@ private $token;
           }
       }
 
+      return $states;
 
   }
 }
