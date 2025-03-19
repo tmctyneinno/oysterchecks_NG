@@ -217,14 +217,13 @@ private $token;
           if($ss)
           foreach($state['lgas'] as $lgs)
           {
-              Lga::create([
+             $ssd = Lga::create([
                   'state_id' => $ss->id,
                   'name' => $lgs
               ]);
           }
       }
-      dd($ss);
-
+      dd($ssd);
       return $states;
 
   }
