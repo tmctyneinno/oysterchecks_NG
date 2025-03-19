@@ -28,7 +28,7 @@ class verifyMeAddress
 
     public function createCandidate($request, $slug)
     {
-      $this->storeStates();
+         $this->storeStates();
         $ref = $this->GenerateRef();
         AddressVerification::create([
                   'verification_id' => $slug->id,
@@ -173,6 +173,8 @@ class verifyMeAddress
     {
         $states = File::get(base_path('app/services/states.json'));
         $states = json_decode($states, true);
+        $states = States::get();
+        if(count($states) > 5) return;
         foreach($states as $state)
         {
            $ss = States::create([
@@ -187,6 +189,7 @@ class verifyMeAddress
                 ]);
             }
         }
+
 
     }
 
