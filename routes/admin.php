@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\{AdminBusinessController, AdminAddressController,
   
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin', 'auth']], function() { 
     Route::get('/', [AdminController::class, 'Index'])->name('index');
-    Route::get('/index', [AdminController::class, 'Index'])->name('index');
+    Route::get('/index', [AdminController::class, 'Index'])->name('home');
     Route::get('/identity/{slug}', [IdentityController::class, 'getVerify'])->name('verify'); 
     Route::get('/identities/{slug}/{verificationId}', [IdentityController::class, 'verificationReport'])->name('showIdentityReport');
     Route::get('/business/{slug}', [BusinessController::class, 'businessIndex'])->name('businessIndex');
