@@ -119,17 +119,6 @@ class HomeController extends Controller
             $user = auth()->user();
             $tax = (7.5*$required_data['customAmount'])/100;
             $trans_reference = generateReference(24);
-           Transaction::create([
-                'user_id' => auth()->user()->id,
-                'ref' => $trans_reference,
-                'type' => 'credit',
-                'purpose' => 'wallet top-up',
-                'total_amount_payable' => intval($required_data['customAmount']) + $tax,
-                'amount' => intval($required_data['customAmount']),
-                'tax' => $tax,
-                'status' => 'processing',
-                'payment_method' => $required_data['paymentMethod']
-            ]);
             $funds =  FundRequest::create([
                 'reference' => generateReference(24),
                  'user_id' => $user->id,
@@ -141,6 +130,17 @@ class HomeController extends Controller
 
         }
      if($funds){
+        Transaction::create([
+            'user_id' => auth()->user()->id,
+            'ref' => $trans_reference,
+            'type' => 'credit',
+            'purpose' => 'wallet top-up',
+            'total_amount_payable' => intval($required_data['customAmount']) + $tax,
+            'amount' => intval($required_data['customAmount']),
+            'tax' => $tax,
+            'status' => 'processing',
+            'payment_method' => $required_data['paymentMethod']
+        ]);
         return response()->json(['success'=> true, 'statusCode'=> 201, 'message' => 'Fund Request Successful', 'data' => $funds], 201);
         //  Session::flash('alert', 'success');
         //  Session::flash('message', 'Fund request send, your account will be credited once payment is approved');

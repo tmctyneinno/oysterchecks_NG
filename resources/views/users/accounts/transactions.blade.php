@@ -90,6 +90,8 @@
                                     <th class="px-2 py-3">Transaction Reference</th>
                                     <th class="px-2 py-3">Status</th>
                                     <th class="px-2 py-3">Amount (&#x20A6;)</th>
+                                    <th class="px-2 py-3">Tax (&#x20A6;)</th>
+                                    <th class="px-2 py-3">Total (&#x20A6;)</th>
                                     <th class="px-2 py-3">Transaction Type</th>
                                     <th class="px-2 py-3">Transaction Date</th>
                                     <th class="px-2 py-3">Purpose</th>
@@ -117,6 +119,9 @@
                                         </a>
                                     </td>
                                     <td class="px-0 py-0"><a class="table-link" href="{{route('user.transaction', $trans->id)}}"><div class="px-2 py-3">{{moneyFormat($trans->amount, 'NG')}}</div></a></td>
+                                    <td class="px-0 py-0"><a class="table-link" href="{{route('user.transaction', $trans->id)}}"><div class="px-2 py-3">{{moneyFormat($trans->tax, 'NG')}}</div></a></td>
+                                    <td class="px-0 py-0"><a class="table-link" href="{{route('user.transaction', $trans->id)}}"><div class="px-2 py-3">{{moneyFormat($trans->total_amount_payable, 'NG')}}</div></a></td>
+
                                     <td class="px-0 py-0"><a class="table-link" href="{{route('user.transaction', $trans->id)}}"><div class="px-2 py-3">@if($trans->type == 'credit')
                                         <span class="badge badge-soft-success rounded-circle me-2 px-1 py-1 fw-bold">
                                             <i class="mdi mdi-arrow-up font-10"></i>
