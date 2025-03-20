@@ -119,7 +119,7 @@ class HomeController extends Controller
             $user = auth()->user();
             $tax = (7.5*$required_data['customAmount'])/100;
             $trans_reference = generateReference(24);
-            $funds = Transaction::create([
+           Transaction::create([
                 'user_id' => auth()->user()->id,
                 'ref' => $trans_reference,
                 'type' => 'credit',
@@ -130,14 +130,14 @@ class HomeController extends Controller
                 'status' => 'processing',
                 'payment_method' => $required_data['paymentMethod']
             ]);
-            // $funds =  FundRequest::create([
-            //     'reference' => generateReference(24),
-            //      'user_id' => $user->id,
-            //      'amount' => $required_data['customAmount'],
-            //      'tax' => $tax,
-            //      'total_amount' => $tax + $required_data['customAmount'],
-            //      'payment_method' => $required_data['paymentMethod']
-            //  ]);
+            $funds =  FundRequest::create([
+                'reference' => generateReference(24),
+                 'user_id' => $user->id,
+                 'amount' => $required_data['customAmount'],
+                 'tax' => $tax,
+                 'total_amount' => $tax + $required_data['customAmount'],
+                 'payment_method' => $required_data['paymentMethod']
+             ]);
 
         }
      if($funds){
