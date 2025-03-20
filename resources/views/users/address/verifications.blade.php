@@ -210,6 +210,7 @@
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seeMore" style="">
                                             {{-- <a class="dropdown-item" href="#">Copy Reference Id</a> --}}
                                                 {{-- @if($address->addressVerificationDetail()->exists()) --}}
+                                                {{dd($verifications)}}
                                                 <a class="dropdown-item " style="background:; color:#000; border: 1px solid #2e5ab7 "  href="{{route('showAddressReport',['slug' => $verifications->type, 'addressId' => $verifications->hashid ] )}}">View Verification Report</a>
                                                 {{-- @else --}}
                    
