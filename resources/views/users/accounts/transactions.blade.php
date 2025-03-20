@@ -140,7 +140,6 @@
                 </div>
             </div> <!-- end col -->
 
-
             <div class="modal fade" id="fundWallet" tabindex="-1" aria-labelledby="fundWalletLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">

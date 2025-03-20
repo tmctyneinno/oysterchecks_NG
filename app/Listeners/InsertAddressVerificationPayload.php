@@ -78,7 +78,7 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'business_type' => isset($res['data'])?$res['data']['businessType']:'',
             'business_id' => isset($res['data'])?$res['data']['businessId']:'',
             'yv_user_id' => isset($res['data'])?$res['data']['userId']:'',
-            'type' => isset($res['data'])?$res['data']['type']:'',
+            'type' =>  $res['type'],
             'yv_id' => isset($res['data'])?$res['data']['id']:'',
             'links' => isset($res['data'])?json_encode($res['links']):'',
             'expected_report_date' => Carbon::now()->addDays(4)

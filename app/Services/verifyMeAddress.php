@@ -105,7 +105,7 @@ class verifyMeAddress
           $res = json_decode($resp,true);
           if($res['customerReference'])
           {
-            $res['type'] = $request->slug;
+            $res['type'] = 'individual';
             event(new AddressVerificationCreated($res, $address_verification));
           }
           Session::flash('alert', 'success');
@@ -149,7 +149,7 @@ class verifyMeAddress
             $res = json_decode($resp,true);
             if($res['customerReference'])
             {
-            $res['type'] = $request->slug;
+            $res['type'] = 'guarantor';
             event(new AddressVerificationCreated($res, $address_verification));
             Session::flash('alert', 'success');
             Session::flash('message', 'Address successfully sent for verifications');
