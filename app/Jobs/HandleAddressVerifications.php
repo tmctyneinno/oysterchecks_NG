@@ -27,11 +27,7 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
      */
     public function handle()
     {
-
-    
-        dd('asas');
         $webhookCallData = json_decode($this->webhookCall,true)['payload'];
-        dd($webhookCallData );
         if(!empty($webhookCallData)){
             $webhookCallData = $webhookCallData['body'];
         if(in_array($webhookCallData['event'],$webhookCallData) ){
@@ -71,7 +67,6 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
             $get_verification_details->revalidation_date = $webhookCallData['data']['address']['requestedAt'];
             $get_verification_details->is_flagged = $webhookCallData['data']['address']['isLive'];
             $get_verification_details->save();
-
             $get_verification = AddressVerification::where('id', $get_verification_details->address_verification_id)->first();
             $get_verification->update(['status' => $webhookCallData['data']['address']['status']['state'] == 'COMPLETE'?'COMPLETED':$webhookCallData['data']['address']['status']['state']]);
     
