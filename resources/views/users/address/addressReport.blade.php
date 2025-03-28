@@ -513,15 +513,14 @@
                                                     </div>
                                                     @else
                                                     @foreach($address_verification->notes as $note)
-                                                    {{dd( $note)}}
                                                     <div class="col-12 py-2">
                                                         <div class="media">
                                                             <div class="me-3 align-self-center">
                                                                 <i class="far fa-sticky-note font-20"></i>
                                                             </div>
                                                             <div class="media-body align-self-center">
-                                                                <h6 class="m-0 font-15">@if(isset($note['note'])) {{$note['note']}} @else {{$note['comment']}} @endif </h6>
-                                                                <p class="mb-0 text-muted font-13">@if(isset($note['createdAt'])){{$note['createdAt']}} @else {{$note['firstname'] .' '.$note['lastname']}} @endif</p>
+                                                                <h6 class="m-0 font-15">@if(is_array($note['note'])) {{$note['note']}} @else {{$note['comment']}} @endif </h6>
+                                                                <p class="mb-0 text-muted font-13">@if(is_array($note['createdAt'])){{$note['createdAt']}} @else {{$note['firstname'] .' '.$note['lastname']}} @endif</p>
                                                             </div>
                                                             <!--end media body-->
                                                         </div>
