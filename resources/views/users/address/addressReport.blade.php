@@ -513,6 +513,7 @@
                                                     </div>
                                                     @else
                                                     @foreach($address_verification->notes as $note)
+                                                    {{dd( $note)}}
                                                     <div class="col-12 py-2">
                                                         <div class="media">
                                                             <div class="me-3 align-self-center">
