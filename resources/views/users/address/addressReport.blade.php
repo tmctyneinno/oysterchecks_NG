@@ -519,8 +519,8 @@
                                                                 <i class="far fa-sticky-note font-20"></i>
                                                             </div>
                                                             <div class="media-body align-self-center">
-                                                                <h6 class="m-0 font-15">{{$note['note']}} </h6>
-                                                                <p class="mb-0 text-muted font-13">{{$note['createdAt']}}</p>
+                                                                <h6 class="m-0 font-15">{{isset($note['note'])?$note['note']:$note['comment']}} </h6>
+                                                                <p class="mb-0 text-muted font-13">{{isset($note['createdAt'])?$note['createdAt']:$note['firstname'] .' '.$note['lastname']}}</p>
                                                             </div>
                                                             <!--end media body-->
                                                         </div>
