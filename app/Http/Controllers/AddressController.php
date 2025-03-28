@@ -47,7 +47,7 @@ private $token;
   {
     
     
-   $this->storeStates();
+  //  $this->storeStates();
     $data = $this->generateAddressReport($slug);
     return view('users.address.index', $data); 
   }
