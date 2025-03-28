@@ -403,12 +403,13 @@
 
                                                             @if(isset($address_verification->address['buildingNumber']))
                                                             <div style="text-decoration:none; overflow:hidden">
-                                                            <div id="embedded-map-display" style="height:100%; width:100%;max-width:100%;">
+                                                           
                                                             <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q={{$address_verification->address['buildingNumber']}}+{{$address_verification->address['street']}}+{{$address_verification->address['city']}}+{{$address_verification->address['lga']}},&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
                                                             </div><a class="my-codefor-googlemap" href="" id="make-map-data"> </a>
                                                             </div>
                                                             @else 
-                                                            <iframe src="{{$address_verification->map_address_url}}" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                                            <div id="embedded-map-display" style="height:100%; width:100%;max-width:100%;">
+                                                            <iframe src="{{$address_verification->map_address_url}}.&output=embed" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                                                             </iframe> 
                                                             @endif
                                                         </div>
@@ -475,7 +476,11 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-lg-12 text-center align-self-center">
-                                                    {{-- <img src="{{isset($image['filePath'])}}" alt="" class="img-fluid" width="{{$image['width']}}" height="{{$image['height']}}"> --}}
+                                                    @if(isset($image['filePath']))
+                                                    <img src="{{$image['filePath']}}" alt="" class="img-fluid" width="{{$image['width']}}" height="{{$image['height']}}">
+                                                    @else 
+                                                    <img src="{{$image}}" alt="" class="img-fluid" width="500" height="500">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -515,12 +520,8 @@
                                                     @foreach($address_verification->notes as $note)
                                                     <div class="col-12 py-2">
                                                         <div class="media">
-                                                            <div class="me-3 align-self-center">
-                                                                <i class="far fa-sticky-note font-20"></i>
-                                                            </div>
                                                             <div class="media-body align-self-center">
-                                                                <h6 class="m-0 font-15">@if(is_array($note)) {{$note}} @else {{$note}} @endif </h6>
-                                                                <p class="mb-0 text-muted font-13">@if(is_array($note)){{$note['createdAt']}} @else {{$note .' '.$note}} @endif</p>
+                                                                <span>@if(is_array($note)) {{$note}} @else  {{$note}} @endif </span>
                                                             </div>
                                                             <!--end media body-->
                                                         </div>
