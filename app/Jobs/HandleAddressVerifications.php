@@ -33,10 +33,8 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
         $webhookCallData = json_decode($this->webhookCall,true)['payload'];
         if(!empty($webhookCallData)){
             $webhookCallData = $webhookCallData['body'];
-         
         if(in_array($webhookCallData['event'],$webhookCallData) ){
-         
-            $get_verification_details = AddressVerificationDetail::where('reference_id', $webhookCallData['data']['customerReference'])->firstorfail();
+            $get_verification_details = AddressVerificationDetail::where('reference_id', $webhookCallData['data']['customerReference'])->first();
             if ($get_verification_details) {
                 // dd($webhookCallData['data']['address']);
             $get_verification_details->agent = json_encode($webhookCallData['data']['address']['agentComment']);
@@ -78,7 +76,6 @@ class HandleAddressVerifications extends SpatieProcessWebhookJob
     
         }
         }
-    
     }
     }
 }
