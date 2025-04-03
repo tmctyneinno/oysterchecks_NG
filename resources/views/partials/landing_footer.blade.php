@@ -63,7 +63,7 @@
                         <div class="col-12">
                             <div class="footer-nav-wrap text-white">
                                 <h4 class="text-white">GET IN TOUCH</h4>
-                                <h5 style="color:#fff">Locations</h5>
+                                {{-- <h5 style="color:#fff">Locations</h5> --}}
                                 <ul class="get-in-touch-list">
                                     <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 
                                         85 Great Portland Street, 
