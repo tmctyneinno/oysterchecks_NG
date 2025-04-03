@@ -66,10 +66,9 @@
                                 <h5 style="color:#fff">Locations</h5>
                                 <ul class="get-in-touch-list">
                                     <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 
-                                        International House 24 Holborn Viaduct</br> 
-                                        London EC1A 2BN</br> 
-                                        United Kingdom</br> 
-                                           +44 74665 88324, </br> 
+                                        85 Great Portland Street, <br>
+                                        First Floor, London W1W 7LT,
+                                        <br> United Kingdom</br> 
                                         </li>
                                         
                                         <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 

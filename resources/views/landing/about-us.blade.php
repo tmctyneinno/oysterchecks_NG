@@ -1,10 +1,6 @@
 @extends('layouts.landing')
-
 @section('content')
-
-
 <div class="main">
-
     <!--header section start-->
     <section class="hero-section ptb-100 gradient-overlay"
              style="background: url('{{asset('/landing_assets/img/header-bg-5.jpg')}}')no-repeat center center / cover">
@@ -27,11 +23,6 @@
         </div>
     </section>
     <!--header section end-->
-
-   
-    <!--promo section end-->
-
-    <!--about us section start-->
     <section class="about-us-section ptb-100">
         <div class="container">
             <div class="row justify-content-between align-items-center">
