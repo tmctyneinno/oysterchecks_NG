@@ -85,11 +85,12 @@ class verifyMeAddress
               Session::flash('message', $valid->errors()->first());
               return redirect()->back()->withErrors($valid)->withInput($request->all());
             }
+            $phone = preg_replace('/^0/','234',$address_verification->phone);
             $body = [
                 'applicant' => [
                     'firstname' => $address_verification->first_name,
                     'lastname'=> $address_verification->last_name,
-                    'phone'=> $address_verification->phone,
+                    'phone'=> $phone,
                     'dob'=> $address_verification->dob,
                     'gender'=> $address_verification->gender,
                            ],

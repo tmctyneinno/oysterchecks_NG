@@ -98,7 +98,6 @@ private $token;
     // dd($token);
 
     $data = $this->generateAddressReportVerify($slug);
-
     $data['service_ref'] = $service_ref;
     $data['states'] = States::get();
     $data['address'] = Verification::where('report_type', '=', 'address')->get();
@@ -112,7 +111,6 @@ private $token;
       Session::flash('message', 'Bad request, refresh page');
       return redirect()->back()->withInput($request->all());
     }
-
       return $this->verifyMeAddress->submitAddressVerify($request,$service_ref);
 
   }

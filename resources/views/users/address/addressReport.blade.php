@@ -399,8 +399,6 @@
                                                     <div class="col-12 py-4 border-top pb-3">
                                                         <div class="fw-semibold m-0 font-15 mb-2">Address Location : </div>
                                                         <div class="w-100 overflow-hidden rounded">
-                                                           
-
                                                             @if(isset($address_verification->address['buildingNumber']))
                                                             <div style="text-decoration:none; overflow:hidden">
                                                            
