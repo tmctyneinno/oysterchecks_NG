@@ -4,7 +4,7 @@
     <div class="footer-top gradient-bg">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="row footer-top-wrap">
                         <div class="col-md-4 col-sm-6">
                             <div class="footer-nav-wrap text-white">
@@ -37,7 +37,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-2 col-sm-6">
                             <div class="footer-nav-wrap text-white">
                                 <h4 class="text-white">Quick Links</h4>
                                 <ul class="nav flex-column">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="row footer-top-wrap">
                         <div class="col-12">
                             <div class="footer-nav-wrap text-white">
@@ -66,21 +66,21 @@
                                 <h5 style="color:#fff">Locations</h5>
                                 <ul class="get-in-touch-list">
                                     <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 
-                                        85 Great Portland Street, <br>
+                                        85 Great Portland Street, 
                                         First Floor, London W1W 7LT,
-                                        <br> United Kingdom</br> 
+                                         United Kingdom
                                         </li>
                                         
                                         <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span> 
                                             Africa:  Nigeria</br> 
-                                            2nd Floor, 1 Adeola Adeoye Street,</br> 
-                                            Off Toyin Street,</br> 
-                                            Ikeja, Lagos Nigeria </br> 
+                                            2nd Floor, 1 Adeola Adeoye Street,
+                                            Off Toyin Street,
+                                            Ikeja, Lagos Nigeria
                                            +234- 915-341-4314 </li>
                                         <li class="d-flex align-items-center py-2"><span class="fas fa-map-marker-alt mr-2"></span>
                                             Europe - Ireland</br> 
-                                            21 Gillabbey Terrace, Gillabbey Street,</br> 
-                                            Cork, T12 KPN4</br> 
+                                            21 Gillabbey Terrace, Gillabbey Street, 
+                                            Cork, T12 KPN4
                                             Republic of Ireland</br> 
                                              +353 877123968
                                              </li>
