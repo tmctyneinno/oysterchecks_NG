@@ -128,22 +128,22 @@ class verifyMeAddress
               Session::flash('message', $valid->errors()->first());
               return redirect()->back()->withErrors($valid)->withInput($request->all());
             }
-
+            $phone = preg_replace('/^0/','234',$request->phone);
             $body = [
               "description" => "Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name,
               'applicant' => [
                 'firstname' => $request->first_name,
                 'lastname'=> $request->last_name,
-                'phone'=> $request->phone,
+                'phone'=> $phone??$request->phone,
                 'dob'=> $request->dob,
                 'gender'=> $request->gender,
                        ],
-                       "street" => $request->street??"",
-                       "customerReference" => $service_ref,
-                       "lgaName" => $request->lga??"",
-                       "stateName" => $request->state??"",
-                       "landmark" => $request->landmark??"",
-                       "city" => $request->city
+              "street" => $request->street??"",
+              "customerReference" => $service_ref,
+              "lgaName" => $request->lga??"",
+              "stateName" => $request->state??"",
+              "landmark" => $request->landmark??"",
+              "city" => $request->city
             ];
             $token = $this->base->generateToken()['accessToken'];
             $resp =   $this->base->baseUrl('post', 'https://api.qoreid.com/v1/addresses', $body, $token);
