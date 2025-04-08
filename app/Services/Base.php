@@ -43,7 +43,7 @@ class Base
                 'content-type' => 'application/json',
             ]
         ]);
-
+    dd($req);
         if($req)
         {
            return json_decode($req->getBody(), true);
