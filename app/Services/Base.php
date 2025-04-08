@@ -30,6 +30,7 @@ class Base
         $secret = getenv('verifyMeSecret');
         $clientId = getenv('verifyMeClientId');
 
+        dd($clientId, $secret);
         $body = [
             'clientId' =>  $clientId,
             'secret' =>  $secret
