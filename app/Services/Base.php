@@ -27,8 +27,8 @@ class Base
     public function generateToken()
     {
         $url = 'https://api.qoreid.com/token';
-        $secret = getenv('verifyMeSecret');
-        $clientId = getenv('verifyMeClientId');
+        $secret = config('app.verifyMeSecret');
+        $clientId = config('app.verifyMeClientId');
 
         dd($clientId, $secret);
         $body = [
