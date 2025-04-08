@@ -30,7 +30,7 @@ class Base
         $secret = config('app.verifyMeSecret');
         $clientId = config('app.verifyMeClientId');
 
-        dd($clientId, $secret);
+        // dd($clientId, $secret);
         $body = [
             'clientId' =>  $clientId,
             'secret' =>  $secret
