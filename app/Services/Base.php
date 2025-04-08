@@ -29,8 +29,6 @@ class Base
         $url = 'https://api.qoreid.com/token';
         $secret = config('app.verifyMeSecret');
         $clientId = config('app.verifyMeClientId');
-
-        // dd($clientId, $secret);
         $body = [
             'clientId' =>  $clientId,
             'secret' =>  $secret
@@ -44,7 +42,7 @@ class Base
                 'content-type' => 'application/json',
             ]
         ]);
-    // dd($req);
+        
         if($req)
         {
            return json_decode($req->getBody(), true);
