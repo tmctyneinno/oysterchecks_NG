@@ -44,7 +44,8 @@ class PhoneVerification extends Model
         'advance_search',
         'requested_at',
         'last_modified_at',
-        'fee'
+        'fee',
+        'is_sandox'
     ];
 
     protected $casts = [

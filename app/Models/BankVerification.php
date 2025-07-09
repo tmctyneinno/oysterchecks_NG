@@ -33,6 +33,7 @@ class BankVerification extends Model
         'type',
         'country',
         
+        
     ];
 
     protected $casts = [

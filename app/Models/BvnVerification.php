@@ -39,7 +39,8 @@ class BvnVerification extends Model
         'all_validation_passed',
         'requested_at',
         'last_modified_at',
-        'fee'
+        'fee',
+        'is_sandox'
     ];
 
     protected $casts = [

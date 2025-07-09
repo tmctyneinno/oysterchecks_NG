@@ -10,5 +10,5 @@ class AdverseMedia extends Model
     use HasFactory;
 
     protected $table = 'adverse_media';
-    protected $fillable = ['verification_id', 'user_id', 'ref', 'query', 'reason', 'weightedScore', 'status', 'queryTags', 'queryStartDate', 'queryEndDate', 'total', 'media', 'tagsAnalysis', 'type', 'metadata', 'links'];
+    protected $fillable = ['verification_id', 'user_id', 'ref', 'query', 'reason', 'weightedScore', 'status', 'queryTags', 'queryStartDate', 'queryEndDate', 'total', 'media', 'tagsAnalysis', 'type', 'metadata', 'links', 'is_sandox'];
 }
