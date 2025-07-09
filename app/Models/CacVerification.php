@@ -45,7 +45,7 @@ class CacVerification extends Model
         'requested_at',
         'last_modified_at',
         'country',
-        'is_sandox'
+        'is_sandbox'
     ];
 
     protected $casts = [

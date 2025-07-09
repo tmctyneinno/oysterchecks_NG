@@ -42,7 +42,7 @@ class NipVerification extends Model
         'requested_at',
         'last_modified_at',
         'fee',
-        'is_sandox'
+        'is_sandbox'
     ];
 
     protected $casts = [

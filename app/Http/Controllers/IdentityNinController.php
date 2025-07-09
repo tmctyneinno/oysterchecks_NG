@@ -152,7 +152,7 @@ class IdentityNinController extends Controller
                         'all_validation_passed' => $decodedResponse['data']['allValidationPassed'],
                         'requested_at' => $decodedResponse['data']['requestedAt'],
                         'last_modified_at' => $decodedResponse['data']['lastModifiedAt'],
-                        'is_sandox' => $this->sandbox(),
+                        'is_sandbox' => $this->sandbox(),
                     ]);
 
                     IdentityVerification::create([
@@ -163,7 +163,7 @@ class IdentityNinController extends Controller
                         'first_name' => $decodedResponse['data']['firstName'],
                         'last_name' => $decodedResponse['data']['lastName'],
                         'pin' => $request->pin,
-                        'is_sandox' => $this->sandbox(),
+                        'is_sandbox' => $this->sandbox(),
                     ]);
 
                     DB::commit();

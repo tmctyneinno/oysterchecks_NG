@@ -11,5 +11,5 @@ class PepSactionVerification extends Model
 
 
     protected $table = 'pep_saction_verifications';
-    protected $fillable = ['verification_id', 'user_id', 'ref','is_sandbox', 'status', 'first_name', 'middle_name', 'last_name', 'pepList', 'sanctionList', 'is_sandox'];
+    protected $fillable = ['verification_id', 'user_id', 'ref','is_sandbox', 'status', 'first_name', 'middle_name', 'last_name', 'pepList', 'sanctionList', 'is_sandbox'];
 }

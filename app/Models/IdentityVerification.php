@@ -12,7 +12,7 @@ class IdentityVerification extends Model
  
     protected $fillable = [
 
-        'verification_id', 'ref', 'service_reference', 'user_id', 'fee', 'discount', 'status', 'first_name', 'last_name', 'pin', 'is_sandox'
+        'verification_id', 'ref', 'service_reference', 'user_id', 'fee', 'discount', 'status', 'first_name', 'last_name', 'pin', 'is_sandbox'
     ];
 
     public function user(){
