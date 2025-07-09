@@ -36,21 +36,21 @@ class BusinessController extends Controller
         if ($slug) {
             if ($slug->slug == 'cac') {
                 $data['slug'] = $slug;
-                $data['success'] = CacVerification::where(['status' => 'found', 'verification_id' => $slug->id, 'user_id' => $user->id,'is_sandbox' => $this->sandbox()])->count();
-                $data['failed'] = CacVerification::where(['status' => 'not_found', 'verification_id' => $slug->id, 'user_id' => $user->id, 'is_sandbox' => $this->sandbox()])->count();
-                $data['pending'] = CacVerification::where(['status' => 'pending', 'verification_id' => $slug->id, 'user_id' => $user->id, 'is_sandbox' => $this->sandbox()])->count();
+                $data['success'] = CacVerification::where(['status' => 'found', 'verification_id' => $slug->id, 'user_id' => $user->id])->count();
+                $data['failed'] = CacVerification::where(['status' => 'not_found', 'verification_id' => $slug->id, 'user_id' => $user->id])->count();
+                $data['pending'] = CacVerification::where(['status' => 'pending', 'verification_id' => $slug->id, 'user_id' => $user->id])->count();
                 $data['fields'] = FieldInput::where(['slug' => $slug->slug])->get();
                 $data['wallet'] = Wallet::where('user_id', $user->id)->first();
-                $data['logs'] = CacVerification::where(['user_id' => $user->id, 'verification_id' => $slug->id, 'is_sandbox' => $this->sandbox()])->latest()->get();
+                $data['logs'] = CacVerification::where(['user_id' => $user->id, 'verification_id' => $slug->id])->latest()->get();
                 return view('users.business.index', $data);
             } elseif ($slug->slug == 'tin') {
                 $data['slug'] = $slug;
-                $data['success'] = TinVerification::where(['status' => 'found', 'verification_id' => $slug->id, 'user_id' => $user->id, 'is_sandbox' => $this->sandbox()])->count();
-                $data['failed'] = TinVerification::where(['status' => 'not_found', 'verification_id' => $slug->id, 'user_id' => $user->id, 'is_sandbox' => $this->sandbox()])->count();
-                $data['pending'] = TinVerification::where(['status' => 'pending', 'verification_id' => $slug->id, 'user_id' => $user->id, 'is_sandbox' => $this->sandbox()])->count();
+                $data['success'] = TinVerification::where(['status' => 'found', 'verification_id' => $slug->id, 'user_id' => $user->id])->count();
+                $data['failed'] = TinVerification::where(['status' => 'not_found', 'verification_id' => $slug->id, 'user_id' => $user->id])->count();
+                $data['pending'] = TinVerification::where(['status' => 'pending', 'verification_id' => $slug->id, 'user_id' => $user->id])->count();
                 $data['fields'] = FieldInput::where(['slug' => $slug->slug])->get();
                 $data['wallet'] = Wallet::where('user_id', $user->id)->first();
-                $data['logs'] = TinVerification::where(['user_id' => $user->id, 'verification_id' => $slug->id, 'is_sandbox' => $this->sandbox()])->latest()->get();
+                $data['logs'] = TinVerification::where(['user_id' => $user->id, 'verification_id' => $slug->id])->latest()->get();
                 return view('users.business.index', $data);
             } else {
             }
