@@ -11,7 +11,9 @@ use App\Models\States;
 use App\Models\Verification;
 use App\Traits\sandbox;
 use App\Models\Wallet;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class verifyMeAddress 
@@ -28,7 +30,6 @@ class verifyMeAddress
 
     public function createCandidate($request, $slug)
     {
-        
         $ref = $this->GenerateRef();
         AddressVerification::create([
                   'verification_id' => $slug->id,
@@ -63,12 +64,14 @@ class verifyMeAddress
         $slug = Verification::whereSlug($request->slug)->first();
         $userWallet = Wallet::where('user_id', auth()->user()->id)->first();
         
+
         if ($userWallet->avail_balance < $slug->fee) {
             Session::flash('alert', 'error');
             Session::flash('message', 'Your walllet is too low for this transaction');
             return redirect()->back()->withInput($request->all());
         }
-
+      
+        try{
         $address_verification = AddressVerification::where('service_reference', $service_ref)->first();
        
         if ($request->slug == 'individual-address') {
@@ -104,6 +107,7 @@ class verifyMeAddress
             $token = $this->base->generateToken()['accessToken'];
           $resp =   $this->base->baseUrl('post', 'https://api.qoreid.com/v1/addresses', $body, $token);
           $res = json_decode($resp,true);
+          Log::info(['info' => $res]);
           if($res['customerReference'])
           {
             $res['type'] = 'individual';
@@ -151,12 +155,14 @@ class verifyMeAddress
             if($res['customerReference'])
             {
             $res['type'] = 'guarantor';
+             Log::info(['info' => $res]);
             event(new AddressVerificationCreated($res, $address_verification));
             Session::flash('alert', 'success');
             Session::flash('message', 'Address successfully sent for verifications');
             return back();
             }
           }else{
+            Log::info(['info' => 'Selected wrong address']);
             Session::flash('alert', 'error');
             Session::flash('message', 'This service is not available at the moment');
             return back()->withInput($request->all());
@@ -164,7 +170,12 @@ class verifyMeAddress
           }
         Session::flash('alert', 'error');
         Session::flash('message', 'Something went wrong');
-        return back()->withInput($request->all());
+
+        }catch(\Exception $e)
+        {
+         Log::info(['info' => $e->getMessage()]);
+        }
+     
     }
 
    
