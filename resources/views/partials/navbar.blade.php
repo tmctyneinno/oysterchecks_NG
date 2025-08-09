@@ -105,6 +105,10 @@
                               You are currently logged in as <b>{{ auth()?->user()?->name}}</b>  
                             </div>                                
                         </li>
+
+                        <a class="btn btn-info text-white" href="{{ route('impersonate.leave') }}">
+                          Leave &nbsp;<i class="ml-4 ti ti-arrow-right-to-arc"></i>
+                      </a>
                         
                         @endImpersonating
 
