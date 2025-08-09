@@ -106,21 +106,13 @@ private $token;
 
   public function submitAddressVerify(Request $request, $service_ref)
   {
-    try{
     if (!isset($service_ref)) {
       Session::flash('alert', 'error');
       Session::flash('message', 'Bad request, refresh page');
       return redirect()->back()->withInput($request->all());
     }
      return  $this->verifyMeAddress->submitAddressVerify($request,$service_ref);
-  }catch(\Exception $e)
-  {
-      Session::flash('alert', 'error');
-      Session::flash('message', 'Bad request, refresh page');
-      return redirect()->back()->withInput($request->all());
-  }
-
-
+  
   }
 
 

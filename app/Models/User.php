@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {
@@ -14,7 +15,7 @@ const ADMIN_VERIFIED = 1;
 const ADMIN_SUSPENDED = -1;
 const ADMIN_PENDING = 0;
 
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Impersonate;
 
     /**
      * The attributes that are mass assignable.
@@ -78,5 +79,10 @@ const ADMIN_PENDING = 0;
     public function getNameAttribute()
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+     public function canImpersonate()
+    {
+        return $this->user_type == 3;
     }
 }

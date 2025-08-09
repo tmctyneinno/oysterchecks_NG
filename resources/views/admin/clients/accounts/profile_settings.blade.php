@@ -113,7 +113,12 @@
                                     <ul class="list-unstyled personal-detail mb-0">
                                         <li class=""><i class="ti ti-medall me-2 text-secondary font-16 align-middle"></i> <b> Role </b> : {{$user->user_type == 2? 'User Account' : ''}}</li>
                                         <li class="mt-2"><i class="ti ti-pencil-alt text-secondary font-16 align-middle me-2"></i> <b> Date Registered </b> : {{date('jS F Y, h:iA', strtotime($user->created_at))}}</li>
-                                        <!-- <li class="mt-2"><i class="ti ti-briefcase text-secondary font-16 align-middle me-2"></i> <b>  </b> : {{ucwords($user->client->company_name)}}</li> -->
+                                       <li class="mt-2"><i class="ti ti-briefcase text-secondary font-16 align-middle me-2"></i> <b>  </b> 
+                                          @if($user->canBeImpersonated())
+                                        <a data-bs-toggle="tooltip" data-bs-placement="top" style="color:#fff" title="Login as this user"   href="{{ route('impersonate', $user->id) }}">
+                                            <i class="text-body ti ti-user-code" > impersonate</i>
+                                        </a>
+                                        @endif</li>
                                     </ul>
                                     <!--end list -->
                                 </div>

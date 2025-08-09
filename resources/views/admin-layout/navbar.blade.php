@@ -69,7 +69,7 @@
                             <div class="nav-link">
                                 <a class=" btn btn-sm btn-soft-primary" href="#" role="button">Admin Dashboard</a>
                             </div>                                
-                        </li>                           
+                        </li>                               
                     </ul>
                 </nav>
                 <!-- end navbar-->

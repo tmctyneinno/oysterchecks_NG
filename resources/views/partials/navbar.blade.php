@@ -97,7 +97,17 @@
                         Welcome to Oysterchecks
                        Kindly provide the requested information to fully verify your account. <a href="{{route('user.profile')}}" class=" badge bg-primary" >  Get Started </a>
                             </div>
-                        </li>                
+                            
+                        </li> 
+                        @impersonating
+                             <li class="creat-btn">
+                            <div class="nav-link">
+                              You are currently logged in as <b>{{ auth()?->user()?->name}}</b>  
+                            </div>                                
+                        </li>
+                        
+                        @endImpersonating
+
                         @endif  
                        @endif     
                     </ul>

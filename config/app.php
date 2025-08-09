@@ -170,6 +170,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
 
         /*
          * Package Service Providers...

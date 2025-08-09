@@ -43,6 +43,9 @@ require __DIR__.'/landing.php';
 require __DIR__.'/auth.php';
 Route::get('/logouts', [HomeController::class, 'Logouts'])->name('logouts');
 
+Route::middleware('web')->group(function () {
+    Route::impersonate();
+});
 
 // Route::get('email', [LandingPages::class, 'email'])->name('email');
 Route::get('/user/verification/employee-reference/questions/{user_id}/{candidate_verification_id}/', [EmployeeRefController::class,'RedirectToQuestions'])->name('candidate.employer-reference.questions');

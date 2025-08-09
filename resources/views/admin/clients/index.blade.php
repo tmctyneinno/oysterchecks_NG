@@ -46,7 +46,7 @@ use App\Models\User as User;
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Status</th>
-                                <th>Last Login</th>
+                                {{-- <th>Last Login</th> --}}
                                 <th>Login Ip</th>
                                 <th>Created On</th>
                                 <th>Action</th>
@@ -64,7 +64,7 @@ use App\Models\User as User;
                                 @endif
                                 {{-- <td> {{$client->user->activities->created_at->format('d/m/y H:I')}}</td>  --}}
                                 <td></td>
-                                <td> {{$client->user->activities->ip_address}}</td>
+                                {{-- <td> {{$client->user->activities->ip_address}}</td> --}}
                                 <td> {{$client->user->created_at}}</td>
                                 <td>
                                     <div class="dropdown kanban-main-dropdown">
