@@ -68,13 +68,13 @@
                                 <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
                                     <div class="dastone-profile-main">
                                         <div class="dastone-profile-pic">
-                                            @if($logon_user->client->logo == null)
+                                            @if($logon_user->client?->logo == null)
                                             <div style="display: flex;width:128px;height:128px;background-color:rgba(59, 130, 246, 0.5);vertical-align:middle;align-items:center;justify-content:center;overflow:hidden" class="rounded-circle">
                                                 <div class="fw-semibold text-white" style="font-size: 36px;font-weight:700">{{strtoupper(substr($user->firstname,0,1))}}</div>
                                             </div>
                                             @else
                                             {{-- <img src="{{asset('assets/images/placeholder.png')}}" alt="" height="110" class="rounded-circle"> --}}
-                                            <img src="{{asset('assets/images/'.$logon_user->client->logo)}}" height="50" width="60px" class="rounded-circle"> 
+                                            <img src="{{asset('assets/images/'.$logon_user?->client->logo)}}" height="50" width="60px" class="rounded-circle"> 
                                             <!-- <img src="{{$user->image}}" alt="logo-large" class="rounded-circle thumb-xs">  -->
                                             @endif
                                             <span class="dastone-profile_main-pic-change">
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="dastone-profile_user-detail">
                                             <h5 class="dastone-user-name">{{ucwords($user->firstname).' '. ucwords($user->lastname)}}</h5>
-                                            <p class="mb-0 dastone-user-name-post">{{ucwords($user->client->company_name)}} 
+                                            <p class="mb-0 dastone-user-name-post">{{ucwords($user?->client?->company_name)}} 
                                                 @if($client->is_admin_verified == 1 )  <span class="badge bg-success">  Verified<small> <i class="fa fa-check"></i> </small></span> 
                                                 @elseif($client->is_admin_verified == -1)<span class="badge bg-danger">  Suspended<small> <i class="fa fa-times"></i></small> </span> 
                                                 @else
@@ -104,7 +104,7 @@
                                     <ul class="list-unstyled personal-detail mb-0">
                                         <li class=""><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> phone </b> : {{$user->phone}}</li>
                                         <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : {{$user->email}}</li>
-                                        <li class="mt-2"><i class="ti ti-briefcase text-secondary font-16 align-middle me-2"></i> <b> Business </b> : {{ucwords($user->client->company_name)}}</li>
+                                        <li class="mt-2"><i class="ti ti-briefcase text-secondary font-16 align-middle me-2"></i> <b> Business </b> : {{ucwords($user?->client?->company_name)}}</li>
                                     </ul>
 
                                 </div>
@@ -307,7 +307,7 @@
                                                     <div class="col-12 mb-3">
                                                         <label class="form-label " for="businessLogo">Business Logo <span class="text-red ms-1">*</span></label>
                                                         <div class="card-body p-0">
-                                                            <img src="{{asset('assets/images/'.$client->logo)}}" width="200px">
+                                                            <img src="{{asset('assets/images/'.$client?->logo)}}" width="200px">
                                                             <input readonly type="file" id="input-file-now" class="dropify" data-height="100" name="businessLogo"  />
                                                         </div>
                                                         @error('businessLogo')
