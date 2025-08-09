@@ -91,14 +91,7 @@
                                 <span class=" badge bg-secondary" > @if(auth()->user()->user_type == 2)Wallet Balance: ₦{{number_format($client_balance->avail_balance,2)}} @endif</span>
                             </div>                                
                         </li>  
-                        @else
-                        <li class="creat-btn">
-                            <div class="nav-link">
-                        Welcome to Oysterchecks
-                       Kindly provide the requested information to fully verify your account. <a href="{{route('user.profile')}}" class=" badge bg-primary" >  Get Started </a>
-                            </div>
-                            
-                        </li> 
+
                         @impersonating
                              <li class="creat-btn">
                             <div class="nav-link">
@@ -111,6 +104,14 @@
                       </a>
                         
                         @endImpersonating
+                        @else
+                        <li class="creat-btn">
+                            <div class="nav-link">
+                        Welcome to Oysterchecks
+                       Kindly provide the requested information to fully verify your account. <a href="{{route('user.profile')}}" class=" badge bg-primary" >  Get Started </a>
+                            </div>
+                            
+                        </li> 
 
                         @endif  
                        @endif     
