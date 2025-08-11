@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h4 class="my-4 fw-semibold text-dark font-16">Address Report - {{$address_verification->reference_id}}</h4>
+                                    <h4 class="my-4 fw-semibold text-dark font-16">Address Report - {{$address_verification?->reference_id}}</h4>
                                     <div>
                                         <a id="printBtn" class="btn btn-primary btn-square">Print</a>
                                         <a id="downloadBtn" class="btn btn-primary btn-square">Download Report</a>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="row"  id="pdfContent">
                             <div class="col-12">
-                                @if(strtolower($address_verification->status == "pending"))
+                                @if(strtolower($address_verification?->status == "pending"))
                                 <div class="alert custom-alert alert-purple icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-clock-outline alert-icon text-purple align-self-center font-30 me-3"></i>
@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif(strtolower($address_verification->status) == 'completed' && strtolower($address_verification->task_status) == 'verified')
+                                @elseif(strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'verified')
                                 <div class="alert custom-alert alert-success icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-check-outline alert-icon text-success align-self-center font-30 me-3"></i>
@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif(strtolower($address_verification->status) == 'in_progress' )
+                                @elseif(strtolower($address_verification?->status) == 'in_progress' )
                                 <div class="alert custom-alert alert-info icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="fas fa-hourglass-start alert-icon text-info align-self-center font-30 me-3"></i>
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif($address_verification->status == 'awaiting_reschedule')
+                                @elseif($address_verification?->status == 'awaiting_reschedule')
                                 <div class="alert custom-alert alert-info icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="fas fa-hourglass-start alert-icon text-info align-self-center font-30 me-3"></i>
@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif(strtolower($address_verification->status) == 'completed' && strtolower($address_verification->task_status) == 'not_verified')
+                                @elseif(strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'not_verified')
                                 <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif(strtolower($address_verification->status) == 'INVALID_ADDRESS')
+                                @elseif(strtolower($address_verification?->status) == 'INVALID_ADDRESS')
                                 <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
@@ -112,7 +112,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif(strtolower($address_verification->status) == 'WRONG_ADDRESS')
+                                @elseif(strtolower($address_verification?->status) == 'WRONG_ADDRESS')
                                 <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
@@ -137,43 +137,43 @@
                         </div>
                         <div class="row pb-4">
                             <div class="col-md-4">
-                                <div class="pt-2 px-2 mb-2 font-15"><span class="text-muted mr-2">Verification Id :</span> {{$address_verification->reference_id}}</div>
+                                <div class="pt-2 px-2 mb-2 font-15"><span class="text-muted mr-2">Verification Id :</span> {{$address_verification?->reference_id}}</div>
                             </div>
                             <div class="col-md-8">
                                 <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Verification Type :</span> {{$slug->name}}</div>
                             </div>
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Created At:</span> {{ date('jS F Y, h:iA', strtotime($address_verification->created_at))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Created At:</span> {{ date('jS F Y, h:iA', strtotime($address_verification?->created_at))}}</div>
                             </div>
-                            @if($address_verification->accepted_at != null)
+                            @if($address_verification?->accepted_at != null)
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Accepted At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification->accepted_at))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Accepted At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification?->accepted_at))}}</div>
                             </div>
                             @endif
 
-                            @if($address_verification->start_date != null)
+                            @if($address_verification?->start_date != null)
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Start Date :</span> {{date('jS F Y, h:iA', strtotime($address_verification->start_date))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Start Date :</span> {{date('jS F Y, h:iA', strtotime($address_verification?->start_date))}}</div>
                             </div>
                             @endif
-                            @if($address_verification->end_date != null)
+                            @if($address_verification?->end_date != null)
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">End Date :</span> {{ date('jS F Y, h:iA', strtotime($address_verification->end_date))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">End Date :</span> {{ date('jS F Y, h:iA', strtotime($address_verification?->end_date))}}</div>
                             </div>
                             @endif
-                            @if($address_verification->completed_at != null)
+                            @if($address_verification?->completed_at != null)
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Completed At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification->completed_at))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Completed At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification?->completed_at))}}</div>
                             </div>
                             @endif
-                            @if($address_verification->submitted_at != null)
+                            @if($address_verification?->submitted_at != null)
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Submitted At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification->submitted_at))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Submitted At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification?->submitted_at))}}</div>
                             </div>
                             @endif
-                            @if($address_verification->revalidation_date != null)
+                            @if($address_verification?->revalidation_date != null)
                             <div class="col-md-4">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Revalidated At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification->revalidation_date))}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Revalidated At :</span> {{ date('jS F Y, h:iA', strtotime($address_verification?->revalidation_date))}}</div>
                             </div>
                             @endif
                             <div class="col-md-4">
@@ -183,7 +183,7 @@
                                 <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Estimated Turn Around Time :</span> 72 Hours</div>
                             </div>
                             <div class="col-12">
-                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Task Description :</span> {{$address_verification->description}}</div>
+                                <div class="mt-2 mb-2 px-2 font-15"><span class="text-muted mr-2">Task Description :</span> {{$address_verification?->description}}</div>
                             </div>
                         </div>
 
@@ -202,7 +202,7 @@
                                                     <div class="col-lg-4 align-self-center py-4 mb-3 mb-lg-0">
                                                         <div class="dastone-profile-main">
                                                             <div class="dastone-profile-main-pic">
-                                                                <img src="{{$address_verification->candidate['photo']}}" alt="" height="110" class="rounded-circle">
+                                                                <img src="{{$address_verification?->candidate['photo']}}" alt="" height="110" class="rounded-circle">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -211,32 +211,32 @@
 
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">First Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->candidate['firstName']??$address_verification->candidate['firstname']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->candidate['firstName'])?$address_verification?->candidate['firstName']: (isset($address_verification?->candidate['firstname'])?$address_verification?->candidate['firstname']: '')}}</div>
                                                     </div>
-                                                    @if(isset($address_verification->candidate['middleName']) || isset($address_verification->candidate['middlename']))
+                                                    @if(isset($address_verification?->candidate['middleName']) || isset($address_verification?->candidate['middlename']))
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Middle Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->candidate['middleName']??$address_verification->candidate['middlename']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->candidate['middleName'])?$address_verification?->candidate['middleName']: (isset($address_verification?->candidate['middlename'])?$address_verification?->candidate['middlename']: '')}}</div>
                                                     </div>
                                                     @endif
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Last Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->candidate['lastname']??$address_verification->candidate['lastName']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->candidate['lastname'])?$address_verification?->candidate['lastname']: (isset($address_verification?->candidate['lastName'])?$address_verification?->candidate['lastName']:'')}}</div>
                                                     </div>
                                                     @if($address_verification?->dob != null)
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Date of Birth : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->candidate['dob']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->candidate['dob']}}</div>
                                                     </div>
                                                     @endif
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Phone : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->candidate['mobile']??$address_verification->candidate['phone']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->candidate['mobile'])?$address_verification?->candidate['mobile']: (isset($address_verification?->candidate['phone'])?$address_verification?->candidate['phone']:'')}}</div>
                                                     </div>
-                                                    @if(isset($address_verification->candidate['email']))
+                                                    @if(isset($address_verification?->candidate['email']))
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">email : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->candidate['email']??''}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->candidate['email']??''}}</div>
                                                     </div>
                                                     @endif
                                                 </div>
@@ -246,7 +246,7 @@
 
                                 </div>
                             </div>
-                            @if($address_verification->guarantor != null)
+                            @if($address_verification?->guarantor != null)
                             <div class="col-12">
                                 <div class="accordion" id="guarantorInformation">
                                     <div class="accordion-item border-0">
@@ -257,12 +257,12 @@
                                         </h5>
                                         <div id="collapseOneTwo" class="accordion-collapse" aria-labelledby="headingOneTwo" data-bs-parent="#guarantorInformation">
                                             <div class="accordion-body">
-                                                @if(isset($address_verification->guarantor['photo']))
+                                                @if(isset($address_verification?->guarantor['photo']))
                                                 <div class="row">
                                                     <div class="col-lg-4 align-self-center py-4 mb-3 mb-lg-0">
                                                         <div class="dastone-profile-main">
                                                             <div class="dastone-profile-main-pic">
-                                                                <img src="{{$address_verification->guarantor['photo']}}" alt="" height="110" class="rounded-circle">
+                                                                <img src="{{$address_verification?->guarantor['photo']}}" alt="" height="110" class="rounded-circle">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -272,20 +272,23 @@
 
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">First Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->guarantor['firstName']??$address_verification->guarantor['firstname']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->guarantor['firstName'])?$address_verification?->guarantor['firstName']: (isset($address_verification?->guarantor['firstname'])?$address_verification?->guarantor['firstname']: '')}} 
+                                                            </div>
                                                     </div>
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Last Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->guarantor['lastName']??$address_verification->guarantor['lastname']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->guarantor['lastName'])?$address_verification?->guarantor['lastName']: (isset($address_verification?->guarantor['lastname'])?$address_verification?->guarantor['lastname']: '')}} 
+                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Phone : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->guarantor['mobile']??$address_verification->guarantor['phone']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{isset($address_verification?->guarantor['mobile'])?$address_verification?->guarantor['mobile']: (isset($address_verification?->guarantor['phone'])?$address_verification?->guarantor['phone']:'')}}
+                                                            </div>
                                                     </div>
-                                                    @if(isset($address_verification->guarantor['email']))
+                                                    @if(isset($address_verification?->guarantor['email']))
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">email : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->guarantor['email']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->guarantor['email']}}</div>
                                                     </div>
                                                     @endif
                                                 </div>
@@ -295,7 +298,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($address_verification->business != null)
+                            @if($address_verification?->business != null)
                             <div class="col-12">
                                 <div class="accordion" id="businessInformation">
                                     <div class="accordion-item border-0">
@@ -305,26 +308,47 @@
                                             </button>
                                         </h5>
                                         <div id="collapseOneThree" class="accordion-collapse" aria-labelledby="headingOneThree" data-bs-parent="#businessInformation">
-                                            <div class="accordion-body">
-                                                <div class="row border-bottom mb-5">
-                                                    <div class="col-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->business['name']??$address_verification->business['businessName']}}</div>
-                                                    </div>
-                                                    <div class="col-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Contact Person : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->business['email']??$address_verification->business['canContactPoc']}}</div>
-                                                    </div>
-                                                    <div class="col-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Phone : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->business['mobile']??''}}</div>
-                                                    </div>
-                                                    <div class="col-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Registration Number : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->business['registrationNumber']??$address_verification->business['rcNumber']}}</div>
-                                                    </div>
-                                                </div>
+                                          <div class="accordion-body">
+                                    <div class="row border-bottom mb-5">
+                                        <div class="col-12 col-md-6 d-flex py-4 border-top">
+                                            <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Name : </div>
+                                            <div class="fw-normal font-15 col-8">{{ isset($address_verification?->business['name']) ? $address_verification?->business['name'] 
+                                                    : (isset($address_verification?->business['businessName']) 
+                                                        ? $address_verification?->business['businessName'] 
+                                                        : '') }}
                                             </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 d-flex py-4 border-top">
+                                            <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Contact Person : </div>
+                                            <div class="fw-normal font-15 col-8">
+                                                {{ isset($address_verification?->business['email']) 
+                                                    ? $address_verification?->business['email'] 
+                                                    : (isset($address_verification?->business['canContactPoc']) 
+                                                        ? $address_verification?->business['canContactPoc'] 
+                                                        : '') }}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 d-flex py-4 border-top">
+                                            <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Phone : </div>
+                                            <div class="fw-normal font-15 col-8">
+                                                {{ isset($address_verification?->business['mobile']) 
+                                                    ? $address_verification?->business['mobile'] 
+                                                    : '' }}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 d-flex py-4 border-top">
+                                            <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Registration Number : </div>
+                                            <div class="fw-normal font-15 col-8">
+                                                {{ isset($address_verification?->business['registrationNumber']) 
+                                                    ? $address_verification?->business['registrationNumber'] 
+                                                    : (isset($address_verification?->business['rcNumber']) 
+                                                        ? $address_verification?->business['rcNumber'] 
+                                                        : '') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -341,86 +365,99 @@
                                         <div id="collapseTwo" class="accordion-collapse" aria-labelledby="headingTwo" data-bs-parent="#addressDetails">
                                             <div class="accordion-body pt-0">
                                                 <div class="row mb-5">
-                                                    @if(isset($address_verification->address['flatNumber']) )
+                                                    @if(isset($address_verification?->address['flatNumber']) )
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Flat Number : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['flatNumber']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['flatNumber']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if(isset($address_verification->address['buildingName']))
+                                                    @if(isset($address_verification?->address['buildingName']))
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['buildingName']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['buildingName']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if(isset($address_verification->address['buildingNumber']))
+                                                    @if(isset($address_verification?->address['buildingNumber']))
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building Number : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['buildingNumber']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['buildingNumber']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if(isset($address_verification->address['street']))
+                                                    @if(isset($address_verification?->address['street']))
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Street : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['street']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['street']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if(isset($address_verification->address['subStreet']))
+                                                    @if(isset($address_verification?->address['subStreet']))
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Sub-Street : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['subStreet']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['subStreet']}}</div>
                                                     </div>
                                                     @endif
 
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">State : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['state']??$address_verification->address['stateName']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['state']??$address_verification?->address['stateName']}}</div>
                                                     </div>
-                                                    @if($address_verification->address['city'] != null)
+                                                    @if($address_verification?->address['city'] != null)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">City : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['city']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['city']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if(isset($address_verification->address['lga']) || isset($address_verification->address['lgaName']) )
+                                                    @if(isset($address_verification?->address['lga']) || isset($address_verification?->address['lgaName']) )
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">LGA : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['lga']??$address_verification->address['lgaName']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['lga']??$address_verification?->address['lgaName']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if(isset($address_verification->address['lga']))
+                                                    @if(isset($address_verification?->address['lga']))
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Country : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->address['country']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->address['country']}}</div>
                                                     </div>
                                                     @endif
-                                                    @if($address_verification->status != 'pending')
+                                                    @if($address_verification?->status != 'pending')
 
                                                     <div class="col-12 py-4 border-top pb-3">
                                                         <div class="fw-semibold m-0 font-15 mb-2">Address Location : </div>
                                                         <div class="w-100 overflow-hidden rounded">
-                                                            @if(isset($address_verification->address['buildingNumber']))
+                                                            @if(isset($address_verification?->address['buildingNumber']))
                                                             <div style="text-decoration:none; overflow:hidden">
                                                            
-                                                            <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q={{$address_verification->address['buildingNumber']}}+{{$address_verification->address['street']}}+{{$address_verification->address['city']}}+{{$address_verification->address['lga']}},&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
+                                                            <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q={{$address_verification?->address['buildingNumber']}}+{{$address_verification?->address['street']}}+{{$address_verification?->address['city']}}+{{$address_verification?->address['lga']}},&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
                                                             </div><a class="my-codefor-googlemap" href="" id="make-map-data"> </a>
                                                             </div>
                                                             @else 
                                                             <div id="embedded-map-display" style="height:100%; width:100%;max-width:100%;">
-                                                            <iframe src="{{$address_verification->map_address_url}}.&output=embed" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                                            <iframe src="{{$address_verification?->map_address_url}}.&output=embed" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                                                             </iframe> 
                                                             @endif
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-6 d-block col-sm-3 col-xl-3 d-sm-flex">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted">Longitude : </div>
-                                                        <div class="fw-normal font-15">{{$address_verification->address['latlong']['lon']??$address_verification->address['longitude']??''}}</div>
-                                                    </div>
-                                                    <div class="col-6 d-block col-sm-3 col-xl-3 d-sm-flex">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted">Latitude : </div>
-                                                        <div class="fw-normal font-15">{{$address_verification->address['latlong']['lat']??$address_verification->address['latitude']??''}}</div>
-                                                    </div>
+                                                   <div class="col-6 d-block col-sm-3 col-xl-3 d-sm-flex">
+                                                            <div class="fw-semibold m-0 font-15 me-3 text-muted">Longitude : </div>
+                                                            <div class="fw-normal font-15">
+                                                                {{ isset($address_verification?->address['latlong']['lon']) 
+                                                                    ? $address_verification?->address['latlong']['lon'] 
+                                                                    : (isset($address_verification?->address['longitude']) 
+                                                                        ? $address_verification?->address['longitude'] 
+                                                                        : '') }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 d-block col-sm-3 col-xl-3 d-sm-flex">
+                                                            <div class="fw-semibold m-0 font-15 me-3 text-muted">Latitude : </div>
+                                                            <div class="fw-normal font-15">
+                                                                {{ isset($address_verification?->address['latlong']['lat']) 
+                                                                    ? $address_verification?->address['latlong']['lat'] 
+                                                                    : (isset($address_verification?->address['latitude']) 
+                                                                        ? $address_verification?->address['latitude'] 
+                                                                        : '') }}
+                                                            </div>
+                                                        </div>
+
                                                     @endif
                                                 </div>
                                             </div>
@@ -429,7 +466,7 @@
                                 </div>
                             </div>
                           
-                            @if($address_verification->status != 'pending')
+                            @if($address_verification?->status != 'pending')
                             <div class="col-12">
                                 <div class="accordion" id="images">
                                     <div class="accordion-item border-0">
@@ -441,10 +478,10 @@
                                         <div id="collapseThree" class="accordion-collapse" aria-labelledby="headingThree" data-bs-parent="#images">
                                             <div class="accordion-body">
                                                 <div class="row mb-5">
-                                                    @empty($address_verification->images)
+                                                    @empty($address_verification?->images)
                                                     <div class="col-12 text-center py-3">No Images Available</div>
                                                     @else
-                                                    @foreach($address_verification->images as $image)
+                                                    @foreach($address_verification?->images as $image)
                                                     <div class="mr-2" style="width: 8rem; height: 8rem;">
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#imageView{{$loop->iteration}}">
                                                            @if(isset($image['filePath'])) <img src="{{$image['filePath']}}" alt="" class="img-fluid rounded">
@@ -461,8 +498,8 @@
                                     </div>
                                 </div>
                             </div>
-                            @if(!empty($address_verification->images))
-                            @foreach($address_verification->images as $image)
+                            @if(!empty($address_verification?->images))
+                            @foreach($address_verification?->images as $image)
                             <div class="modal fade" id="imageView{{$loop->iteration}}" tabindex="-1" aria-labelledby="imageView{{$loop->iteration}}" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document">
                                     <div class="modal-content" style="background:none">
@@ -502,20 +539,20 @@
                                         <div id="collapseFour" class="accordion-collapse" aria-labelledby="headingFour" data-bs-parent="#notes">
                                             <div class="accordion-body">
                                                 <div class="row mb-5">
-                                                    @if(!is_array($address_verification->notes))
+                                                    @if(!is_array($address_verification?->notes))
                                                     <div class="col-12 py-2">
                                                         <div class="media">
                                                             <div class="me-3 align-self-center">
                                                                 <i class="far fa-sticky-note font-20"></i>
                                                             </div>
                                                             <div class="media-body align-self-center">
-                                                                <h6 class="m-0 font-15">{{$address_verification->notes}} </h6>
+                                                                <h6 class="m-0 font-15">{{$address_verification?->notes}} </h6>
                                                             </div>
                                                             <!--end media body-->
                                                         </div>
                                                     </div>
                                                     @else
-                                                    @foreach($address_verification->notes as $note)
+                                                    @foreach($address_verification?->notes as $note)
                                                     <div class="col-12 py-2">
                                                         <div class="media">
                                                             <div class="media-body align-self-center">
@@ -546,29 +583,29 @@
 
                                                     {{-- <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building has Gate : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->gate_present == true ? 'Yes' : 'No'}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->gate_present == true ? 'Yes' : 'No'}}</div>
                                                     </div> --}}
-                                                    @if($address_verification->gate_present == true)
+                                                    @if($address_verification?->gate_present == true)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Color of Gate : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->gate_color}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->gate_color}}</div>
                                                     </div>
                                                     @endif
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building Type : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->building_type}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->building_type}}</div>
                                                     </div>
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building Color : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->building_color}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->building_color}}</div>
                                                     </div>
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Closest Landmark : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->closest_landmark}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->closest_landmark}}</div>
                                                     </div>
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Availability Confirmed By : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->availability_confirmed_by}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->availability_confirmed_by}}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -587,19 +624,19 @@
                                         <div id="collapseSix" class="accordion-collapse" aria-labelledby="headingSix" data-bs-parent="#otherInformation">
                                             <div class="accordion-body pt-0">
                                                 <div class="row mb-5">
-                                                    @if($address_verification->additional_info != null)
+                                                    @if($address_verification?->additional_info != null)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Additional Info : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->additional_info}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->additional_info}}</div>
                                                     </div>
-                                                    @elseif($address_verification->incident_report != null)
+                                                    @elseif($address_verification?->incident_report != null)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Incident Report : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->incident_report}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->incident_report}}</div>
                                                     </div>
-                                                    @elseif($address_verification->reasons != null)
+                                                    @elseif($address_verification?->reasons != null)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-normal font-15 col-12">{{$address_verification->reasons}}</div>
+                                                        <div class="fw-normal font-15 col-12">{{$address_verification?->reasons}}</div>
                                                     </div>
                                                     @else
                                                     <div class="col-12 text-center py-3">No Other Information Available</div>
@@ -624,7 +661,7 @@
                                                     <div class="col-lg-4 align-self-center py-4 mb-3 mb-lg-0">
                                                         <div class="dastone-profile-main">
                                                             <div class="dastone-profile-main-pic">
-                                                                <img src="{{$address_verification->agent['photo']}}" alt="" height="110" class="rounded-circle">
+                                                                <img src="{{$address_verification?->agent['photo']}}" alt="" height="110" class="rounded-circle">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -632,13 +669,13 @@
                                                 <div class="row border-bottom mb-5">
                                                     <div class="col-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Agent's Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification->agent['firstName']}} {{$address_verification->agent['lastName']}}</div>
+                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->agent['firstName']}} {{$address_verification?->agent['lastName']}}</div>
                                                     </div>
                                                     <div class="col-12 col-md-12 d-block py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3">Signature : </div>
                                                         <div class="dastone-profile-main">
                                                             <div class="dastone-profile-main-pic">
-                                                                <img src="{{$address_verification->agent['signature']}}" alt="" height="80" class="rounded">
+                                                                <img src="{{$address_verification?->agent['signature']}}" alt="" height="80" class="rounded">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -685,7 +722,7 @@
 
                                             </div><!--end row-->   
                                             <p style="text-align:center; padding-top:10px" id="reporter">   Report will be updated automatically once its available
-                                            <br> <span class="badge bg-info pt-2" id="dater">Check Back on {{Date('Y-m-d H:i:s', strtotime($address_verification->expected_report_date))}} </span></p>
+                                            <br> <span class="badge bg-info pt-2" id="dater">Check Back on {{Date('Y-m-d H:i:s', strtotime($address_verification?->expected_report_date))}} </span></p>
 
                                         </div><!--end modal-body-->
                                         
@@ -765,7 +802,7 @@
            $('#awaiting_response_modal').modal('show', {keyboard:false, backdrop: 'static'});
         });
 
-        let times = {!! json_encode($address_verification->expected_report_date) !!}
+        let times = {!! json_encode($address_verification?->expected_report_date) !!}
          console.log(times);
         initiated = new Date(times).getTime();
      

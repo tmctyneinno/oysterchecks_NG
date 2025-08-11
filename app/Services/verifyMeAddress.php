@@ -213,7 +213,5 @@ class verifyMeAddress
     return $update;
 }
 
-   
-
 
 }

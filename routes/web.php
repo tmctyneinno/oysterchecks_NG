@@ -16,6 +16,7 @@ use App\Http\Controllers\CustomVerification;
 use App\Http\Controllers\SanctionPepController;
 use App\Http\Controllers\AdverseMediaController;
 use App\Http\Controllers\EmployeeRefController;
+use App\Models\AddressVerification;
 
 // use App\Models\Transaction;
 
@@ -46,6 +47,8 @@ Route::get('/logouts', [HomeController::class, 'Logouts'])->name('logouts');
 Route::middleware('web')->group(function () {
     Route::impersonate();
 });
+
+Route::get('/test/token', [AddressController::class, 'testToken']);
 
 // Route::get('email', [LandingPages::class, 'email'])->name('email');
 Route::get('/user/verification/employee-reference/questions/{user_id}/{candidate_verification_id}/', [EmployeeRefController::class,'RedirectToQuestions'])->name('candidate.employer-reference.questions');
