@@ -8,6 +8,8 @@ use App\Traits\GenerateRef;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\States;
+use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Verification;
 use App\Traits\sandbox;
 use App\Models\Wallet;
@@ -111,6 +113,7 @@ class verifyMeAddress
           if($res['customerReference'])
           {
             $res['type'] = 'individual';
+             $this->chargeUser($slug->fee, $res['customerReference'], $res['type']);
             event(new AddressVerificationCreated($res, $address_verification));
           }
           Session::flash('alert', 'success');
@@ -156,6 +159,7 @@ class verifyMeAddress
             {
             $res['type'] = 'guarantor';
              Log::info(['info' => $res]);
+             $this->chargeUser($slug->fee, $res['customerReference'], $res['type']);
             event(new AddressVerificationCreated($res, $address_verification));
             Session::flash('alert', 'success');
             Session::flash('message', 'Address successfully sent for verifications');
@@ -170,13 +174,44 @@ class verifyMeAddress
           }
         Session::flash('alert', 'error');
         Session::flash('message', 'Something went wrong');
-
+          return back();
         }catch(\Exception $e)
         {
          Log::info(['info' => $e->getMessage()]);
+          Session::flash('alert', 'error');
+        Session::flash('message', 'Something went wrong');
+          return back();
         }
      
     }
+
+
+    public function chargeUser($amount, $ext_ref, $type)
+{
+    $user = User::where('id', auth()->user()->id)->first();
+    $wallet = Wallet::where('user_id', $user->id)->first();
+    $newWallet = $user->wallet->avail_balance - $amount;
+    $update = Wallet::where('user_id', $user->id)
+        ->update([
+            'book_balance' => $wallet->avail_balance,
+            'avail_balance' => $newWallet,
+        ]);
+    $refs = $this->GenerateRef();
+    Transaction::create([
+        'ref' => $refs,
+        'user_id' => $user->id,
+        'external_ref' => $ext_ref,
+        'purpose' => $type,
+        'service_type' => $type,
+        'total_amount_payable' => $amount,
+        'payment_method' => 'Wallet Payment',
+        'type'  => 'DEBIT',
+        'amount' => $amount,
+        'prev_balance' => $wallet->avail_balance,
+        'avail_balance' => $newWallet
+    ]);
+    return $update;
+}
 
    
 

@@ -88,7 +88,7 @@
                         </li>  
                         <li class="creat-btn">
                             <div class="nav-link">
-                                <span class=" badge bg-secondary" > @if(auth()->user()->user_type == 2)Wallet Balance: ₦{{number_format($client_balance->avail_balance,2)}} @endif</span>
+                                {{-- <span class=" badge bg-secondary" > @if(auth()->user()->user_type == 2)Wallet Balance: ₦{{number_format($client_balance->avail_balance,2)}} @endif</span> --}}
                             </div>                                
                         </li>  
 
