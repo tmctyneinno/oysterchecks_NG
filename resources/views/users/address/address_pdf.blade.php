@@ -14,7 +14,7 @@
       @elseif(strtolower($address_verification?->status) == 'WRONG_ADDRESS')
       <span style="color:coral"> Completed and Not Verified<</span>
      @else 
-      <span style="color:red"> Address Cancelled</span>
+      <span style="color:blue"> {{$address_verification?->status}}</span>
      @endif
   </div>
 
@@ -126,7 +126,7 @@
             @if(isset($image['filePath'])) 
             <img src="{{$image['filePath']}}"  height="150px" width="250px" alt="" >
             @else 
-            <img src="{{$image}}" alt=""  height="50px" width="100px" >
+            <img src="{{$image}}" alt=""  height="150px" width="250px"  >
             @endif
     </div>
     @endforeach
