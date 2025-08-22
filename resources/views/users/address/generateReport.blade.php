@@ -141,13 +141,9 @@
    document.getElementById('myButton').addEventListener('click', function() {
     Swal.fire({
         title: 'warning!',
-        text: 'Report is running, results will be made available once completed, you can continue with other activities while the system get this ready for you.',
+        text: 'Report is running, Please wait while we get the reports ready for you.',
         icon: 'warning',
         confirmButtonText: 'Close Model'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = "{{ route('home') }}";
-        }
     });
 });
     </script>
