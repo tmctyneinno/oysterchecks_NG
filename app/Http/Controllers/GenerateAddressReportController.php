@@ -24,7 +24,10 @@ class GenerateAddressReportController extends Controller
         $dates = explode('-',$request->daterange);
         $start_date = Carbon::parse(strip_tags($dates['0']));
         $end_date =  Carbon::parse($dates['1']);;
-        $verification = AddressVerification::where(['user_id' => auth()->user()->id])->where('status', '!=', 'pending')
+        $verification = AddressVerification::where(['user_id' => auth()->user()->id])->whereNotIn('status',[
+            'IN_PROGRESS', 
+            'pending' 
+        ])
         ->where('slug', $request->query_type)
         ->whereBetween('created_at',[
             $start_date,

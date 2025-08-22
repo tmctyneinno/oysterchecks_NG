@@ -5,16 +5,20 @@
     <div class="row"><span class="label">Verification ID:</span> <span class="value">{{$address_verification?->reference_id}}</span></div>
     <div class="row"><span class="label">Type:</span> <span class="value"> {{ucfirst($slug)}} Verification</span></div>
     <div class="row"><span class="label">Created At:</span> <span class="value">{{ date('jS F Y, h:iA', strtotime($address_verification?->created_at))}}</span></div>
-     @if(strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'verified')
-    <div class="status"> Completed and Verified</div>
-    @elseif(strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'not_verified')
-    <span style="color:coral"> Completed and Not Verified<</span>
-     @elseif(strtolower($address_verification?->status) == 'INVALID_ADDRESS')
-      <span style="color:orangered"> Completed and Not Verified<</span>
-      @elseif(strtolower($address_verification?->status) == 'WRONG_ADDRESS')
-      <span style="color:coral"> Completed and Not Verified<</span>
+     @if(strtolower($address_verification?->task_status) == 'verified')
+    <div class="status"> COMPLETED AND VERIFIED</div>
+    @elseif(strtolower($address_verification?->task_status) == 'not_verified')
+    <span style="color:coral"> COMPLETED AND NOT VERIFIED </span>
+     @elseif(strtolower($address_verification?->task_status) == 'invalid_address')
+      <span style="color:orangered"> COMPLETED AND NOT VERIFIED</span>
+      @elseif(strtolower($address_verification?->task_status) == 'wrong_address')
+      <span style="color:coral"> COMPLETED AND NOT VERIFIED</span>
+     @elseif(strtolower($address_verification?->status) == 'rejected') 
+      <span style="color:red"> COMPLETED AND NOT VERIFIED</span>
+     @elseif(strtolower($address_verification?->status) == 'cancelled')
+        <span style="color:red"> Address Cancelled - FUND REFUNDED </span>
      @else 
-      <span style="color:blue"> {{$address_verification?->status}}</span>
+       <span style="color:red">  {{$address_verification?->task_status}}</span>
      @endif
   </div>
 
