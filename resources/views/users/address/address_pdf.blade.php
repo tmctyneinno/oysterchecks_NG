@@ -16,9 +16,9 @@
      @elseif(strtolower($address_verification?->status) == 'rejected') 
       <span style="color:red"> COMPLETED AND NOT VERIFIED</span>
      @elseif(strtolower($address_verification?->status) == 'cancelled')
-        <span style="color:red"> Address Cancelled - FUND REFUNDED </span>
+        <span style="color:red"> CANCELLED  </span>
      @else 
-       <span style="color:red">  {{$address_verification?->task_status}}</span>
+       {{-- <span style="color:red">  {{$address_verification?->task_status}}</span> --}}
      @endif
   </div>
 
