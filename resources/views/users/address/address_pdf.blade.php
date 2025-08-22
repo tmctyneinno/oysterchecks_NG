@@ -128,9 +128,9 @@
    @foreach($address_verification?->images as $image)
     <div>
             @if(isset($image['filePath'])) 
-            <img src="{{$image['filePath']}}"  style="width:200px; height:50px;"  alt="" >
+            <img src="{{$image['filePath']}}"  style="width:200px; height:80px;"  alt="" >
             @else 
-            <img src="{{$image}}" alt=""  style="width:200px; height:50px;"   >
+            <img src="{{$image}}" alt=""  style="width:200px; height:80px;"   >
             @endif
     </div>
     @endforeach

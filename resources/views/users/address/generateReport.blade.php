@@ -74,11 +74,11 @@
                                         <label class="form-label" for="exampleInputEmai">Select Number of Reports</label> <br>
                                         <div class="input-group">  
                                          <select name="reportCount" class="form-control" required> 
-                                            <option> 10</option>
-                                            <option> 20</option>
-                                            <option> 30</option>
-                                            <option> 40</option>
-                                            <option> 50</option>
+                                            <option value="10"> 10</option>
+                                            <option value="20"> 20</option>
+                                            <option value="30"> 30</option>
+                                            <option value="40"> 40</option>
+                                            <option value="50"> 50</option>
                                          </select>
                                         </div>
                                     </div>
