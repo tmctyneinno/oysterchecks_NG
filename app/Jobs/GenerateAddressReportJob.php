@@ -65,7 +65,7 @@ class GenerateAddressReportJob implements ShouldQueue
     }
     file_put_contents($filePath, $pdf->output());
        GenerateAddresssReport::create([
-            'user_id' => $verifications->first()->id,
+            'user_id' => $verifications->first()->user_id,
             'address_type' => $type,
             'reports'  => "verifications/".$fileName,
             'start_date' => $this->start_date,
