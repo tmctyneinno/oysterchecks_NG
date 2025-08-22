@@ -144,11 +144,7 @@
         text: 'Report is running, results will be made available once completed, you can continue with other activities while the system get this ready for you.',
         icon: 'warning',
         confirmButtonText: 'Close Model'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = "{{ route('home') }}";
-        }
-    });
+    })
 });
     </script>
     @endsection
