@@ -39,7 +39,7 @@ class GenerateAddressReportJob implements ShouldQueue
         foreach($verifications as $verification){
      if(!isset($verification->addressVerificationDetail) || empty($verification->addressVerificationDetail)) continue;
         foreach($verification->addressVerificationDetail as $address_verification){
-
+                if($address_verification->status == 'IN_PROGRESS') continue;
     $address_verification->candidate = json_decode($address_verification->candidate,true);
     if ($address_verification->business != null) $address_verification->business = json_decode($address_verification->business);
     if ($address_verification->guarantor != null) $address_verification->guarantor = json_decode($address_verification->guarantor, true);
