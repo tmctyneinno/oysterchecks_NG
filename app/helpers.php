@@ -114,6 +114,16 @@ function crypto_rand_secure($min, $max)
  }
 
 
+ function getCompanyName()
+ {
+    $client = Client::where('user_id', auth()->user()->id)->first();
+    if(!$client)
+    {
+        return "Morgans";
+    }
+    return $client?->company_name;
+ }
+
 
 
 

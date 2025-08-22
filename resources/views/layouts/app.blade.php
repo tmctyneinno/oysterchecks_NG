@@ -114,6 +114,7 @@
       countdownBar:!0
     });
     </script>
+    
     @yield('script')
 
         <!--Start of Tawk.to Script-->

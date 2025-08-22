@@ -184,7 +184,10 @@
                  <div class="card">
                      <div class="card-header">
                          <h4 class="card-title">{{$slug->name}} log</h4>
+                      
+                       <span class="float-end"> <a href="{{route('client-generate-report')}}" class="btn btn-info"> Generate Address Report</a></span>  
                      </div>
+
                      <!--end card-header-->
                      <div class="card-body">
                          <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">

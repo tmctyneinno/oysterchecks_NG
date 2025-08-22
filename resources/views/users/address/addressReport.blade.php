@@ -556,7 +556,7 @@
                                                     <div class="col-12 py-2">
                                                         <div class="media">
                                                             <div class="media-body align-self-center">
-                                                                <span>@if(is_array($note)) {{$note}} @else  {{$note}} @endif </span>
+                                                                <span>@if(is_array($note)){{$note['note']}}  @else {{$note}} @endif</span>
                                                             </div>
                                                             <!--end media body-->
                                                         </div>
@@ -625,10 +625,10 @@
                                             <div class="accordion-body pt-0">
                                                 <div class="row mb-5">
                                                     @if($address_verification?->additional_info != null)
-                                                    <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
+                                                    {{-- <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Additional Info : </div>
                                                         <div class="fw-normal font-15 col-8">{{$address_verification?->additional_info}}</div>
-                                                    </div>
+                                                    </div> --}}
                                                     @elseif($address_verification?->incident_report != null)
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Incident Report : </div>
@@ -647,45 +647,6 @@
                                     </div>
                                 </div>
                             </div>
-                             {{-- <div class="col-12">
-                                <div class="accordion" id="agentDetails">
-                                    <div class="accordion-item border-0">
-                                        <h5 class="accordion-header m-0" id="headingSix">
-                                            <button class="accordion-button fw-semibold font-15" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
-                                                Agent Details
-                                            </button>
-                                        </h5>
-                                        <div id="collapseSix" class="accordion-collapse" aria-labelledby="headingSix" data-bs-parent="#agentDetails">
-                                            <div class="accordion-body pt-0">
-                                                <div class="row">
-                                                    <div class="col-lg-4 align-self-center py-4 mb-3 mb-lg-0">
-                                                        <div class="dastone-profile-main">
-                                                            <div class="dastone-profile-main-pic">
-                                                                <img src="{{$address_verification?->agent['photo']}}" alt="" height="110" class="rounded-circle">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row border-bottom mb-5">
-                                                    <div class="col-12 col-md-6 d-flex py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Agent's Name : </div>
-                                                        <div class="fw-normal font-15 col-8">{{$address_verification?->agent['firstName']}} {{$address_verification?->agent['lastName']}}</div>
-                                                    </div>
-                                                    <div class="col-12 col-md-12 d-block py-4 border-top">
-                                                        <div class="fw-semibold m-0 font-15 me-3">Signature : </div>
-                                                        <div class="dastone-profile-main">
-                                                            <div class="dastone-profile-main-pic">
-                                                                <img src="{{$address_verification?->agent['signature']}}" alt="" height="80" class="rounded">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                             @else 
 
                        
@@ -697,10 +658,9 @@
                                             <div class="row">
                                                 <div class="col-lg-3 text-center align-self-center">
                                                     <img src="assets/images/widgets/btc.png" alt="" class="img-fluid">
-                                                </div><!--end col-->
+                                                </div>
                                                 <div class="col-lg-9">
                                                     <h5 id="title">Report will be available in</h5>
-                                                   
                                                     <table> 
                                                         <tr id="timer">
                                                         <th style="font-size:34px" id="days">00 : </th>

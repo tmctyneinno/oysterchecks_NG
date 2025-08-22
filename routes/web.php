@@ -16,6 +16,7 @@ use App\Http\Controllers\CustomVerification;
 use App\Http\Controllers\SanctionPepController;
 use App\Http\Controllers\AdverseMediaController;
 use App\Http\Controllers\EmployeeRefController;
+use App\Http\Controllers\GenerateAddressReportController;
 use App\Models\AddressVerification;
 
 // use App\Models\Transaction;
@@ -148,6 +149,9 @@ Route::post('/get/lga', [AddressController::class,'getLga'])->name('getLga');
 //     return view('users.address.addressReport');
 // });
 
+
+Route::get('/client-generate-report',[GenerateAddressReportController::class, 'showList'])->name('client-generate-report');
+Route::post('/generate/address/report', [GenerateAddressReportController::class,'RunGeneratorJob'])->name('user.generate-address-report');
 });
 
 require __DIR__.'/admin.php';

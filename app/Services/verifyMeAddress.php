@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Events\AddressVerificationCreated;
 use App\Models\AddressVerification;
+use App\Models\Client;
 use App\Models\Lga;
 use App\Traits\GenerateRef;
 use Illuminate\Support\Carbon;
@@ -13,6 +14,7 @@ use App\Models\User;
 use App\Models\Verification;
 use App\Traits\sandbox;
 use App\Models\Wallet;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -20,12 +22,10 @@ use Illuminate\Support\Facades\Validator;
 
 class verifyMeAddress 
 {
-
     public function __construct(
         public readonly Base $base
     )
     {
-        
     }
     use GenerateRef;
     use sandbox;
@@ -99,7 +99,7 @@ class verifyMeAddress
                     'dob'=> $address_verification->dob,
                     'gender'=> $address_verification->gender,
                            ],
-                "street" => $request->street??"",
+                "street" => $request->street.'company: '.getCompanyName()??"",
                 "customerReference" => $service_ref,
                 "lgaName" => $request->lga??"",
                 "stateName" => $request->state??"",
@@ -145,7 +145,7 @@ class verifyMeAddress
                 'dob'=> $request->dob,
                 'gender'=> $request->gender,
                        ],
-              "street" => $request->street??"",
+              "street" => $request->street.'company: '.getCompanyName()??"",
               "customerReference" => $service_ref,
               "lgaName" => $request->lga??"",
               "stateName" => $request->state??"",
