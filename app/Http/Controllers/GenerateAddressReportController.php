@@ -35,7 +35,7 @@ class GenerateAddressReportController extends Controller
          if(count($verification) > 0){
         GenerateAddressReportJob::dispatch($verification, $request->query_type,$start_date, $end_date);
         Session::flash('alert', 'success');
-        Session::flash('message', 'Report is completed, please proceed to download');
+        Session::flash('message', 'Report is running, and will be made available to you once completed');
         return back();
         }
 
