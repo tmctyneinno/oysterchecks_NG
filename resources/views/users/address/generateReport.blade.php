@@ -142,7 +142,7 @@
     Swal.fire({
         title: 'warning!',
         // text: 'Report is running, results will be made available once completed, you can continue with other activities while the system get this ready for you.',
-        text:'Report is running, please wait while we get the reports ready for you'
+        text:'Report is running, please wait while we get the reports ready for you',
         icon: 'warning',
         confirmButtonText: 'OK'
     })
