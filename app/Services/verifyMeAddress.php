@@ -145,7 +145,7 @@ class verifyMeAddress
                 'dob'=> $request->dob,
                 'gender'=> $request->gender,
                        ],
-              "street" => $request->street.'company: '.getCompanyName()??"",
+              "street" => $request->street.' company: '.getCompanyName()??""."- Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name,
               "customerReference" => $service_ref,
               "lgaName" => $request->lga??"",
               "stateName" => $request->state??"",
