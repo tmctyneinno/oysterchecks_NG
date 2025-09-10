@@ -49,7 +49,7 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'status' => $res['summary']['address_check'],
             'task_status' => $res['summary']['address_check'],
             'start_date' => $res['address']['requestedAt'],
-            'closest_landmark' => isset($res['data'])?$res['address']['location']['landmark']:'',
+            // 'closest_landmark' => isset($res['data'])?$res['address']['location']['landmark']:'',
             'accepted_at' => isset($res['data'])?$res['data']['acceptedAt']:'',
             'revalidation_date'=> isset($res['data'])?$res['data']['revalidationDate']:'',
             'notes'=> isset($res['data'])?json_encode($res['data']['notes']):'',

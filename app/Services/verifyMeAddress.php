@@ -100,11 +100,11 @@ class verifyMeAddress
                     'dob'=> $address_verification->dob,
                     'gender'=> $address_verification->gender,
                            ],
-                "street" => $request->street.'company: '.getCompanyName()??"",
+                "street" => $request->street,
                 "customerReference" => $ref,
                 "lgaName" => $request->lga??"",
                 "stateName" => $request->state??"",
-                "landmark" => $request->landmark??"",
+                "landmark" => $request->landmark.' company: '.getCompanyName(),
                 "city" => $request->city,
             ];
             $token = $this->base->generateToken()['accessToken'];
@@ -146,11 +146,11 @@ class verifyMeAddress
                 'dob'=> $request->dob,
                 'gender'=> $request->gender,
                        ],
-              "street" => $request->street.' Company: '.getCompanyName()??""."- Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name .'Candidate_phone: '.$CandidatePhone,
+              "street" => $request->street,
               "customerReference" => $ref,
               "lgaName" => $request->lga??"",
               "stateName" => $request->state??"",
-              "landmark" => $request->landmark??"",
+              "landmark" => $request->landmark.' Company: '.getCompanyName()??""."- Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name .'Candidate_phone: '.$CandidatePhone,
               "city" => $request->city
             ];
             $token = $this->base->generateToken()['accessToken'];
