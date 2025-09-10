@@ -55,7 +55,8 @@ class AddressVerificationDetail extends Model
         'type',
         'yv_id',
         'links',
-        'expected_report_date'
+        'expected_report_date',
+        'candidate_id'
     ];
 
 

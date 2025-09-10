@@ -65,7 +65,7 @@ class verifyMeAddress
         // }
         $slug = Verification::whereSlug($request->slug)->first();
         $userWallet = Wallet::where('user_id', auth()->user()->id)->first();
-        
+          $ref = $this->GenerateRef();
 
         if ($userWallet->avail_balance < $slug->fee) {
             Session::flash('alert', 'error');
@@ -75,7 +75,7 @@ class verifyMeAddress
       
         try{
         $address_verification = AddressVerification::where('service_reference', $service_ref)->first();
-       
+       $CandidatePhone = preg_replace('/^0/','234',$address_verification->phone);
         if ($request->slug == 'individual-address') {
             $valid = Validator::make($request->all(), [
               'street' => 'required|string',
@@ -90,17 +90,18 @@ class verifyMeAddress
               Session::flash('message', $valid->errors()->first());
               return redirect()->back()->withErrors($valid)->withInput($request->all());
             }
-            $phone = preg_replace('/^0/','234',$address_verification->phone);
+            // $phone = preg_replace('/^0/','234',$address_verification->phone);
+            
             $body = [
                 'applicant' => [
                     'firstname' => $address_verification->first_name,
                     'lastname'=> $address_verification->last_name,
-                    'phone'=> $phone,
+                    'phone'=> $CandidatePhone,
                     'dob'=> $address_verification->dob,
                     'gender'=> $address_verification->gender,
                            ],
                 "street" => $request->street.'company: '.getCompanyName()??"",
-                "customerReference" => $service_ref,
+                "customerReference" => $ref,
                 "lgaName" => $request->lga??"",
                 "stateName" => $request->state??"",
                 "landmark" => $request->landmark??"",
@@ -145,8 +146,8 @@ class verifyMeAddress
                 'dob'=> $request->dob,
                 'gender'=> $request->gender,
                        ],
-              "street" => $request->street.' company: '.getCompanyName()??""."- Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name,
-              "customerReference" => $service_ref,
+              "street" => $request->street.' Company: '.getCompanyName()??""."- Guarantor for ".$address_verification->first_name. '  '.$address_verification->last_name .'Candidate_phone: '.$CandidatePhone,
+              "customerReference" => $ref,
               "lgaName" => $request->lga??"",
               "stateName" => $request->state??"",
               "landmark" => $request->landmark??"",
