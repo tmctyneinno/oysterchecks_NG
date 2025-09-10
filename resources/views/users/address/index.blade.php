@@ -31,13 +31,13 @@
          <div class="row ">
              <div class="col-lg-12">
                  <div class="row justify-content-left">
-                     <div class="col-md-6 col-lg-4">
-                         <div class="card report-card ">
-                             <div class="card-body" >
+                     <div class="col-md-6 col-lg-4 ">
+                         <div class="card report-card  ">
+                             <div class="card-body " >
                                  <div class="row d-flex justify-content-center">
-                                     <div class="col">
-                                         <p class="mb-0 fw-semibold text-black">Total Address Verifications</p>
-                                         <h3 class="m-0 text-black">{{$all??0}}</h3>
+                                     <div class="col ">
+                                         <p class="mb-0 fw-semibold text-blue">Total Address Verifications</p>
+                                         <h3 class="m-0 text-blue">{{$all??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -55,8 +55,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="text-black mb-0 fw-semibold">Completed Address Verifications</p>
-                                         <h3 class="m-0 text-black">{{$completed??0}}</h3>
+                                         <p class="text-success mb-0 fw-semibold">Completed Address Verifications</p>
+                                         <h3 class="m-0 text-success">{{$completed??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -74,8 +74,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="text-black mb-0 fw-semibold">Verifications in Progress</p>
-                                         <h3 class="m-0 text-black">{{$IN_PROGRESS??''}}</h3>
+                                         <p class="text-info mb-0 fw-semibold">Verifications in Progress</p>
+                                         <h3 class="m-0 text-info">{{$IN_PROGRESS??''}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -94,8 +94,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="text-black mb-0 fw-semibold">Requests Awaiting Reschedule</p>
-                                         <h3 class="m-0 text-black">{{$pending??0}}</h3>
+                                         <p class="text-warning mb-0 fw-semibold">Requests  Pending</p>
+                                         <h3 class="m-0 text-warning">{{$pending??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -114,8 +114,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                          <p class="text-red mb-0 fw-semibold">Address Cancelled or Rejected</p>
-                                         <h3 class="m-0 text-black">{{$cancelled??0}}</h3>
+                                          <p class="text-danger mb-0 fw-semibold">Address Cancelled or Rejected</p>
+                                         <h3 class="m-0 text-danger">{{$cancelled??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
