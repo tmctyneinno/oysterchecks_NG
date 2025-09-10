@@ -196,7 +196,9 @@
                                      <th>SN</th>
                                      <th>Address Candidate</th>
                                      <th>Reference Id</th>
+                                     <td> Candidate Address Status</td>
                                      <th>Initiated by</th>
+                                     
                                      <th>Date Created</th>
                                      <th>Action</th>
                                  </tr>
@@ -207,25 +209,25 @@
                                      <td>{{$loop->iteration}}</td>
                                      <td>{{$transaction->first_name}} {{$transaction->last_name}}</td>
                                      <td>{{$transaction->service_reference}}</td>
-                                     {{-- <td>
+                                     <td>
                                          @if($transaction->addressVerificationDetail()->exists())
-                                         @if($transaction->addressVerificationDetail->status == 'pending')
+                                         @if($transaction->addressVerificationDetail->first()->status == 'pending')
                                          <span class="badge badge-soft-purple">Pending</span>
-                                         @elseif($transaction->addressVerificationDetail->status == 'completed' && $transaction->addressVerificationDetail->task_status == 'VERIFIED')
+                                         @elseif($transaction->addressVerificationDetail->first()->status == 'completed' && $transaction->addressVerificationDetail->first()->task_status == 'VERIFIED')
                                          <span class="badge badge-soft-success">Completed & Verified</span>
-                                         @elseif($transaction->addressVerificationDetail->status == 'awaiting_reschedule')
+                                         @elseif($transaction->addressVerificationDetail->first()->status == 'awaiting_reschedule')
                                          <span class="badge badge-soft-dark">Awaiting Reschedule</span>
-                                         @elseif($transaction->addressVerificationDetail->status == 'completed' && $transaction->addressVerificationDetail->task_status == 'NOT_VERIFIED')
+                                         @elseif($transaction->addressVerificationDetail->first()->status == 'completed' && $transaction->addressVerificationDetail->first()->task_status == 'NOT_VERIFIED')
                                          <span class="badge badge-soft-warning">Completed but Not Verified</span>
-                                         @elseif($transaction->addressVerificationDetail->status == 'canceled')
-                                         <span class="badge badge-soft-danger"> {{$transaction->addressVerificationDetail->status}}</span>
+                                         @elseif($transaction->addressVerificationDetail->first()->status == 'canceled')
+                                         <span class="badge badge-soft-danger"> {{$transaction->addressVerificationDetail->first()->status}}</span>
                                          @else
-                                         <span class="badge badge-soft-danger"> {{$transaction->addressVerificationDetail->status}}</span>
+                                         <span class="badge badge-soft-danger"> {{$transaction->addressVerificationDetail->first()->status}}</span>
                                          @endif
                                          @else
                                          <span class="badge badge-soft-secondary">No verification Request Yet</span>
                                          @endif
-                                     </td> --}}
+                                     </td>
                                      <td>{{$transaction->user->firstname}}</td>
                                      <td>{{$transaction->created_at}}</td>
                                      <td>
