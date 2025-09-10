@@ -36,8 +36,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="mb-0 fw-semibold text-black">Total Candidates</p>
-                                         <h3 class="m-0 text-black">{{isset($address_verifications)?count($address_verifications):'0'}}</h3>
+                                         <p class="mb-0 fw-semibold text-black">Total Address Verifications</p>
+                                         <h3 class="m-0 text-black">{{$all??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -55,8 +55,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="text-black mb-0 fw-semibold">Total Verifications Sent</p>
-                                         <h3 class="m-0 text-black">{{isset($verifications)?count($verifications):''}}</h3>
+                                         <p class="text-black mb-0 fw-semibold">Completed Address Verifications</p>
+                                         <h3 class="m-0 text-black">{{$completed??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -74,8 +74,8 @@
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="text-black mb-0 fw-semibold">Total Results Received</p>
-                                         <h3 class="m-0 text-black">{{isset($results)??'0'}}</h3>
+                                         <p class="text-black mb-0 fw-semibold">Verifications in Progress</p>
+                                         <h3 class="m-0 text-black">{{$IN_PROGRESS??''}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -89,13 +89,13 @@
                          <!--end card-->
                      </div>
                      <!--end col-->
-                     {{-- <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-4">
                          <div class="card report-card">
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                         <p class="text-black mb-0 fw-semibold">Cancelled Requests</p>
-                                         <h3 class="m-0 text-black">{{$cancelled}}</h3>
+                                         <p class="text-black mb-0 fw-semibold">Requests Awaiting Reschedule</p>
+                                         <h3 class="m-0 text-black">{{$pending??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -109,13 +109,13 @@
                          <!--end card-->
                      </div>
                      <!--end col-->
-                     <div class="col-md-6 col-lg-4">
+                  <div class="col-md-6 col-lg-4">
                          <div class="card report-card">
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
-                                          <p class="text-black mb-0 fw-semibold">Requests Awaiting Reschedule</p>
-                                         <h3 class="m-0 text-black">{{$awaiting_reschedule}}</h3>
+                                          <p class="text-red mb-0 fw-semibold">Address Cancelled or Rejected</p>
+                                         <h3 class="m-0 text-black">{{$cancelled??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
                                          <div class="report-main-icon bg-light-alt">
@@ -129,7 +129,7 @@
                          <!--end card-->
                      </div>
                      <!--end col-->
-                     <div class="col-md-6 col-lg-4">
+                       {{--   <div class="col-md-6 col-lg-4">
                          <div class="card report-card">
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">

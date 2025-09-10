@@ -64,8 +64,43 @@ public function generateHeaderReports($slug){
         $data['slug'] = $slug;
         if(count($address_verifications) > 0){
         $data['address_verifications'] = $address_verifications->load('addressVerificationDetail');
-        $data['results'] = AddressVerificationDetail::where(['address_verification_id'=>$address_verifications[0]?->id, 'status' => 'completed'])->count();
+        $data['all'] = AddressVerificationDetail::whereHas('addressVerification', function ($query) use ($user, $slug) {
+                $query->where([
+                    'user_id' => $user->id,
+                    'verification_id' => $slug->id,
+                ]);
+            })->count();
+                $data['IN_PROGRESS'] = AddressVerificationDetail::with('addressVerification')
+                ->where('status', 'IN_PROGRESS')
+                ->whereHas('addressVerification', function ($query) use ($user, $slug) {
+                    $query->where('user_id', $user->id)
+                        ->where('verification_id', $slug->id);
+                })
+                ->count();
+
+                 $data['pending'] = AddressVerificationDetail::with('addressVerification')
+                ->where('status', 'pending')
+                ->whereHas('addressVerification', function ($query) use ($user, $slug) {
+                    $query->where('user_id', $user->id)
+                        ->where('verification_id', $slug->id);
+                })->count();
+
+                   $data['completed'] = AddressVerificationDetail::with('addressVerification')
+                ->where('status', 'completed')->orWhere('status', 'COMPLETED')
+                ->whereHas('addressVerification', function ($query) use ($user, $slug) {
+                    $query->where('user_id', $user->id)
+                        ->where('verification_id', $slug->id);
+                })->count();
+
+                 $data['cancelled'] = AddressVerificationDetail::with('addressVerification')
+                ->where('status', 'cancelled')->orWhere('status', 'rejected')
+                ->whereHas('addressVerification', function ($query) use ($user, $slug) {
+                    $query->where('user_id', $user->id)
+                        ->where('verification_id', $slug->id);
+                })->count();
+
          }
+
         $data['fields'] = FieldInput::where(['slug'=>'candidate'])->get();
         $data['states'] = States::get();
         $data['wallet']= Wallet::where('user_id', $user->id)->first();

@@ -430,9 +430,11 @@
                                                             </div><a class="my-codefor-googlemap" href="" id="make-map-data"> </a>
                                                             </div>
                                                             @else 
+                                                            @if(isset($address_verification->map_address_url) && $address_verification->map_address_url != "")
                                                             <div id="embedded-map-display" style="height:100%; width:100%;max-width:100%;">
                                                             <iframe src="{{$address_verification?->map_address_url}}.&output=embed" width="100%" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                                                             </iframe> 
+                                                            @endif
                                                             @endif
                                                         </div>
                                                     </div>
