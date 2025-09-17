@@ -124,7 +124,9 @@ private $token;
     foreach($verification as $verify)
     {
       $verify->hashid = encodeId($verify->id);
+      $verify->candidate =  empty($verify->guarantor)? json_decode($verify->candidate) :json_decode($verify->guarantor) ;
     }
+    
     // dd(decrypt($verification_id));
     $data['candidate'] =  $verification[0]->addressVerification->first_name . $verification[0]->addressVerification->last_name;
     $data['verified'] = AddressVerificationDetail::where(['address_verification_id' => $id, 'status' => 'completed'])->get();

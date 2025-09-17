@@ -178,7 +178,7 @@
                                 @foreach ($verification as $verifications)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$candidate}}</td>
+                                    <td>{{$verifications->candidate['firstname'].' '.$verifications->candidate['lastname']}}  </td>
                                     <td>{{$verifications->reference_id}}</td>
                                     <td>
                                         @if($verifications->status == 'pending')
