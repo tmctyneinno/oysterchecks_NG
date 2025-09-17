@@ -111,12 +111,9 @@ class verifyMeAddress
           $resp =   $this->base->baseUrl('post', 'https://api.qoreid.com/v1/addresses', $body, $token);
           $res = json_decode($resp,true);
           Log::info(['info' => $res]);
-          if($res['customerReference'])
-          {
             $res['type'] = 'individual';
              $this->chargeUser($slug->fee, $res['customerReference'], $res['type']);
             event(new AddressVerificationCreated($res, $address_verification));
-          }
           Session::flash('alert', 'success');
           Session::flash('message', 'Address successfully sent for verifications');
           return back();
@@ -156,8 +153,6 @@ class verifyMeAddress
             $token = $this->base->generateToken()['accessToken'];
             $resp =   $this->base->baseUrl('post', 'https://api.qoreid.com/v1/addresses', $body, $token);
             $res = json_decode($resp,true);
-            if($res['customerReference'])
-            {
             $res['type'] = 'guarantor';
              Log::info(['info' => $res]);
              $this->chargeUser($slug->fee, $res['customerReference'], $res['type']);
@@ -165,7 +160,6 @@ class verifyMeAddress
             Session::flash('alert', 'success');
             Session::flash('message', 'Address successfully sent for verifications');
             return back();
-            }
           }else{
             Log::info(['info' => 'Selected wrong address']);
             Session::flash('alert', 'error');
@@ -174,13 +168,13 @@ class verifyMeAddress
             
           }
         Session::flash('alert', 'error');
-        Session::flash('message', 'Something went wrong');
+        Session::flash('message', 'Selected wrong address');
           return back();
         }catch(\Exception $e)
         {
          Log::info(['info' => $e->getMessage()]);
           Session::flash('alert', 'error');
-        Session::flash('message', 'Something went wrong');
+        Session::flash('message', 'Something went wrong'.$e->getMessage());
           return back();
         }
      
