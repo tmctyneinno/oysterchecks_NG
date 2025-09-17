@@ -91,8 +91,6 @@ class verifyMeAddress
               Session::flash('message', $valid->errors()->first());
               return redirect()->back()->withErrors($valid)->withInput($request->all());
             }
-            // $phone = preg_replace('/^0/','234',$address_verification->phone);
-            
             $body = [
                 'applicant' => [
                     'firstname' => $address_verification->first_name,
