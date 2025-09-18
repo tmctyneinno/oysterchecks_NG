@@ -196,7 +196,7 @@
                                      <th>SN</th>
                                      <th>Address Candidate</th>
                                      <th>Reference Id</th>
-                                     <td> Candidate Address Status</td>
+                                     <td>  Address Status</td>
                                      <th>Initiated by</th>
                                      
                                      <th>Date Created</th>
@@ -209,7 +209,26 @@
                                      <td>{{$loop->iteration}}</td>
                                      <td>{{$transaction->first_name}} {{$transaction->last_name}}</td>
                                      <td>{{$transaction->service_reference}}</td>
-                                     <td>
+                                        <td> 
+                                             @if($transaction->addressVerificationDetail()->exists())
+                                         @php
+                                            $details = $transaction->addressVerificationDetail;
+                                            $total = $details->count();
+                                            $completed = $details->where('status', 'COMPLETED')->count();
+                                        @endphp
+
+                                        @if($completed > 0)
+                                            <span class="badge badge-soft-success">{{ $completed }}/{{ $total }} Completed</span>
+                                         @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
+                                         <span class="badge badge-soft-info"> Verification in Progress</span>
+                                         @else 
+                                         <span class="badge badge-soft-primary">Pending</span>
+                                         @endif 
+                                         @else 
+                                         <span class="badge badge-soft-secondary">No verification Request Yet</span>
+                                         @endif 
+                                            </td>
+                                     {{-- <td>
                                          @if($transaction->addressVerificationDetail()->exists())
                                          @if($transaction->addressVerificationDetail->first()->status == 'pending')
                                          <span class="badge badge-soft-purple">Pending</span>
@@ -219,15 +238,16 @@
                                          <span class="badge badge-soft-dark">Awaiting Reschedule</span>
                                          @elseif($transaction->addressVerificationDetail->first()->status == 'completed' && $transaction->addressVerificationDetail->first()->task_status == 'NOT_VERIFIED')
                                          <span class="badge badge-soft-warning">Completed but Not Verified</span>
-                                         @elseif($transaction->addressVerificationDetail->first()->status == 'canceled')
+                                         @elseif($transaction->addressVerificationDetail->first()->status == 'cancelled')
                                          <span class="badge badge-soft-danger"> {{$transaction->addressVerificationDetail->first()->status}}</span>
                                          @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
                                          <span class="badge badge-soft-info"> Verification in Progress</span>
                                          @endif
+                                          <span class="badge badge-soft-purple">Pending</span>
                                          @else
                                          <span class="badge badge-soft-secondary">No verification Request Yet</span>
                                          @endif
-                                     </td>
+                                     </td> --}}
                                      <td>{{$transaction->user->firstname}}</td>
                                      <td>{{$transaction->created_at}}</td>
                                      <td>
