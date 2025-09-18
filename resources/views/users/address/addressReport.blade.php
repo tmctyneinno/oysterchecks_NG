@@ -601,10 +601,10 @@
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Building Color : </div>
                                                         <div class="fw-normal font-15 col-8">{{$address_verification?->building_color}}</div>
                                                     </div>
-                                                    <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
+                                                    {{-- <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Closest Landmark : </div>
                                                         <div class="fw-normal font-15 col-8">{{$address_verification?->closest_landmark}}</div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-xs-12 col-md-6 d-flex py-4 border-top">
                                                         <div class="fw-semibold m-0 font-15 me-3 text-muted col-4">Availability Confirmed By : </div>
                                                         <div class="fw-normal font-15 col-8">{{$address_verification?->availability_confirmed_by}}</div>
