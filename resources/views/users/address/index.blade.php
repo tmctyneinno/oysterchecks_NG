@@ -222,7 +222,7 @@
                                          @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
                                          <span class="badge badge-soft-info"> Verification in Progress</span>
                                          @else 
-                                         <span class="badge badge-soft-primary">Pending</span>
+                                         <span class="badge badge-soft-primary">{{$transaction->addressVerificationDetail->first()->status}}</span>
                                          @endif 
                                          @else 
                                          <span class="badge badge-soft-secondary">No verification Request Yet</span>
