@@ -17,6 +17,7 @@ use App\Http\Controllers\SanctionPepController;
 use App\Http\Controllers\AdverseMediaController;
 use App\Http\Controllers\EmployeeRefController;
 use App\Http\Controllers\GenerateAddressReportController;
+use App\Http\Controllers\UpdateVerificationStatus;
 use App\Models\AddressVerification;
 
 // use App\Models\Transaction;
@@ -154,4 +155,5 @@ Route::get('/client-generate-report',[GenerateAddressReportController::class, 's
 Route::post('/generate/address/report', [GenerateAddressReportController::class,'RunGeneratorJob'])->name('user.generate-address-report');
 });
 
+Route::get('resend/webhook', [UpdateVerificationStatus::class, 'resendWebhook']);
 require __DIR__.'/admin.php';
