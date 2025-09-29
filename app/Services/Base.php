@@ -9,6 +9,7 @@ class Base
     public function baseUrl($method, $url, $body, $token)
     {
 
+ 
         $client = new Client();
       $req =  $client->request($method, $url, [
             'headers' => [
@@ -16,8 +17,9 @@ class Base
                 'authorization' => "Bearer $token",
                 'content-type' => 'application/json',
             ],
-            'body' => json_encode($body)
+            'body' =>json_encode($body)
         ]);
+      
 
         return $req->getBody();
     }
