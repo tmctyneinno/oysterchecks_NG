@@ -24,8 +24,8 @@ class GenerateAddressReportController extends Controller
     {
         
         $dates = explode('-',$request->daterange);
-        $start_date = Carbon::parse($dates[0])->startOfDay();
-        $end_date = Carbon::parse($dates[1])->endOfDay();
+        $start_date = Carbon::parse(strip_tags($dates[0]))->startOfDay();
+        $end_date = Carbon::parse(strip_tags($dates[1]))->endOfDay();
         $status = $request->status ?? null;
 
         //rescope query type to match address verification detail type
