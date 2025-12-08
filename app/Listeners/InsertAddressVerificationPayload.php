@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Events\AddressVerificationCreated;
 use App\Models\AddressVerificationDetail;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class InsertAddressVerificationPayload implements ShouldQueue
 {
@@ -34,6 +35,8 @@ class InsertAddressVerificationPayload implements ShouldQueue
     {
         $res = $event->res;
         $get_address_verification = $event->address_verification;
+
+        Log::info($res);
 
         $candidate = [
             'first_name' => $get_address_verification->firt_name,
@@ -81,7 +84,7 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'type' =>  $res['type'],
             'yv_id' => isset($res['data'])?$res['data']['id']:'',
             'links' => isset($res['data'])?json_encode($res['links']):'',
-             'expected_report_date' => Carbon::now()->addDays(4)
+            //  'expected_report_date' => Carbon::now()->addDays(4)
           ]);
     }
 
