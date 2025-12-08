@@ -39,7 +39,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"> <span style="color:rgb(13, 100, 132); font-style:italics">  <strong> Address Verification Report  </strong> </span></h4>
+                        <h4 class="card-title"> <span style="color:rgb(13, 100, 132); font-style:italics"> <strong> Address Verification Report </strong> </span></h4>
                     </div>
                     <!--end card-header-->
                     <form method="post" action="{{route('user.generate-address-report')}}" id="form1" enctype="multipart/form-data">
@@ -48,41 +48,45 @@
                         <div class="card-body bootstrap-select-1">
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    <span> Select Address Type  </span> 
+                                    <span> Select Address Type </span>
                                     <br>
-                                    <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
-                                      
-                                        <input type="radio" class="btn-check" value="individual-address"  name="query_type" id="btnradio1" autocomplete="off" checked="">
-                                        <label class="btn btn-lg btn-outline-info"  for="btnradio1">Individual Address</label>
-                                      &nbsp;   &nbsp;
+                                    <div class="btn-group align-items-center" role="group" aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" value="individual-address" name="query_type" id="btnradio1" autocomplete="off" checked="">
+                                        <label class="btn btn-lg btn-outline-info" for="btnradio1">Individual Address</label>
+                                        &nbsp; &nbsp;
                                         <input type="radio" class="btn-check" value="reference-address" name="query_type" id="btnradio2" autocomplete="off">
                                         <label class="btn btn-lg btn-outline-info" for="btnradio2">Reference Address</label>
-                                        &nbsp;   &nbsp;
+                                        &nbsp; &nbsp;
                                         <input type="radio" class="btn-check" value="business-address" name="query_type" id="btnradio3" autocomplete="off">
                                         <label class="btn btn-lg btn-outline-info" for="btnradio3">Business Address</label>
                                     </div>
-                                    <div class="col-md-12 mt-3">
-                                 
-                                        <label class="form-label" for="exampleInputEmai">Select Date Range</label> <br>
-                                        <div class="input-group">  
-                                            <input type="text" name="daterange"  id="reportrange" class="form-control" value="2024-01-01">
-                                            <span class="input-group-text"><i class="ti ti-calendar font-16"></i></span>
+                                    <div class="row col-md-12 mt-3">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label" for="exampleInputEmai">Select Date Range</label> <br>
+                                            <div class="input-group">
+                                                <input type="text" name="daterange" id="reportrange" class="form-control" value="2024-01-01">
+                                                <span class="input-group-text"><i class="ti ti-calendar font-16"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label" for="status">Select Status</label> <br>
+                                            <select class="w-100 p-1" style="border:1px solid rgb(227, 235, 246); border-radius:5px" id="status" name="status">
+                                                <option value=""> All </option>
+                                                <option value="PENDING"> Pending </option>
+                                                <option value="IN_PROGRESS"> In Progress </option>
+                                                <option value="COMPLETED"> Completed </option>
+                                                <option value="CANCELLED"> Cancelled </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column mb-3">
+                                            <label class="form-label" for="report-doc-type">Select Report Document Type</label>
+                                            <select class="w-100 p-1" style="border:1px solid rgb(227, 235, 246); border-radius:5px" id="report-doc-type" name="report_doc_type" required>
+                                                <option> Select Document Type </option>
+                                                <option value="excel"> Excel </option>
+                                                <option value="pdf"> PDF </option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mt-3">
-                                 
-                                        <label class="form-label" for="exampleInputEmai">Select Number of Reports</label> <br>
-                                        <div class="input-group">  
-                                         <select name="reportCount" class="form-control" required> 
-                                            <option value="10"> 10</option>
-                                            <option value="20"> 20</option>
-                                            <option value="30"> 30</option>
-                                            <option value="40"> 40</option>
-                                            <option value="50"> 50</option>
-                                         </select>
-                                        </div>
-                                    </div>
-
                                 </div><!-- end col -->
                                 <button class="btn btn-primary w-25 pt-2 pb-2" id="myButton"> Generate Address Report</button>
                             </div><!-- end row -->
@@ -92,60 +96,59 @@
             </div> <!-- end col -->
         </div>
 
-          <div class="row">
-             <div class="col-12">
-                 <div class="card">
-                     <div class="card-body">
-                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                             <thead>
-                                 <tr>
-                                     <th>SN</th>
-                                     <th>Date Requested</th>
-                                     <th>Report Type</th>
-                                     <th>Start Date</th>
-                                     <th>End Date</th>
-                                     <th>Download Path</th>
-                                 </tr>
-                             </thead>
-                             <tbody>
-                                 @foreach ($reports as $transaction)
-                                 <tr>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Date Requested</th>
+                                    <th>Report Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Download Path</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($reports as $transaction)
+                                <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$transaction->created_at}}</td>
-                                     <td>{{$transaction->address_type}}</td>
-                                     <td>{{$transaction->start_date}} </td>
-                                     <td>{{$transaction->end_date}}</td>
-                                     <td> <a target="_blank" class="btn btn-outline-info" href="{{asset($transaction->reports)}}"> Download Report </td>
-                                 </tr>
-                                 @endforeach
-                             </tbody>
-                         </table>
-                     </div>
-                 </div>
-             </div> <!-- end col -->
-         </div>
+                                    <td>{{$transaction->address_type}}</td>
+                                    <td>{{$transaction->start_date}} </td>
+                                    <td>{{$transaction->end_date}}</td>
+                                    <td> <a target="_blank" class="btn btn-outline-info" href="{{asset($transaction->reports)}}"> Download Report </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
     </div>
     @endsection
 
     @section('script')
     <script>
-
- $(function() {
-    $('#reportrange').daterangepicker({
-        minDate: new Date('2018-11-2'),
-        locale: {
-            format: minDate
-        }
-    });
-});
-   document.getElementById('myButton').addEventListener('click', function() {
-    Swal.fire({
-        title: 'warning!',
-        // text: 'Report is running, results will be made available once completed, you can continue with other activities while the system get this ready for you.',
-        text:'Report is running, please wait while we get the reports ready for you',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-    })
-});
+        $(function() {
+            $('#reportrange').daterangepicker({
+                minDate: new Date('2018-11-2'),
+                locale: {
+                    format: minDate
+                }
+            });
+        });
+        document.getElementById('myButton').addEventListener('click', function() {
+            Swal.fire({
+                title: 'warning!',
+                text: 'Report is running, results will be made available once completed, you can continue with other activities while the system get this ready for you.',
+                //text: 'Report is running, please wait while we get the reports ready for you',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            })
+        });
     </script>
     @endsection
