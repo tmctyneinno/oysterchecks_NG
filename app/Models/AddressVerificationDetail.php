@@ -65,15 +65,15 @@ class AddressVerificationDetail extends Model
      *
      * @var array
      */
-    // protected $casts = [
-    //     'candidate' => 'array',
-    //     'business' => 'array',
-    //     'agent' => 'array',
-    //     'address' => 'array',
-    //     'notes' => 'array',
-    //     'images' => 'array',
-    //     'links' => 'array'
-    // ];
+    protected $casts = [
+        'candidate' => 'array',
+        'business' => 'array',
+        'agent' => 'array',
+        'address' => 'array',
+        'notes' => 'array',
+        'images' => 'array',
+        'links' => 'array'
+    ];
 
 
     public function addressVerification()
