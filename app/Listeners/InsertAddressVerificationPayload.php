@@ -48,10 +48,10 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'address' => json_encode($res['address']['location']),
             'status' => $res['summary']['address_check'],
             'task_status' => $res['summary']['address_check'],
-            'start_date' => $res['address']['requestedAt'],
+            'start_date' => $this->safeDate($res['address']['requestedAt'] ?? null),
+            'accepted_at' => $this->safeDate($res['data']['acceptedAt'] ?? null),
+            'revalidation_date'=> $this->safeDate($res['data']['revalidationDate'] ?? null),
             // 'closest_landmark' => isset($res['data'])?$res['address']['location']['landmark']:'',
-            'accepted_at' => isset($res['data'])?$res['data']['acceptedAt']:'',
-            'revalidation_date'=> isset($res['data'])?$res['data']['revalidationDate']:'',
             'notes'=> isset($res['data'])?json_encode($res['data']['notes']):'',
             'is_flagged'=> isset($res['data'])?$res['data']['isFlagged']:1,
             'subject_consent' =>  true,
@@ -81,7 +81,20 @@ class InsertAddressVerificationPayload implements ShouldQueue
             'type' =>  $res['type'],
             'yv_id' => isset($res['data'])?$res['data']['id']:'',
             'links' => isset($res['data'])?json_encode($res['links']):'',
-            //  'expected_report_date' => Carbon::now()->addDays(4)
+             'expected_report_date' => Carbon::now()->addDays(4)
           ]);
     }
+
+    private function safeDate($value)
+{
+    try {
+        if (!$value || strtolower($value) == 'n/a') {
+            return null;
+        }
+        return Carbon::parse($value);
+    } catch (\Exception $e) {
+        return null;
+    }
+}
+
 }
