@@ -112,7 +112,7 @@ class verifyMeAddress
           Log::info(['info' => $res]);
             $res['type'] = 'individual';
              $this->chargeUser($slug->fee, $res['customerReference'], $res['type']);
-            event(new AddressVerificationCreated($res, $address_verification));
+            // event(new AddressVerificationCreated($res, $address_verification));
           Session::flash('alert', 'success');
           Session::flash('message', 'Address successfully sent for verifications');
           return back();
