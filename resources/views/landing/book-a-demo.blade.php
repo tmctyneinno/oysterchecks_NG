@@ -113,6 +113,12 @@
                                         <input type="text" class="form-control" name="phone" placeholder="Phone" required="required" >
                                     </div>
                                 </div>
+                                 <div class="col-6">
+                                    <div class="form-group">
+                                       <span class="text-muted"> Choose peferred Date (*)</span> 
+                                        <input type="date" class="form-control" name="date" placeholder="Choose a date" required="required" >
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <p><b>The platform(s) that you are looking to protect:</b></p>
                                 </div>

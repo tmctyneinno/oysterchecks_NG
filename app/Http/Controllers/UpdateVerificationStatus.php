@@ -22,7 +22,7 @@ class UpdateVerificationStatus extends Controller
     public function resendWebhook()
     {
         $client = new Client();
-      $req =  
+      
           $token = $this->base->generateToken()['accessToken'];
              AddressVerificationDetail::where('status', 'IN_PROGRESS')
              ->chunk(100, function($ddresses) use ($token, $client){
