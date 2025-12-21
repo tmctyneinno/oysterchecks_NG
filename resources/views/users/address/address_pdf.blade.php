@@ -122,7 +122,7 @@
           @endforeach
           @endempty
     </div>
-     @empty($address_verification?->images)
+    {{-- @empty($address_verification?->images)
     <div class="col-12 text-center py-3">No Images Available</div>
     @else
    @foreach($address_verification?->images as $image)
@@ -134,5 +134,5 @@
             @endif
     </div>
     @endforeach
-    @endempty
+    @endempty --}}
   </div>
