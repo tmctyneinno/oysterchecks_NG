@@ -18,10 +18,10 @@
                     <li><a href="{{route('about-us')}}" class="dropdown-toggle">About Us</a>
                         <ul class="sub-menu">
                             <li><a href="{{route('about-us')}}" >About Us</a></li>
-                            <li><a href="{{route('who-we-are')}}">Who we are</a></li>
-                            <li><a href="{{route('core-values')}}">Core values</a></li>
-                            <li><a href="{{route('mission')}}">Mission </a></li>
-                            <li><a href="{{route('about-us')}}">Why Choose Us</a></li>
+                            <!-- <li><a href="{{route('who-we-are')}}">Who we are</a></li> -->
+                            <!-- <li><a href="{{route('core-values')}}">Core values</a></li> -->
+                            <!-- <li><a href="{{route('mission')}}">Mission </a></li> -->
+                            <!-- <li><a href="{{route('about-us')}}">Why Choose Us</a></li> -->
                             <li><a  href="{{route('industry')}}">Industry</a></li>
                         </ul>
                     </li>
