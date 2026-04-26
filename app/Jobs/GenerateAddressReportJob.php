@@ -218,7 +218,7 @@ class GenerateAddressReportJob implements ShouldQueue
 
                 $row++;
             }
-        }
+        } 
         
         // Auto-size columns AFTER all data is written
         foreach (range('A', chr(64 + count($headers))) as $columnID) {
