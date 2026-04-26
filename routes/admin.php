@@ -50,4 +50,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin', '
     Route::post('/password/update', [AdminController::class, 'UpdatePassword'])->name('form_PasswordeUpdate');
     Route::post('/basic/information/update', [AdminController::class, 'UpdateBusinessInfo'])->name('basic_information');
     Route::post('/contact/information/update', [AdminController::class, 'UpdateContactInfo'])->name('contact_information');
-    }); 
+}); 

@@ -7,9 +7,11 @@ use App\Models\AddressVerification;
 use App\Models\AddressVerificationDetail;
 use App\Models\GenerateAddresssReport;
 use Carbon\Carbon;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-
+ 
 class GenerateAddressReportController extends Controller
 {
     
@@ -54,19 +56,36 @@ class GenerateAddressReportController extends Controller
             ->count();
 
         if($verification_count > 0){
-
-            // Pass only query parameters to the job, not the actual data
-            GenerateAddressReportJob::dispatch(
+            $jobPayload = [
                 auth()->user()->id,
                 $verification_detail_type,
                 $request->report_doc_type,
                 $status,
                 $start_date,
-                $end_date
-            );
+                $end_date,
+            ];
 
-            Session::flash('alert', 'success');
-            Session::flash('message', 'Report generation has been queued. Please check back in a few minutes for your download link.');
+            try {
+                GenerateAddressReportJob::dispatch(...$jobPayload);
+
+                Session::flash('alert', 'success');
+                Session::flash('message', 'Report generation has been queued. Please check back in a few minutes for your download link.');
+            } catch (QueryException $exception) {
+                if (! $this->isDatabaseQueueInsertError($exception)) {
+                    throw $exception;
+                }
+
+                Log::warning('Database queue insert failed for address report generation; running job synchronously instead.', [
+                    'user_id' => auth()->id(),
+                    'error' => $exception->getMessage(),
+                ]);
+
+                GenerateAddressReportJob::dispatchSync(...$jobPayload);
+
+                Session::flash('alert', 'success');
+                Session::flash('message', 'Report generated successfully. The queue table is not configured correctly, so this one was processed immediately.');
+            }
+
             return back();
         }
 
@@ -74,5 +93,16 @@ class GenerateAddressReportController extends Controller
         Session::flash('message', 'No Report found within the dates selected');
         return back();
 
+    }
+
+    private function isDatabaseQueueInsertError(QueryException $exception): bool
+    {
+        $message = $exception->getMessage();
+
+        return str_contains($message, 'insert into `jobs`')
+            && (
+                str_contains($message, "Field 'id' doesn't have a default value")
+                || str_contains($message, 'SQLSTATE[HY000]')
+            );
     }
 }
