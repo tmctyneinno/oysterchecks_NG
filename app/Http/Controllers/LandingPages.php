@@ -36,7 +36,7 @@ class LandingPages extends Controller
         return view('landing.amlsolution');
     }
     public function bpssClearance(){
-        return view('bpss-clearance');
+        return view('landing.bpss-clearance');
     }
 
     public function bs7858Vetting(){

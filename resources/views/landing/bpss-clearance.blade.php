@@ -85,7 +85,7 @@
                     <div class=" text-center single-pricing-pack">
                         <div class="card-header py-4 border-0 simplepricing-header" >
                             <h2 class="pt-4">BPSS Clearance</h2>
-                            <p>$329</p>  
+                            <p>£329</p>  
                         </div>
                         <div class="simplepricing-headerr" >
                             <p >billed just once</p>   

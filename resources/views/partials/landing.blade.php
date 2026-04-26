@@ -32,7 +32,7 @@
                             <li><a href="{{route('transaction')}}">Transaction</a></li>
                             <li><a href="{{route('aml-solution')}}">AML Solution</a></li>
                             <li><a href="{{route('bpss-clearance')}}">BPSS Clearance</a></li>
-                            <li><a href="#">BS7858 Vetting</a></li>
+                            <li><a href="{{route('bs7858-vetting')}}">BS7858 Vetting</a></li> 
                         </ul>
                     </li>
                     <li><a href="{{route('technology')}}">Technology</a></li>

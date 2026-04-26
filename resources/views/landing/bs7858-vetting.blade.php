@@ -90,8 +90,8 @@
                 <div class="col-md-12 col-lg-5" style="background-color: #F8F8F9;  border-top-left-radius: 15px;">
                     <div class=" text-center single-pricing-pack">
                         <div class="card-header py-4 border-0 simplepricing-header" >
-                            <h2 class="pt-4">BPSS Clearance</h2>
-                            <p>$690</p>  
+                            <h2 class="pt-4">BS7858 Vetting</h2>
+                            <p>£690</p>  
                         </div>
                         <div class="simplepricing-headerr" >
                             <p >billed just once</p>   
