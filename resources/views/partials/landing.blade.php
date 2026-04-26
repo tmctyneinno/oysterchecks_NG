@@ -22,7 +22,7 @@
                             <!-- <li><a href="{{route('core-values')}}">Core values</a></li> -->
                             <!-- <li><a href="{{route('mission')}}">Mission </a></li> -->
                             <!-- <li><a href="{{route('about-us')}}">Why Choose Us</a></li> -->
-                            <li><a  href="{{route('industry')}}">Industry</a></li>
+                            <li><a  href="{{route('industry')}}">Industries we serve</a></li>
                         </ul>
                     </li>
                       <li><a  href="#" class="dropdown-toggle">Services</a>

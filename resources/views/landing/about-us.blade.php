@@ -6,8 +6,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap');
 
     :root {
-        --navy:   #0B1F3A;
-        --navy2:  #0D2B52;
+        --navy:   #0C447C;
+        --navy2:  #042C53;
         --teal:   #0E7C6A;
         --teal-l: #E0F4F0;
         --gold:   #C49A3C;
@@ -606,7 +606,7 @@
 <div class="main oc-page">
 
     <!-- ══════════ HERO ══════════ -->
-    <section class="oc-hero">
+    <section class="oc-hero" >
         <div class="oc-hero-deco"></div>
         <div class="container oc-hero-inner">
             <div class="row">
@@ -625,6 +625,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- ══════════ SECTION 1: WHO WE ARE ══════════ -->
     <section class="oc-section" id="who-we-are">
