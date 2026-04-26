@@ -23,7 +23,7 @@
                         <div class="pt-4"><h5>GDPR screening package</h5></div>
                        
                         <div class="card-header py-4 border-0 pricing-header" style="color: #000;">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">₦100,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
+                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">£100,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
                             
                         </div>
                         <div class="card-body">
@@ -44,7 +44,7 @@
                         <div class="pt-4"><h5>Entryscreening package </h5></div>
                         
                         <div class="card-header py-4 border-0 pricing-header" style="color: #000">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">₦150,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
+                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">£150,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
 
 
                         </div>
@@ -72,7 +72,7 @@
                             
                         </div>
                         <div class="card-header py-4 border-0 pricing-header" style="color: #000">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder">₦250,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
+                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder">£250,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
                             
 
                         </div>
@@ -96,7 +96,7 @@
                     <div class="card text-center single-employment-pack">
                         <div class="pt-4"><h5>Director & senior management package</h5></div>
                         <div class="card-header py-4 border-0 pricing-header" style="color: #000">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">₦500,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
+                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">£500,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
 
                         </div>
                         <div class="card-body">
@@ -238,7 +238,7 @@
                         
                         <div class="card-header align-items-left py-4 border-0 pricing-header text-left" style="color: #000;">
                             <div class="h2  mb-0">
-                                <span class="price font-weight-bolder" style="font-size: 32px;">₦150,000</span>
+                                <span class="price font-weight-bolder" style="font-size: 32px;">£150,000</span>
                                 <sub style="color: #1A1A1A; font-size: 12px; line-height: 16.8px">/ month</sub>
                             </div>
                         </div>
@@ -265,7 +265,7 @@
                         
                         <div class="card-header align-items-left py-4 border-0 pricing-header text-left" style="color: #000;">
                             <div class="h2  mb-0">
-                                <span class="price font-weight-bolder" style="font-size: 32px;">₦250,000</span>
+                                <span class="price font-weight-bolder" style="font-size: 32px;">£250,000</span>
                                 <sub style="color: #1A1A1A; font-size: 12px; line-height: 16.8px">/ month</sub>
                             </div>
                         </div>
