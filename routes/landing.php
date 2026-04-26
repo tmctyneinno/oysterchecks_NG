@@ -16,7 +16,7 @@ Route::get('/kyc', [LandingPages::class, 'KYC'])->name('kyc');
 Route::get('/aml', [LandingPages::class, 'AML'])->name('aml');
 Route::get('/services', [LandingPages::class, 'Services'])->name('services');
 Route::get('/technology', [LandingPages::class, 'Technology'])->name('technology');
-Route::get('/industry', [LandingPages::class, 'Industry'])->name('industry');
+Route::get('/industries', [LandingPages::class, 'Industry'])->name('industry');
 Route::get('/resources', [LandingPages::class, 'Resources'])->name('resource');
 Route::post('/contact/form', [LandingPages::class, 'ContactForm'])->name('ContactForm');
 Route::get('/employment-checks', [LandingPages::class, 'EmploymentChecks'])->name('employment-checks');

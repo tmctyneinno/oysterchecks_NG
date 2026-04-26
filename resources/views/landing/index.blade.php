@@ -8,15 +8,13 @@
     <section class="hero-equal-height pt-165 pb-100" style="background: url('{{asset('/landing_assets/img/bg-shape.png')}}')no-repeat center center / cover; margin-bottom:-190px;">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-12 col-lg-6">
+                <div class="col-md-12 col-lg-6"> 
                     <div class="hero-slider-content z-index position-relative">
                         <span class="text-white text-uppercase">AI-Driven Risk Intelligence</span>
                         <h1 class="text-white">Instant Verification. Intelligent Decisions.</h1>
                         <p class="text-white">
-                          OysterChecks works like a smart backbone for trust and compliance.
-                                It plugs into whatever system a business already uses — CRM, HRIS, ERP, onboarding platforms — and instantly adds real-time intelligence, verification, and automated decisioning.
-
-                                No friction. No reinventing the wheel.
+                          Oysterchecks is not just a verification or compliance tool.
+It is a unified risk and assurance intelligence platform designed to help organisations prove trust, in real time.
                         </p>
                         <div class="action-btns mt-3">
                             <a class="btn secondary-solid-btn" style="font-size: 12px; color:#162E66; background-color:#fff" href="{{ route('login') }}">

@@ -6,7 +6,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap');
 
     :root {
-        --navy:   #0C447C;
+        --navy:   #0B1F3A;
         --teal:   #0E7C6A;
         --teal-l: #E0F4F0;
         --gold:   #C49A3C;
