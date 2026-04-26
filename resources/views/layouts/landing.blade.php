@@ -5,7 +5,7 @@
     <title>{{ config('app.name', 'Oysterchecks Comprehensive and Exceptional background checks') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Oysterchecks Comprehensive and Exceptional background checks, KYC & AML compliance Solutions</" name="description" />
-
+ 
     <meta property="og:site_name" content=""/> <!-- website name -->
     <meta property="og:site" content=""/> <!-- website link -->
     <meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
@@ -56,7 +56,7 @@
 @include('partials.landing')
 
 @yield('content')
-
+ 
 @include('partials.landing_footer')
 
 
