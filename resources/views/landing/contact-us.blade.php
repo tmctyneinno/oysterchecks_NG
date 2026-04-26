@@ -374,7 +374,7 @@
                         </svg>
                     </div>
                     <p class="ct-info__label">Call Us</p>
-                    <p class="ct-info__value"><a href="tel:+23417001770">+234 170 017 70</a></p>
+                    <p class="ct-info__value"><a href="tel:+23417001770">+44-2078560149</a></p>
                 </div>
 
                 <div class="ct-info__card">
@@ -385,7 +385,8 @@
                         </svg>
                     </div>
                     <p class="ct-info__label">Visit Us</p>
-                    <p class="ct-info__value">Adeola Adeoye Street,<br>Off Toyin Street, Ikeja</p>
+                    <p class="ct-info__value">United kingdom
+                        85 Great Portland Street, First Floor, London W1W 7LT, United Kingdom</p>
                 </div>
 
                 <div class="ct-info__card">
