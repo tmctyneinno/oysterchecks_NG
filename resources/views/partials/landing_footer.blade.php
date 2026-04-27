@@ -37,7 +37,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-6">
+                        <div class="col-md-3 col-sm-6">
                             <div class="footer-nav-wrap text-white">
                                 <h4 class="text-white">Quick Links</h4>
                                 <ul class="nav flex-column">
@@ -48,7 +48,7 @@
                                         <a class="nav-link" href="{{route('services')}}">Services</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{route('industry')}}">Industry</a>
+                                        <a class="nav-link" href="{{route('industry')}}">Industries we serve</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route('kyc')}}">KYC</a>

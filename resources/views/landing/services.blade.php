@@ -19,7 +19,7 @@
                                 <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="list-inline-item breadcrumb-item"><a href="#">SERVICES</a></li>
                             </ol>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
