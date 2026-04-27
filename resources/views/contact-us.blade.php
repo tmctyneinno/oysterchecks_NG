@@ -37,7 +37,7 @@
                                 <span class="ti-mobile icon-sm color-secondary"></span>
                             </div>
                             <div><h5 class="mb-0">Call Us</h5>
-                                <p class="text-muted mb-0"> +23417001770</p>
+                                <p class="text-muted mb-0"> +234 170 017 70</p>
                             </div>
                         </div>
                     </div>
