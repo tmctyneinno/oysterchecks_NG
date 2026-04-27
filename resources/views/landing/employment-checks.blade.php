@@ -1,398 +1,648 @@
 @extends('layouts.landing')
 
 @section('content')
- 
+
+<style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+        --navy:       #162E66;
+        --navy-dark:  #0e1e44;
+        --navy-mid:   #1e3d85;
+        --red:        #DA251D;
+        --white:      #ffffff;
+        --off-white:  #f6f8fc;
+        --text-dark:  #1a1f36;
+        --text-muted: #5a6282;
+        --border:     rgba(22, 46, 102, 0.12);
+        --radius-sm:  8px;
+        --radius-md:  12px;
+        --radius-lg:  16px;
+        --shadow-sm:  0 1px 4px rgba(22,46,102,0.08);
+        --shadow-md:  0 4px 20px rgba(22,46,102,0.10);
+        --shadow-lg:  0 12px 40px rgba(22,46,102,0.16);
+    }
+
+    /* ── HERO ────────────────────────────────────── */
+    .ec-hero {
+        background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+        padding: 88px 0 72px;
+        position: relative; overflow: hidden;
+    }
+    .ec-hero::before {
+        content: ''; position: absolute; inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
+    }
+    .ec-hero .container { position: relative; z-index: 1; text-align: center; }
+    .ec-hero__eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+        text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 16px;
+    }
+    .ec-hero__eyebrow::before {
+        content: ''; display: block; width: 22px; height: 2px;
+        background: rgba(255,255,255,0.4); flex-shrink: 0;
+    }
+    .ec-hero h1 {
+        font-size: clamp(28px, 4vw, 48px); font-weight: 800; color: #fff;
+        line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 14px;
+    }
+    .ec-hero p {
+        font-size: 17px; color: rgba(255,255,255,0.72);
+        line-height: 1.65; max-width: 520px; margin: 0 auto;
+    }
+
+    /* ── SHARED ──────────────────────────────────── */
+    .ec-section { padding: 80px 0; }
+    .ec-section--alt { background: var(--off-white); }
+    .ec-section-heading { text-align: center; margin-bottom: 52px; }
+    .ec-pill {
+        display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
+        text-transform: uppercase; color: var(--navy); background: rgba(22,46,102,0.08);
+        padding: 5px 16px; border-radius: 100px; margin-bottom: 14px;
+    }
+    .ec-section-heading h2 {
+        font-size: clamp(22px, 3vw, 34px); font-weight: 800; color: var(--text-dark);
+        letter-spacing: -0.025em; margin: 0 0 10px;
+    }
+    .ec-section-heading p { font-size: 15px; color: var(--text-muted); max-width: 480px; margin: 0 auto; line-height: 1.65; }
+
+    /* ── PRICING CARDS — EMPLOYMENT ──────────────── */
+    .ec-pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        align-items: start;
+    }
+    @media (max-width: 1199px) { .ec-pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 575px)  { .ec-pricing-grid { grid-template-columns: 1fr; } }
+
+    .ec-plan {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        display: flex; flex-direction: column;
+        transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+        position: relative;
+    }
+    .ec-plan:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(22,46,102,0.22); }
+
+    .ec-plan--popular {
+        border-color: var(--navy);
+        border-width: 2px;
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+    .ec-plan--popular:hover { transform: translateY(-8px); }
+
+    .ec-plan__badge {
+        position: absolute; top: 16px; right: 16px;
+        background: var(--red); color: #fff;
+        font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+        text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+    }
+
+    .ec-plan__head {
+        background: var(--navy); padding: 24px 24px 20px;
+    }
+    .ec-plan--popular .ec-plan__head { background: var(--navy-dark); }
+
+    .ec-plan__name {
+        font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.75);
+        text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 10px;
+    }
+    .ec-plan__price {
+        display: flex; align-items: baseline; gap: 4px;
+    }
+    .ec-plan__price-amount {
+        font-size: 34px; font-weight: 800; color: #fff; letter-spacing: -0.03em;
+    }
+    .ec-plan__price-period { font-size: 13px; color: rgba(255,255,255,0.55); }
+
+    .ec-plan__body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .ec-plan__label {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--text-muted); margin: 0 0 14px;
+    }
+    .ec-plan__features { list-style: none; padding: 0; margin: 0 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .ec-plan__features li {
+        display: flex; align-items: flex-start; gap: 10px;
+        font-size: 13.5px; color: var(--text-dark); line-height: 1.45;
+    }
+    .ec-plan__check {
+        width: 18px; height: 18px; flex-shrink: 0;
+        background: #d5f2e8; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .ec-plan__check svg { width: 10px; height: 10px; color: #0d6e52; }
+
+    .ec-plan__cta {
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+        background: var(--navy); color: #fff;
+        font-size: 14px; font-weight: 700; padding: 13px 20px;
+        border-radius: var(--radius-sm); text-decoration: none;
+        margin-top: 22px; letter-spacing: 0.01em;
+        transition: background 0.18s, transform 0.18s;
+    }
+    .ec-plan__cta:hover { background: var(--navy-dark); color: #fff; text-decoration: none; transform: translateY(-1px); }
+    .ec-plan__cta svg { width: 14px; height: 14px; }
+    .ec-plan--popular .ec-plan__cta { background: var(--navy-dark); }
+
+    /* ── COMPARISON TABLE ─────────────────────────── */
+    .ec-table-wrap { overflow-x: auto; }
+    .ec-table {
+        width: 100%; border-collapse: collapse;
+        font-size: 14px;
+    }
+    .ec-table thead tr {
+        background: var(--navy);
+    }
+    .ec-table thead th {
+        padding: 14px 20px; font-size: 12px; font-weight: 700;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: rgba(255,255,255,0.75); text-align: center;
+        border: none;
+    }
+    .ec-table thead th:first-child { text-align: left; color: #fff; }
+
+    .ec-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    .ec-table tbody tr:hover { background: rgba(22,46,102,0.03); }
+    .ec-table tbody tr:last-child { border-bottom: none; }
+
+    .ec-table tbody td, .ec-table tbody th {
+        padding: 13px 20px; vertical-align: middle;
+    }
+    .ec-table tbody th {
+        font-size: 13.5px; font-weight: 600; color: var(--text-dark);
+        text-align: left; max-width: 260px;
+    }
+    .ec-table tbody td { text-align: center; }
+
+    .ec-table-check {
+        width: 22px; height: 22px; border-radius: 50%;
+        background: #d5f2e8; display: inline-flex; align-items: center; justify-content: center; margin: auto;
+    }
+    .ec-table-check svg { width: 11px; height: 11px; color: #0d6e52; }
+    .ec-table-dash { color: #c4c9d9; font-size: 18px; font-weight: 300; }
+    .ec-table-unlimited {
+        font-size: 12px; font-weight: 700; color: #059669;
+        background: #d5f2e8; padding: 3px 10px; border-radius: 100px;
+        display: inline-block;
+    }
+    .ec-table-num {
+        font-size: 13px; font-weight: 600; color: var(--text-dark);
+    }
+
+    /* column headers in table */
+    .ec-table-col-header { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .ec-table-col-header span:first-child { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.55); }
+    .ec-table-col-header span:last-child  { font-size: 13px; font-weight: 800; color: #fff; }
+
+    /* ── BS7858 / ENTRY SCREENING ─────────────────── */
+    .ec-bs-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    @media (max-width: 767px) { .ec-bs-grid { grid-template-columns: 1fr; } }
+
+    .ec-bs-card {
+        border-radius: var(--radius-lg); overflow: hidden;
+        box-shadow: var(--shadow-md);
+        display: flex; flex-direction: column;
+    }
+    .ec-bs-card__head { padding: 28px 28px 22px; }
+    .ec-bs-card__head--navy { background: var(--navy); }
+    .ec-bs-card__head--red  { background: var(--red); }
+
+    .ec-bs-card__name { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin: 0 0 10px; }
+    .ec-bs-card__price { display: flex; align-items: baseline; gap: 5px; }
+    .ec-bs-card__price-amount { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
+    .ec-bs-card__price-period { font-size: 13px; color: rgba(255,255,255,0.55); }
+
+    .ec-bs-card__cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        color: #fff; font-size: 14px; font-weight: 700;
+        padding: 12px 22px; border-radius: var(--radius-sm);
+        text-decoration: none; margin-top: 18px; letter-spacing: 0.01em;
+        border: 2px solid rgba(255,255,255,0.35);
+        transition: background 0.18s;
+    }
+    .ec-bs-card__cta:hover { background: rgba(255,255,255,0.15); color: #fff; text-decoration: none; }
+    .ec-bs-card__cta svg { width: 14px; height: 14px; }
+
+    .ec-bs-card__body { background: var(--white); border: 1px solid var(--border); border-top: none; padding: 28px; flex: 1; }
+    .ec-bs-card__label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 14px; }
+    .ec-bs-card__features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+    .ec-bs-card__features li {
+        display: flex; align-items: flex-start; gap: 10px;
+        font-size: 14px; color: var(--text-dark); line-height: 1.45;
+    }
+    .ec-bs-check {
+        width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .ec-bs-check--navy { background: rgba(22,46,102,0.1); color: var(--navy); }
+    .ec-bs-check--red  { background: rgba(218,37,29,0.1); color: var(--red); }
+    .ec-bs-check svg { width: 10px; height: 10px; }
+
+    /* ── CTA STRIP ────────────────────────────────── */
+    .ec-cta { padding: 0 0 88px; background: var(--off-white); }
+    .ec-cta__strip {
+        background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+        border-radius: var(--radius-lg); padding: 52px 52px;
+        display: flex; align-items: center; justify-content: space-between; gap: 24px;
+        box-shadow: var(--shadow-lg);
+    }
+    @media (max-width: 767px) { .ec-cta__strip { flex-direction: column; text-align: center; padding: 36px 28px; } }
+    .ec-cta__strip h3 { font-size: 22px; font-weight: 800; color: #fff; margin: 0 0 8px; letter-spacing: -0.01em; }
+    .ec-cta__strip p  { font-size: 15px; color: rgba(255,255,255,0.68); margin: 0; line-height: 1.5; }
+    .ec-cta-btn {
+        display: inline-flex; align-items: center; gap: 9px;
+        background: #fff; color: var(--navy); font-size: 14px; font-weight: 700;
+        padding: 13px 26px; border-radius: var(--radius-sm); text-decoration: none;
+        white-space: nowrap; flex-shrink: 0; letter-spacing: 0.01em;
+        transition: background 0.18s, transform 0.18s;
+    }
+    .ec-cta-btn:hover { background: #e8eefb; color: var(--navy); text-decoration: none; transform: translateX(2px); }
+    .ec-cta-btn svg { width: 15px; height: 15px; }
+</style>
 
 <div class="main">
-    <!--hero section start-->
-    {{-- <section class="hero-equal-height pt-165 pb-100" style="background: url('{{asset('/landing_assets/img/bg-shape.png')}}')no-repeat bottom center / cover; margin-bottom:-190px; height: 500px;"> --}}
-        
-    <section class="pricing-section ptb-100" style="background-color: #162E66">
+
+    <!-- ════════════════ HERO ════════════════ -->
+    <section class="ec-hero">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="section-heading text-center mb-5">
-                        <h2 class="text-white" style="font-size: 32px">Employment Checks</h2>
-                        <p class="lead text-white" style="font-size: 18px">Choose the perfect plan for your business needs.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center ">
-                <div class="col-lg col-md">
-                    <div class="card text-center single-employment-pack">
-                        <div class="pt-4"><h5>GDPR screening package</h5></div>
-                       
-                        <div class="card-header py-4 border-0 pricing-header" style="color: #000;">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">£100,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
-                            
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled text-sm mb-4 .pricing-feature-para" style="text-align: left; font-weight:600; font-size:16px; color:#18181B">
-                                <li>What you get:</li>
-                            </ul>
-                            
-                            <ul class="list-unstyled text-sm mb-4 pricing-feature-list">
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > DBS check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Credit check (including PEP & sanctions)</li>
-                            </ul>
-                            <a href="#" class="btn secondary-solid-btn mb-3" style="border-radius: 5px;" target="_blank">Get started</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg col-md">
-                    <div class="card popular-price text-center single-employment-pack">
-                        <div class="pt-4"><h5>Entryscreening package </h5></div>
-                        
-                        <div class="card-header py-4 border-0 pricing-header" style="color: #000">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">£150,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
-
-
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled text-sm mb-4 .pricing-feature-para" style="text-align: left; font-weight:600; font-size:16px; color:#18181B">
-                                <li>What you get:</li>
-                            </ul>
-                           <ul class="list-unstyled text-sm mb-4 pricing-feature-list">
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > DBS check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Credit check (including PEP & sanctions)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > ID verification</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > RTW check</li>
-                            </ul>
-                            <a href="#" class="btn secondary-solid-btn mb-3" style="border-radius: 5px;" target="_blank">Get started </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg col-md">
-                    <div class="card text-center single-employment-pack">
-                        <div class="pt-4 d-flex">
-                            <h5>Mid-tier package</h5>
-                            <div class="action-btns mb-3 ml-2" style="white-space: nowrap;">
-                                <button class="btn secondary-solid-btn" style="background-color: red; border: none; font-size: 12px;">Most Popular</button>
-                            </div>
-                            
-                        </div>
-                        <div class="card-header py-4 border-0 pricing-header" style="color: #000">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder">£250,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
-                            
-
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled text-sm mb-4 .pricing-feature-para" style="text-align: left; font-weight:600; font-size:16px; color:#18181B">
-                                <li>What you get:</li>
-                            </ul>
-                           <ul class="list-unstyled text-sm mb-4 pricing-feature-list">
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > DBS check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Credit check (including PEP & sanctions)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > ID verification</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > RTW check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > 3-year employment referencing (including gap analysis)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Adverse media, social media & undercover journalistic checks</li>
-                            </ul>
-                            <a href="#" class="btn secondary-solid-btn mb-3" style="border-radius: 5px;" target="_blank">Get started </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg col-md">
-                    <div class="card text-center single-employment-pack">
-                        <div class="pt-4"><h5>Director & senior management package</h5></div>
-                        <div class="card-header py-4 border-0 pricing-header" style="color: #000">
-                            <div class="h2 text-center mb-0"><span class="price font-weight-bolder" style="font-size: 32px">£500,000</span><sub style="color:#1A1A1A; font-size:12px; line-height:16.8px">/ month</sub></div>
-
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled text-sm mb-4 .pricing-feature-para" style="text-align: left; font-weight:600; font-size:16px; color:#18181B">
-                                <li>What you get:</li>
-                            </ul>
-                           <ul class="list-unstyled text-sm mb-4 pricing-feature-list">
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > DBS check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Credit check (including PEP & sanctions)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > ID verification</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > RTW check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > 3-year employment referencing (including gap analysis)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Adverse media, social media & undercover journalistic checks</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Qualification verification</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Directorship check</li>
-                            </ul>
-                            <a href="#" class="btn secondary-solid-btn mb-3" style="border-radius: 5px;" target="_blank">Get started </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p class="ec-hero__eyebrow">Services</p>
+            <h1>Employment Checks</h1>
+            <p>Comprehensive background screening packages designed to match every role, sector, and risk level.</p>
         </div>
     </section>
-    <!--hero section end-->
-    
-    <section class="about-us-section pt-100 ptb-50">
+
+
+    <!-- ════════════════ EMPLOYMENT PRICING ════════════════ -->
+    <section class="ec-section ec-section--alt">
         <div class="container">
-            <div class="row ">
-                <table class="table">
+            <div class="ec-section-heading">
+                <span class="ec-pill">Employment check packages</span>
+                <h2>Choose the right plan for your organisation</h2>
+                <p>From basic GDPR-compliant screening to comprehensive director-level checks — all in one platform.</p>
+            </div>
+
+            <div class="ec-pricing-grid">
+
+                <!-- Plan 1 -->
+                <div class="ec-plan">
+                    <div class="ec-plan__head">
+                        <p class="ec-plan__name">GDPR Screening</p>
+                        <div class="ec-plan__price">
+                            <span class="ec-plan__price-amount">£100k</span>
+                            <span class="ec-plan__price-period">/ month</span>
+                        </div>
+                    </div>
+                    <div class="ec-plan__body">
+                        <p class="ec-plan__label">What you get</p>
+                        <ul class="ec-plan__features">
+                            <li>
+                                <span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                DBS check
+                            </li>
+                            <li>
+                                <span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                Credit check (including PEP &amp; sanctions)
+                            </li>
+                        </ul>
+                        <a href="{{ route('login') }}" class="ec-plan__cta">
+                            Get Started
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="ec-plan">
+                    <div class="ec-plan__head">
+                        <p class="ec-plan__name">Entry Screening</p>
+                        <div class="ec-plan__price">
+                            <span class="ec-plan__price-amount">£150k</span>
+                            <span class="ec-plan__price-period">/ month</span>
+                        </div>
+                    </div>
+                    <div class="ec-plan__body">
+                        <p class="ec-plan__label">What you get</p>
+                        <ul class="ec-plan__features">
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>DBS check</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Credit check (including PEP &amp; sanctions)</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>ID verification</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Right to Work (RTW) check</li>
+                        </ul>
+                        <a href="{{ route('login') }}" class="ec-plan__cta">
+                            Get Started
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan 3 — Most Popular -->
+                <div class="ec-plan ec-plan--popular">
+                    <span class="ec-plan__badge">Most Popular</span>
+                    <div class="ec-plan__head">
+                        <p class="ec-plan__name">Mid-Tier</p>
+                        <div class="ec-plan__price">
+                            <span class="ec-plan__price-amount">£250k</span>
+                            <span class="ec-plan__price-period">/ month</span>
+                        </div>
+                    </div>
+                    <div class="ec-plan__body">
+                        <p class="ec-plan__label">What you get</p>
+                        <ul class="ec-plan__features">
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>DBS check</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Credit check (including PEP &amp; sanctions)</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>ID verification</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Right to Work (RTW) check</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>3-year employment referencing (incl. gap analysis)</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Adverse media, social media &amp; undercover journalistic checks</li>
+                        </ul>
+                        <a href="{{ route('login') }}" class="ec-plan__cta">
+                            Get Started
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan 4 -->
+                <div class="ec-plan">
+                    <div class="ec-plan__head">
+                        <p class="ec-plan__name">Director &amp; Senior Management</p>
+                        <div class="ec-plan__price">
+                            <span class="ec-plan__price-amount">£500k</span>
+                            <span class="ec-plan__price-period">/ month</span>
+                        </div>
+                    </div>
+                    <div class="ec-plan__body">
+                        <p class="ec-plan__label">What you get</p>
+                        <ul class="ec-plan__features">
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>DBS check</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Credit check (including PEP &amp; sanctions)</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>ID verification</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Right to Work (RTW) check</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>3-year employment referencing (incl. gap analysis)</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Adverse media, social media &amp; undercover journalistic checks</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Qualification verification</li>
+                            <li><span class="ec-plan__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>Directorship check</li>
+                        </ul>
+                        <a href="{{ route('login') }}" class="ec-plan__cta">
+                            Get Started
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- /.ec-pricing-grid -->
+        </div>
+    </section>
+
+
+    <!-- ════════════════ OPTIONAL EXTRAS TABLE ════════════════ -->
+    <section class="ec-section">
+        <div class="container">
+            <div class="ec-section-heading">
+                <span class="ec-pill">Feature comparison</span>
+                <h2>Optional extra checks</h2>
+                <p>See exactly which additional checks are available with each package.</p>
+            </div>
+
+            <div class="ec-table-wrap">
+                <table class="ec-table">
                     <thead>
-                      <tr style="background-color: #E4E4E7">
-                        <th scope="col" style="font-weight: bold">Optional extra checks</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                      </tr>
+                        <tr>
+                            <th style="text-align:left; width:34%;">Check type</th>
+                            <th>
+                                <div class="ec-table-col-header">
+                                    <span>GDPR</span>
+                                    <span>£100k</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ec-table-col-header">
+                                    <span>Entry</span>
+                                    <span>£150k</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ec-table-col-header">
+                                    <span>Mid-Tier</span>
+                                    <span>£250k</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ec-table-col-header">
+                                    <span>Director</span>
+                                    <span>£500k</span>
+                                </div>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">Adverse media & undercover journalism check 
-                            <img src="{{asset('/landing_assets/img/circle_question.png')}}" >
-                        </th>
-                        <td></td>
-                        <td>100</td>
-                        <td>100</td>
-                        <td><span style="color: #059669">Unlimited</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Character reference  <img src="{{asset('/landing_assets/img/circle_question.png')}}"> </th>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">DBS basic <img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td ><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">DBS enhanced <img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> - </td>
-                        <td > - </td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">DBS standard <img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" > </td>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" > </td>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" > </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">DBS volunteer <img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> - </td>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" > </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">UK directorship check<img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" > </td>
-                        <td> <img src="{{asset('/landing_assets/img/green_check.png')}}" > </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">UK driving license check<img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Previous reference<img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Two previous references<img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Employment history (including gap analysis)<img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Mobile App Integration<img src="{{asset('/landing_assets/img/circle_question.png')}}"></th>
-                        <td> -  </td>
-                        <td> - </td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                        <td><img src="{{asset('/landing_assets/img/green_check.png')}}" ></td>
-                      </tr>
-                     
+                        <tr>
+                            <th>Adverse media &amp; undercover journalism check</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-num">100</span></td>
+                            <td><span class="ec-table-num">100</span></td>
+                            <td><span class="ec-table-unlimited">Unlimited</span></td>
+                        </tr>
+                        <tr>
+                            <th>Character reference</th>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>DBS basic</th>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>DBS standard</th>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>DBS enhanced</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>DBS volunteer</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>UK directorship check</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>UK driving licence check</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>Previous reference</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>Two previous references</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>Employment history (incl. gap analysis)</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
+                        <tr>
+                            <th>Mobile app integration</th>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-dash">—</span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                            <td><span class="ec-table-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span></td>
+                        </tr>
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     </section>
 
-    <section class="about-us-section ptb-100">
+
+    <!-- ════════════════ BS7858 / ENTRY SCREENING ════════════════ -->
+    <section class="ec-section ec-section--alt">
         <div class="container">
-            <div class="row ">
-                <div class="col-md-12 col-lg-6 mb-3"> <!-- Add mb-3 class for spacing -->
-                    <div class="card popular-price  single-employment-pack" style="border: 3px solid  #162E66; border-radius:10px">
-                        <div class="pt-4 align-items-center text-center " style="background-color: #162E66; "><h5 class="text-white"><center>BS7858 SCREENING </center></h5></div>
-                        
-                        <div class="card-header align-items-left py-4 border-0 pricing-header text-left" style="color: #000;">
-                            <div class="h2  mb-0">
-                                <span class="price font-weight-bolder" style="font-size: 32px;">£150,000</span>
-                                <sub style="color: #1A1A1A; font-size: 12px; line-height: 16.8px">/ month</sub>
-                            </div>
+            <div class="ec-section-heading">
+                <span class="ec-pill">Specialist vetting</span>
+                <h2>BS7858 &amp; security screening packages</h2>
+                <p>Structured vetting packages designed for security, defence, and high-risk sector requirements.</p>
+            </div>
+
+            <div class="ec-bs-grid">
+
+                <!-- BS7858 -->
+                <div class="ec-bs-card">
+                    <div class="ec-bs-card__head ec-bs-card__head--navy">
+                        <p class="ec-bs-card__name">BS7858 Screening</p>
+                        <div class="ec-bs-card__price">
+                            <span class="ec-bs-card__price-amount">£150k</span>
+                            <span class="ec-bs-card__price-period">/ month</span>
                         </div>
-                        <a href="#" class="btn secondary-solid-btn mb-3 ml-3 mr-3" style="border-radius: 5px; background-color: #162E66; border: none; color: white; font-weight:600; font-size:16px" target="_blank">Get started</a>
-                        
-                        <div class="card-body">
-                            <ul class="list-unstyled text-sm mb-4 .pricing-feature-para" style="text-align: left; font-weight:600; font-size:16px; color:#18181B">
-                                <li>You will get:</li>
-                            </ul>
-                           <ul class="list-unstyled text-sm mb-4 pricing-feature-list">
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > ID verification</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > RTW check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > 5 years previous employment reference (including gap analysis)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Basic DBS</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Credit check (including PEP and sanctions)</li>
-                            </ul>
-                        </div>
+                        <a href="{{ route('login') }}" class="ec-bs-card__cta">
+                            Get Started
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                    <div class="ec-bs-card__body">
+                        <p class="ec-bs-card__label">You will get</p>
+                        <ul class="ec-bs-card__features">
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--navy"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                ID verification
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--navy"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                Right to Work (RTW) check
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--navy"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                5-year employment referencing (incl. gap analysis)
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--navy"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                Basic DBS
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--navy"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                Credit check (including PEP &amp; sanctions)
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="col-md-12 col-lg-6 mb-3" > <!-- Add mb-3 class for spacing -->
-                    <div class="card   single-employment-pack" style="border: 3px solid #DA251D; border-radius:10px">
-                        <div class="pt-4" style="background-color: #DA251D; "><h5 class="text-white"><center>Entryscreening package </center></h5></div>
-                        
-                        <div class="card-header align-items-left py-4 border-0 pricing-header text-left" style="color: #000;">
-                            <div class="h2  mb-0">
-                                <span class="price font-weight-bolder" style="font-size: 32px;">£250,000</span>
-                                <sub style="color: #1A1A1A; font-size: 12px; line-height: 16.8px">/ month</sub>
-                            </div>
+                <!-- Entry Screening -->
+                <div class="ec-bs-card">
+                    <div class="ec-bs-card__head ec-bs-card__head--red">
+                        <p class="ec-bs-card__name">Entry Screening</p>
+                        <div class="ec-bs-card__price">
+                            <span class="ec-bs-card__price-amount">£250k</span>
+                            <span class="ec-bs-card__price-period">/ month</span>
                         </div>
-                       <a href="#" class="btn secondary-solid-btn mb-3 ml-3 mr-3" style="border-radius: 5px; background-color: #DA251D; border: none; color: white; font-weight:600; font-size:16px" target="_blank">Get started</a>
-                        
-                        <div class="card-body">
-                            <ul class="list-unstyled text-sm mb-4 .pricing-feature-para" style="text-align: left; font-weight:600; font-size:16px; color:#18181B">
-                                <li>You will get:</li>
-                            </ul>
-                            <ul class="list-unstyled text-sm mb-4 pricing-feature-list">
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > ID verification</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > RTW check</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > 3 years previous employment reference (including gap analysis)</li>
-                                <li style="d-flex flex-row"><img src="{{asset('/landing_assets/img/checkmark.png')}}" style="width:18px; height:18px; padding-top:3px" > Basic DBS</li>
-                                <li style="d-flex flex-row"><br> </li>
-                            </ul>
-                        </div>
+                        <a href="{{ route('login') }}" class="ec-bs-card__cta">
+                            Get Started
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                    <div class="ec-bs-card__body">
+                        <p class="ec-bs-card__label">You will get</p>
+                        <ul class="ec-bs-card__features">
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--red"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                ID verification
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--red"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                Right to Work (RTW) check
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--red"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                3-year employment referencing (incl. gap analysis)
+                            </li>
+                            <li>
+                                <span class="ec-bs-check ec-bs-check--red"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></span>
+                                Basic DBS
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                
 
-            </div>  
+            </div>
         </div>
     </section>
-  
-   
 
-    {{-- faq --}}
-    {{-- <section class="promo-section ptb-100">
+
+    <!-- ════════════════ CTA ════════════════ -->
+    <section class="ec-cta">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="section-headingfaq mb-5 text-center">
-                        <h2>Frequently Asked Questions</h2>
-                        <p class="lead" style="font-size:18px; font-weight: 400;">
-                            Can’t find the anwser you’re looking for ? Reach out to customer support team.
-                        </p>
-                    </div>
+            <div class="ec-cta__strip">
+                <div>
+                    <h3>Not sure which package is right for you?</h3>
+                    <p>Speak to our team and we'll recommend the best screening solution for your organisation and sector.</p>
                 </div>
+                <a href="{{ route('contact-us') }}" class="ec-cta-btn">
+                    Speak to Our Team
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </a>
             </div>
-            <!--pricing faq start-->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div id="accordion-1" class="accordion accordion-faq">
-                        <!-- Accordion card 1 -->
-                        <div class="card">
-                            <div class="card-header py-4" id="heading-1-1" data-toggle="collapse" role="button" data-target="#collapse-1-1" aria-expanded="false" aria-controls="collapse-1-1">
-                                <h6 class="mb-0">Nulla voluptate ullamco ipsum anim ?</h6>
-                            </div>
-                            <div id="collapse-1-1" class="collapse" aria-labelledby="heading-1-1" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <p>Nulla voluptate ullamco ipsum anim.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Accordion card 2 -->
-                        <div class="card">
-                            <div class="card-header py-4" id="heading-1-2" data-toggle="collapse" role="button" data-target="#collapse-1-2" aria-expanded="false" aria-controls="collapse-1-2">
-                                <h6 class="mb-0"> Id aliquip laborum nulla ?</h6>
-                            </div>
-                            <div id="collapse-1-2" class="collapse" aria-labelledby="heading-1-2" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <p>Id aliquip laborum nulla.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Accordion card 3 -->
-                        <div class="card">
-                            <div class="card-header py-4" id="heading-1-3" data-toggle="collapse" role="button" data-target="#collapse-1-3" aria-expanded="false" aria-controls="collapse-1-3">
-                                <h6 class="mb-0">Pariatur incididunt sint voluptate dolor in veniam ?
-                                </h6>
-                            </div>
-                            <div id="collapse-1-3" class="collapse" aria-labelledby="heading-1-3" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <p>Pariatur incididunt sint voluptate dolor in veniam.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div id="accordion-2" class="accordion accordion-faq">
-                        <!-- Accordion card 1 -->
-                        <div class="card">
-                            <div class="card-header py-4" id="heading-2-1" data-toggle="collapse" role="button" data-target="#collapse-2-1" aria-expanded="false" aria-controls="collapse-2-1">
-                                <h6 class="mb-0"> Sit magna excepteur velit fugiat magna deserunt ?</h6>
-                            </div>
-                            <div id="collapse-2-1" class="collapse" aria-labelledby="heading-2-1" data-parent="#accordion-2">
-                                <div class="card-body">
-                                    <p> Sit magna excepteur velit fugiat magna deserunt</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Accordion card 2 -->
-                        <div class="card">
-                            <div class="card-header py-4" id="heading-2-2" data-toggle="collapse" role="button" data-target="#collapse-2-2" aria-expanded="false" aria-controls="collapse-2-2">
-                                <h6 class="mb-0"> How do I get access to a theme?</h6>
-                            </div>
-                            <div id="collapse-2-2" class="collapse" aria-labelledby="heading-2-2" data-parent="#accordion-2">
-                                <div class="card-body">
-                                    <p>Quickly recaptiualize revolutionary meta-services and multimedia based channels. Seamlessly impact diverse deliverables rather than cooperative strategic theme areas.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Accordion card 3 -->
-                        <div class="card">
-                            <div class="card-header py-4" id="heading-2-3" data-toggle="collapse" role="button" data-target="#collapse-2-3" aria-expanded="false" aria-controls="collapse-2-3">
-                                <h6 class="mb-0"> Anim do deserunt incididunt ad qui aliqui ?
-                                </h6>
-                            </div>
-                            <div id="collapse-2-3" class="collapse" aria-labelledby="heading-2-3" data-parent="#accordion-2">
-                                <div class="card-body">
-                                    <p>Anim do deserunt incididunt ad qui aliqui.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--pricing faq end-->
         </div>
-    </section> --}}
-
-   
-
-    
- 
+    </section>
 
 </div>
 

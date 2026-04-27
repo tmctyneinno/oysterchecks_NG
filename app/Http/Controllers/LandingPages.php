@@ -43,6 +43,12 @@ class LandingPages extends Controller
         return view('landing.bs7858-vetting');
     }
 
+    public function grcAssurance(){
+        return view('landing.grcAssurance');
+    }
+
+    
+
     public function EmploymentChecks(){
         return view('landing.employment-checks');
     }

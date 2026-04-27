@@ -22,6 +22,7 @@ Route::post('/contact/form', [LandingPages::class, 'ContactForm'])->name('Contac
 Route::get('/employment-checks', [LandingPages::class, 'EmploymentChecks'])->name('employment-checks');
 Route::get('/bpss-clearance', [LandingPages::class, 'bpssClearance'])->name('bpss-clearance');
 Route::get('/bs7858-vetting', [LandingPages::class, 'bs7858Vetting'])->name('bs7858-vetting');
+Route::get('/grc-assurance', [LandingPages  ::class, 'grcAssurance'])->name('grc-assurance');
 Route::get('/aml-solution', [LandingPages::class, 'amlsolution'])->name('aml-solution');
 Route::get('/best-decision', [LandingPages::class, 'bestdecision'])->name('best-decision');
 Route::get('/transaction', [LandingPages::class, 'transaction'])->name('transaction');
