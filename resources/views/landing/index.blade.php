@@ -426,7 +426,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-12 col-lg-6">
-                    <p class="oc-hero__eyebrow">dddAI-Driven Risk Intelligence</p>
+                    <p class="oc-hero__eyebrow">AI-Driven Risk Intelligence</p>
                     <h1>Instant Verification.<br>Intelligent Decisions.</h1>
                     <p>
                         Oysterchecks is not just a verification or compliance tool.
