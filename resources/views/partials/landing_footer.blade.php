@@ -25,7 +25,7 @@
                                         <a class="nav-link" href="{{route('terms')}}">Privacy Policy</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{route('who-we-are')}}">About Us</a>
+                                        <a class="nav-link" href="{{route('about-us')}}">About Us</a>
                                     </li>
                                     {{-- <li class="nav-item">
                                         <a class="nav-link" href="{{route('terms')}}">Terms of Service</a>
