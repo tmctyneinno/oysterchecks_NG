@@ -174,8 +174,8 @@ class verifyMeAddress
         {
          Log::info(['info' => $e->getMessage()]);
           Session::flash('alert', 'error');
-        Session::flash('message', 'Something went wrong'.$e->getMessage());
-          return back();
+        Session::flash('message', 'We could not submit this address for verification. Please confirm the street, city, LGA, state, and landmark are valid, then try again.');
+          return back()->withInput($request->all());
         }
      
     }
