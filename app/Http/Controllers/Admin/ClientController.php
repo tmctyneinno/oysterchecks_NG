@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\ActivityLog;
 use App\Models\User;
+use App\Mail\UserReg;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\Wallet;
 
 class ClientController extends Controller
 {
-    //
+    // 
     public function UserClients(){
         $clients = Client::get();
         return view('admin.clients.index', ['clients'=> $clients]);
@@ -45,7 +47,7 @@ class ClientController extends Controller
 
         //create a client account 
         $pass = $this->generatePass($request->name);
-        $name = explode(' ', $request->name);
+        $name = array_pad(explode(' ', trim($request->name), 2), 2, '');
         $data = [
             'firstname' => $name[0],
             'lastname' => $name[1],
@@ -67,7 +69,7 @@ class ClientController extends Controller
             'total_balance' => 0,
         ]);
            if(request()->file('image')){
-            $image_url = cloudinary()->upload($request->file('image')->getRealPath(), [
+            $image = cloudinary()->upload($request->file('image')->getRealPath(), [
                 'folder' => 'oysterchecks/clientProfile'
             ])->getSecurePath();
 
@@ -140,6 +142,17 @@ class ClientController extends Controller
         Session::flash('alert', 'danger');
         Session::flash('message', 'Account Suspend Successfully');
         return back();
+    }
+
+    private function generatePass($user){
+        $pass = substr(str_replace(['+', '=', '/'], '', base64_encode(random_bytes(15))), 0, 10);
+        $user = substr($user, 0, 4);
+
+        return $user.$pass;
+    }
+
+    private function sendMail($data){
+        Mail::to($data['email'])->send(new UserReg($data));
     }
 
 
