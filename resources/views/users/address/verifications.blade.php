@@ -158,11 +158,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Candidate Verificaton logss</h4>
+                <h4 class="card-title">Candidate Verificaton logs</h4>
             </div>
             <!--end card-header-->
             <div class="card-body">
-
                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <tr>
@@ -183,19 +182,21 @@
                             <td>{{$verifications->reference_id}}</td>
                             <td>
                                 @if($verifications->status == 'pending')
-                                <span class="badge badge-soft-purple">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
-                                @elseif(strtolower($verifications->status) == 'completed' || strtolower($verifications->task_status) == 'verified')
-                                <span class="badge badge-soft-success">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
+                                <span class="badge badge-soft-warning">PENDING</span>
+                                @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'verified')
+                                <span class="badge badge-soft-success">COMPLETED & VERIFIED</span>
                                 @elseif($verifications->status == 'awaiting_reschedule' || strtolower($verifications->status) == 'in_progress' )
-                                <span class="badge badge-soft-dark">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
-                                @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'not_verified')
-                                <span class="badge badge-soft-warning">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
+                                <span class="badge badge-soft-dark">
+                                    {{strtoupper(str_replace('_', ' ', $verifications->status))}}
+                                </span>
+                                @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) != 'verified')
+                                <span class="badge badge-soft-purple">COMPLETED NOT VERIFIED</span>
                                 @elseif(strtolower($verifications->status) == 'invalid_address')
-                                <span class="badge badge-soft-danger">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
+                                <span class="badge badge-soft-danger"> INVALID ADDRESS</span>
                                 @elseif(strtolower($verifications->status) == 'wrong_address')
-                                <span class="badge badge-soft-danger">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
+                                <span class="badge badge-soft-danger"> WRONG ADDRESS</span>
                                 @else
-                                <span class="badge badge-soft-danger">{{ strtoupper(str_replace('_', ' ', $verifications->status)) }}</span>
+                                <span class="badge badge-soft-danger"> {{$verifications->status}}</span>
                                 @endif
                             </td>
                             <td>
