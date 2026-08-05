@@ -259,7 +259,7 @@
                  <div class="row justify-content-left g-3">
                      <div class="col-md-6 col-lg-4 ">
                          <div class="card report-card acl-stat-card" style="--acl-accent:#1761fd; --acl-accent-soft: rgba(23, 97, 253, .12);">
-                             <div class="card-body " >
+                             <div class="card-body ">
                                  <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col ">
                                          <p class="acl-stat-label">Total Address Verifications</p>
@@ -278,7 +278,7 @@
                      </div>
                      <div class="col-md-6 col-lg-4">
                          <div class="card report-card acl-stat-card" style="--acl-accent:#03d87f; --acl-accent-soft: rgba(3, 216, 127, .15);">
-                             <div class="card-body" >
+                             <div class="card-body">
                                  <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col">
                                          <p class="acl-stat-label">Completed Address Verifications</p>
@@ -297,7 +297,7 @@
                      </div>
                      <div class="col-md-6 col-lg-4">
                          <div class="card report-card acl-stat-card" style="--acl-accent:#12a4ed; --acl-accent-soft: rgba(18, 164, 237, .15);">
-                             <div class="card-body" >
+                             <div class="card-body">
                                  <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col">
                                          <p class="acl-stat-label">Verifications in Progress</p>
@@ -315,9 +315,9 @@
                          <!--end card-->
                      </div>
                      <!--end col-->
-                    <div class="col-md-6 col-lg-4">
+                     <div class="col-md-6 col-lg-4">
                          <div class="card report-card acl-stat-card" style="--acl-accent:#ffb822; --acl-accent-soft: rgba(255, 184, 34, .15);">
-                             <div class="card-body" >
+                             <div class="card-body">
                                  <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col">
                                          <p class="acl-stat-label">Requests Pending</p>
@@ -335,12 +335,12 @@
                          <!--end card-->
                      </div>
                      <!--end col-->
-                  <div class="col-md-6 col-lg-4">
+                     <div class="col-md-6 col-lg-4">
                          <div class="card report-card acl-stat-card" style="--acl-accent:#f5325c; --acl-accent-soft: rgba(245, 50, 92, .15);">
-                             <div class="card-body" >
+                             <div class="card-body">
                                  <div class="row d-flex justify-content-center align-items-center">
                                      <div class="col">
-                                          <p class="acl-stat-label">Address Cancelled or Rejected</p>
+                                         <p class="acl-stat-label">Address Cancelled or Rejected</p>
                                          <h3 class="acl-stat-value">{{$cancelled??0}}</h3>
                                      </div>
                                      <div class="col-auto align-self-center">
@@ -355,113 +355,113 @@
                          <!--end card-->
                      </div>
                      <!--end col-->
-                       {{--   <div class="col-md-6 col-lg-4">
+                     {{-- <div class="col-md-6 col-lg-4">
                          <div class="card report-card">
                              <div class="card-body" >
                                  <div class="row d-flex justify-content-center">
                                      <div class="col">
                                          <p class="text-black mb-0 fw-semibold">Verification not Requested</p>
                                          <h3 class="m-0 text-black">{{$not_requested}}</h3>
-                                     </div>
-                                     <div class="col-auto align-self-center">
-                                         <div class="report-main-icon bg-light-alt">
-                                             <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                             <!--end card-body-->
-                         </div>
-                         <!--end card-->
-                     </div> --}}
-                     <!--end col-->
-                     <!--end col-->
                  </div>
-                 <!--end row-->
+                 <div class="col-auto align-self-center">
+                     <div class="report-main-icon bg-light-alt">
+                         <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
+                     </div>
+                 </div>
              </div>
          </div>
-         <div class="row">
-             <div class="col-lg-12">
-                 <div class="card mb-3 acl-cta-card">
-                     <div class="row">
-                         <div class="col-md-6">
-                             <div class="card-body">
-                                 <div class="acl-cta-icon">
-                                     <i data-feather="user-check" class="icon-sm"></i>
-                                 </div>
-                                 <h5 class="card-title">Verify @if($slug->slug == 'individual_address') an Individual @elseif ($slug->slug == 'reference_address') a Guarantor @else a Business @endif </h5>
-                                 <p class="card-text mb-0">Wether you are verifying a business, a guarantor or an individual's address, we provide key insights and overall analysis of any verification request made.</p>
-                                 <p class="card-text mb-0"><small class="text-muted">Use the "Create Candidate" button to initiate the {{$slug->name}} process.</small></p>
-                             </div>
-                         </div>
-                         <div class="col-md-6 align-self-center">
-                             <div class="card-body d-flex justify-content-lg-end justify-content-center">
-                                 <a type="button" class="btn btn-primary " href="{{route('showCreateCandidate', $slug->slug)}}">Create Candidate</a>
-
-                             </div>
-                         </div>
-                         <!--end col-->
-                         <!--end col-->
-                     </div>
-                     <!--end row-->
-                 </div>
-                 <!--end card-->
-             </div>
-         </div>
-         <div class="row">
-             <div class="col-12">
-                 <div class="card acl-table-card">
-                     <div class="card-header">
-                         <h4 class="card-title"><i data-feather="list" class="icon-sm"></i> {{$slug->name}} log</h4>
-                       <a href="{{route('client-generate-report')}}" class="btn btn-info">Generate Address Report</a>
-                     </div>
-
-                     <!--end card-header-->
+         <!--end card-body-->
+     </div>
+     <!--end card-->
+ </div> --}}
+ <!--end col-->
+ <!--end col-->
+ </div>
+ <!--end row-->
+ </div>
+ </div>
+ <div class="row">
+     <div class="col-lg-12">
+         <div class="card mb-3 acl-cta-card">
+             <div class="row">
+                 <div class="col-md-6">
                      <div class="card-body">
-                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                             <thead>
-                                 <tr>
-                                     <th>SN</th>
-                                     <th>Address Candidate</th>
-                                     <th>Reference Id</th>
-                                     <th>Address Status</th>
-                                     <th>Initiated by</th>
+                         <div class="acl-cta-icon">
+                             <i data-feather="user-check" class="icon-sm"></i>
+                         </div>
+                         <h5 class="card-title">Verify @if($slug->slug == 'individual_address') an Individual @elseif ($slug->slug == 'reference_address') a Guarantor @else a Business @endif </h5>
+                         <p class="card-text mb-0">Wether you are verifying a business, a guarantor or an individual's address, we provide key insights and overall analysis of any verification request made.</p>
+                         <p class="card-text mb-0"><small class="text-muted">Use the "Create Candidate" button to initiate the {{$slug->name}} process.</small></p>
+                     </div>
+                 </div>
+                 <div class="col-md-6 align-self-center">
+                     <div class="card-body d-flex justify-content-lg-end justify-content-center">
+                         <a type="button" class="btn btn-primary " href="{{route('showCreateCandidate', $slug->slug)}}">Create Candidate</a>
 
-                                     <th>Date Created</th>
-                                     <th>Action</th>
-                                 </tr>
-                             </thead>
-                             <tbody>
-                                 @foreach ($verifications as $transaction)
-                                 <tr>
-                                     <td>{{$loop->iteration}}</td>
-                                     <td>
-                                         <div class="acl-candidate">
-                                             <span class="acl-avatar">{{strtoupper(substr($transaction->first_name, 0, 1))}}{{strtoupper(substr($transaction->last_name, 0, 1))}}</span>
-                                             <span class="acl-candidate-name">{{$transaction->first_name}} {{$transaction->last_name}}</span>
-                                         </div>
-                                     </td>
-                                     <td>{{$transaction->service_reference}}</td>
-                                        <td>
-                                             @if($transaction->addressVerificationDetail()->exists())
-                                         @php
-                                            $details = $transaction->addressVerificationDetail;
-                                            $total = $details->count();
-                                            $completed = $details->where('status', 'COMPLETED')->count();
-                                        @endphp
+                     </div>
+                 </div>
+                 <!--end col-->
+                 <!--end col-->
+             </div>
+             <!--end row-->
+         </div>
+         <!--end card-->
+     </div>
+ </div>
+ <div class="row">
+     <div class="col-12">
+         <div class="card acl-table-card">
+             <div class="card-header">
+                 <h4 class="card-title"><i data-feather="list" class="icon-sm"></i> {{$slug->name}} log</h4>
+                 <a href="{{route('client-generate-report')}}" class="btn btn-info">Generate Address Report</a>
+             </div>
 
-                                        @if($completed > 0)
-                                            <span class="badge badge-soft-success">{{ $completed }}/{{ $total }} Completed</span>
-                                         @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
-                                         <span class="badge badge-soft-info"> Verification in Progress</span>
-                                         @else
-                                         <span class="badge badge-soft-primary">{{$transaction->addressVerificationDetail->first()->status}}</span>
-                                         @endif
-                                         @else
-                                         <span class="badge badge-soft-secondary">No verification Request Yet</span>
-                                         @endif
-                                            </td>
-                                     {{-- <td>
+             <!--end card-header-->
+             <div class="card-body">
+                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                     <thead>
+                         <tr>
+                             <th>S/N</th>
+                             <th>Address Candidate</th>
+                             <th>Reference Id</th>
+                             <th>Address Status</th>
+                             <th>Initiated by</th>
+
+                             <th>Date Created</th>
+                             <th>Action</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         @foreach ($verifications as $transaction)
+                         <tr>
+                             <td>{{$loop->iteration}}</td>
+                             <td>
+                                 <div class="acl-candidate">
+                                     <span class="acl-avatar">{{strtoupper(substr($transaction->first_name, 0, 1))}}{{strtoupper(substr($transaction->last_name, 0, 1))}}</span>
+                                     <span class="acl-candidate-name">{{$transaction->first_name}} {{$transaction->last_name}}</span>
+                                 </div>
+                             </td>
+                             <td>{{$transaction->service_reference}}</td>
+                             <td>
+                                 @if($transaction->addressVerificationDetail()->exists())
+                                 @php
+                                 $details = $transaction->addressVerificationDetail;
+                                 $total = $details->count();
+                                 $completed = $details->where('status', 'COMPLETED')->count();
+                                 @endphp
+
+                                 @if($completed > 0)
+                                 <span class="badge badge-soft-success">{{ $completed }}/{{ $total }} Completed</span>
+                                 @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
+                                 <span class="badge badge-soft-info"> Verification in Progress</span>
+                                 @else
+                                 <span class="badge badge-soft-primary">{{$transaction->addressVerificationDetail->first()->status}}</span>
+                                 @endif
+                                 @else
+                                 <span class="badge badge-soft-secondary">No verification Request Yet</span>
+                                 @endif
+                             </td>
+                             {{-- <td>
                                          @if($transaction->addressVerificationDetail()->exists())
                                          @if($transaction->addressVerificationDetail->first()->status == 'pending')
                                          <span class="badge badge-soft-purple">Pending</span>
@@ -473,49 +473,49 @@
                                          <span class="badge badge-soft-warning">Completed but Not Verified</span>
                                          @elseif($transaction->addressVerificationDetail->first()->status == 'cancelled')
                                          <span class="badge badge-soft-danger"> {{$transaction->addressVerificationDetail->first()->status}}</span>
-                                         @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
-                                         <span class="badge badge-soft-info"> Verification in Progress</span>
-                                         @endif
-                                          <span class="badge badge-soft-purple">Pending</span>
-                                         @else
-                                         <span class="badge badge-soft-secondary">No verification Request Yet</span>
-                                         @endif
-                                     </td> --}}
-                                     <td>{{$transaction->user->firstname}}</td>
-                                     <td>{{$transaction->created_at}}</td>
-                                     <td>
-                                         <div class="dropdown d-inline-block">
-                                             <a class="dropdown-toggle arrow-none acl-action-toggle" id="seeMore" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                                 <i class="fa fa-ellipsis-h font-12"></i>
-                                             </a>
-                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seeMore" style="">
-                                             {{-- <a class="dropdown-item" href="#">Copy Reference Id</a> --}}
+                             @elseif($transaction->addressVerificationDetail->first()->status == 'IN_PROGRESS')
+                             <span class="badge badge-soft-info"> Verification in Progress</span>
+                             @endif
+                             <span class="badge badge-soft-purple">Pending</span>
+                             @else
+                             <span class="badge badge-soft-secondary">No verification Request Yet</span>
+                             @endif
+                             </td> --}}
+                             <td>{{$transaction->user->firstname}}</td>
+                             <td>{{$transaction->created_at}}</td>
+                             <td>
+                                 <div class="dropdown d-inline-block">
+                                     <a class="dropdown-toggle arrow-none acl-action-toggle" id="seeMore" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                         <i class="fa fa-ellipsis-h font-12"></i>
+                                     </a>
+                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seeMore" style="">
+                                         {{-- <a class="dropdown-item" href="#">Copy Reference Id</a> --}}
 
-                                                 @if($transaction->addressVerificationDetail()->exists())
-                                                 <a class="dropdown-item" href="{{route('ViewCandidateAddresses', $transaction->hashid)}}">
-                                                     <i data-feather="eye" class="icon-xs me-1"></i> View Verifications
-                                                 </a>
-                                                 @endif
-                                                 <a class="dropdown-item" href="{{route('showVerificationDetailsForm', ['slug' => $slug->slug, 'service_ref' => $transaction->service_reference])}}">
-                                                     <i data-feather="plus-circle" class="icon-xs me-1"></i> Make a Verification Request
-                                                 </a>
-                                                 {{-- @endif --}}
+                                         @if($transaction->addressVerificationDetail()->exists())
+                                         <a class="dropdown-item" href="{{route('ViewCandidateAddresses', $transaction->hashid)}}">
+                                             <i data-feather="eye" class="icon-xs me-1"></i> View Verifications
+                                         </a>
+                                         @endif
+                                         <a class="dropdown-item" href="{{route('showVerificationDetailsForm', ['slug' => $slug->slug, 'service_ref' => $transaction->service_reference])}}">
+                                             <i data-feather="plus-circle" class="icon-xs me-1"></i> Make a Verification Request
+                                         </a>
+                                         {{-- @endif --}}
 
-                                             </div>
-                                         </div>
-                                     </td>
-                                 </tr>
-                                 @endforeach
-                             </tbody>
-                         </table>
-                     </div>
-                 </div>
-             </div> <!-- end col -->
+                                     </div>
+                                 </div>
+                             </td>
+                         </tr>
+                         @endforeach
+                     </tbody>
+                 </table>
+             </div>
          </div>
-         @endsection
-         @section('script')
-         <script>
+     </div> <!-- end col -->
+ </div>
+ @endsection
+ @section('script')
+ <script>
 
-         </script>
+ </script>
 
-         @endsection
+ @endsection
