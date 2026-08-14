@@ -72,6 +72,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                @elseif(strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'completed')
+                                <div class="alert custom-alert alert-success icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                    <div class="media">
+                                        <i class="mdi mdi-shield-check-outline alert-icon text-success align-self-center font-30 me-3"></i>
+                                        <div class="media-body align-self-center">
+                                            <h5 class="mb-1 fw-bold mt-0 text-success">Completed and Verified</h5>
+                                            <span>Your Address verification request have been completed and confirmed verified.</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 @elseif(strtolower($address_verification?->status) == 'in_progress' )
                                 <div class="alert custom-alert alert-info icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
@@ -92,7 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @elseif(strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'not_verified')
+                                @elseif($address_verification?->status == 'COMPLETED' || strtolower($address_verification?->status) == 'completed' && strtolower($address_verification?->task_status) == 'not_verified')
                                 <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
                                         <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
@@ -123,11 +133,21 @@
                                     </div>
                                 </div>
                                 @elseif($address_verification?->status == 'UNVERIFIED' || strtolower($address_verification?->status) == 'not_verified')
-                                <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                <div class="alert custom-alert alert-danger icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">
-                                        <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
+                                        <i class="mdi mdi-shield-off-outline alert-icon text-danger align-self-center font-30 me-3"></i>
                                         <div class="media-body align-self-center">
-                                            <h5 class="mb-1 fw-bold mt-0 text-warning">Unverified</h5>
+                                            <h5 class="mb-1 fw-bold mt-0 text-danger">Unverified</h5>
+                                            <span>Your Address verification request have been completed and marked not verified. Candidate does not live here or address does not exist or is not accessible.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @elseif($address_verification?->status == 'COMPLETED NOT VERIFIED' || strtolower($address_verification?->status) == 'COMPLETED NOT VERIFIED')
+                                <div class="alert custom-alert alert-danger icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                    <div class="media">
+                                        <i class="mdi mdi-shield-off-outline alert-icon text-danger align-self-center font-30 me-3"></i>
+                                        <div class="media-body align-self-center">
+                                            <h5 class="mb-1 fw-bold mt-0 text-danger">COMPLETED NOT VERIFIED</h5>
                                             <span>Your Address verification request have been completed and marked not verified. Candidate does not live here or address does not exist or is not accessible.</span>
                                         </div>
                                     </div>
@@ -137,7 +157,7 @@
                                     <div class="media">
                                         <i class="far fa-times-circle alert-icon text-danger align-self-center font-30 me-3"></i>
                                         <div class="media-body align-self-center">
-                                            <h5 class="mb-1 fw-bold mt-0 text-danger">Cancelled</h5>
+                                            <h5 class="mb-1 fw-bold mt-0 text-danger"> Cancelled</h5>
                                             <span>Your Address verification request have been cancelled due to incomplete or incorrect address details</span>
                                         </div>
                                     </div>

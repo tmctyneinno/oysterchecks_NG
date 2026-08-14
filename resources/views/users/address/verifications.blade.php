@@ -386,6 +386,8 @@
                                 <span class="badge badge-soft-warning">PENDING</span>
                                 @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'verified')
                                 <span class="badge badge-soft-success">COMPLETED & VERIFIED</span>
+                                @elseif(strtolower($verifications->status) == 'completed' && strtolower($verifications->task_status) == 'completed')
+                                <span class="badge badge-soft-success">COMPLETED & VERIFIED</span>
                                 @elseif($verifications->status == 'awaiting_reschedule' || strtolower($verifications->status) == 'in_progress' )
                                 <span class="badge badge-soft-dark">
                                     {{strtoupper(str_replace('_', ' ', $verifications->status))}}
@@ -405,7 +407,7 @@
                                 @else Individual Address
                                 @endif</td>
                             <td>{{$verifications->created_at}}</td>
-                            <td>
+                            <td> 
                                 <div class="dropdown d-inline-block">
                                     <a class="dropdown-toggle arrow-none avf-action-toggle" id="seeMore" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h font-12"></i>

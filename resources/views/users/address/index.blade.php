@@ -448,7 +448,7 @@
                                  $details = $transaction->addressVerificationDetail;
                                  $total = $details->count();
                                  $completed = $details->where('status', 'COMPLETED')->count();
-                                 @endphp
+                                 @endphp 
 
                                  @if($completed > 0)
                                  <span class="badge badge-soft-success">{{ $completed }}/{{ $total }} Completed</span>
