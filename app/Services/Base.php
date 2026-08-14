@@ -11,7 +11,7 @@ class Base
 
  
         $client = new Client();
-      $req =  $client->request($method, $url, [
+        $req =  $client->request($method, $url, [
             'headers' => [
                 'accept' => 'application/json',
                 'authorization' => "Bearer $token",
@@ -35,7 +35,7 @@ class Base
             'clientId' =>  $clientId,
             'secret' =>  $secret
         ];
-
+ 
         $client = new Client();
         $req = $client->request('POST', $url, [
             'body' => json_encode($body),

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
  
 use App\Events\AddressVerificationCreated;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;  
 use App\Models\AddressVerification;
 use App\Models\AddressVerificationDetail;
 use App\Models\Verification;
@@ -138,8 +138,11 @@ private $token;
     $data['not_verified']  = AddressVerificationDetail::where(['address_verification_id' => $id, 'status' => 'pending'])->get();
     $data['verification'] = $verification;
 
+    // dd($data['verification']);
+
     return view('users.address.verifications', $data);
   }
+
   public function verificationReport($slug, $addressId)
   {
 

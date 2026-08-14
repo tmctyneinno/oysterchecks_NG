@@ -122,6 +122,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                @elseif($address_verification?->status == 'UNVERIFIED' || strtolower($address_verification?->status) == 'not_verified')
+                                <div class="alert custom-alert alert-warning icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
+                                    <div class="media">
+                                        <i class="mdi mdi-shield-off-outline alert-icon text-warning align-self-center font-30 me-3"></i>
+                                        <div class="media-body align-self-center">
+                                            <h5 class="mb-1 fw-bold mt-0 text-warning">Unverified</h5>
+                                            <span>Your Address verification request have been completed and marked not verified. Candidate does not live here or address does not exist or is not accessible.</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 @else
                                 <div class="alert custom-alert alert-danger icon-custom-alert shadow-sm fade show d-flex justify-content-between" role="alert">
                                     <div class="media">

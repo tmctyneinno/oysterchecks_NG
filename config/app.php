@@ -60,7 +60,7 @@ return [
     'PAYSTACK_TESTPUBLIC_KEY' => env('PAYSTACK_TESTPUBLIC_KEY',''),
     'verifyMeSecret' => env('verifyMeSecret'),
     'verifyMeClientId' => env('verifyMeClientId'),
-
+ 
     'asset_url' => env('ASSET_URL', null),
     // 'FLUTTERWAVE_KEY' => env('FLUTTERWAVE_SKEY', ''),
     /*
