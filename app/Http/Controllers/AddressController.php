@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
- 
+  
 use App\Events\AddressVerificationCreated;
 use Illuminate\Http\Request;  
 use App\Models\AddressVerification;
@@ -45,10 +45,9 @@ private $token;
 
   public function AddressIndex($slug)
   {
-    
-    
-  //  $this->storeStates();
+    //  $this->storeStates();
     $data = $this->generateAddressReport($slug);
+    dd($data);
     return view('users.address.index', $data); 
   }
 
