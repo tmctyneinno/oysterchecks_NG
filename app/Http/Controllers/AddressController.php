@@ -45,8 +45,11 @@ private $token;
 
   public function AddressIndex($slug)
   {
-    //  $this->storeStates();
-    $data = $this->generateAddressReport($slug);
+    $verification = Verification::where('slug', $slug)
+      ->where('report_type', 'address')
+      ->firstOrFail();
+
+    $data = $this->generateAddressReport($verification->slug);
     // dd($data);
     return view('users.address.index', $data); 
   }
