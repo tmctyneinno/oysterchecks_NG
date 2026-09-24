@@ -418,7 +418,8 @@
 
              <!--end card-header-->
              <div class="card-body">
-                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                 <div class="table-responsive">
+                 <table id="datatable-buttons" class="table table-striped nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                      <thead>
                          <tr>
                              <th>S/N</th>
@@ -507,6 +508,7 @@
                          @endforeach
                      </tbody>
                  </table>
+                 </div>
              </div>
          </div>
      </div> <!-- end col -->
