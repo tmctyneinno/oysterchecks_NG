@@ -491,10 +491,11 @@
                                      </a>
                                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seeMore" style="">
                                         
-                                          <a class="dropdown-item" href="{{route('ViewCandidateAddresses', $transaction->hashid)}}">
+                                         @if($transaction->addressVerificationDetail()->exists())
+                                         <a class="dropdown-item" href="{{route('ViewCandidateAddresses', $transaction->hashid)}}">
                                              <i data-feather="eye" class="icon-xs me-1"></i> View Verifications
                                          </a>
-                                         
+                                         @endif
                                          <a class="dropdown-item" href="{{route('showVerificationDetailsForm', ['slug' => $slug->slug, 'service_ref' => $transaction->service_reference])}}">
                                              <i data-feather="plus-circle" class="icon-xs me-1"></i> Make a Verification Request
                                          </a>
