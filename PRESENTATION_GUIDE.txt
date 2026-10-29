@@ -1,0 +1,213 @@
+OYSTERCHECKS: HOW TO PRESENT THE PLATFORM
+==========================================
+
+The idea in one sentence
+------------------------
+Tell one story: a problem shows up in the data, the platform catches it, the right
+people deal with it, and the board sees the result. Every screen you show should be
+a step in that story.
+
+
+1. BEFORE THE DEMO (about 15 minutes)
+-------------------------------------
+
+a) Open the demo
+   - Hosted: open the link where you uploaded the site.
+   - On your laptop:
+         cd frontend
+         npm run dev            (opens on http://localhost:3000)
+     or, to run the exact files you will upload:
+         npm run generate
+         npm run preview
+
+b) Start from clean data
+   On the sign-in page, open "Demo accounts" and click "Reset demo data".
+   (When signed in, the same reset is the circular-arrow button in the top bar.)
+   Dates always count from today, so "overdue" and "due in 3 days" look right
+   whenever you present.
+
+c) Open TWO TABS in the SAME browser window, side by side.
+   Sign in as a different person in each, for example the CRO in one tab and
+   the CCO in the other. Changes made in one tab appear in the other a moment
+   later. This is how you show live updates and the "two people must approve" rule.
+   Do NOT use an incognito window for the second person: incognito does not share
+   the demo data with the normal window.
+
+d) Use the light theme on a projector. Switch to dark once (the half-circle icon
+   in the top bar) to show it exists.
+
+e) Set the browser zoom to 110 to 125 percent so tables are readable from the back
+   of the room.
+
+f) Do one full rehearsal, then click "Reset demo data" again before the real session.
+
+
+Demo accounts (all use the password  OysterDemo!2026 )
+------------------------------------------------------
+On the sign-in page, "Demo accounts" fills these in for you with one click.
+
+   Role                              Name                 Email                                Lands on
+   Chief Risk Officer (CRO)          Adaeze Okonkwo       cro@oysterchecks.demo                Overview
+   Chief Compliance Officer (CCO)    Daniel Okafor        cco@oysterchecks.demo                Compliance
+   MLRO (money laundering lead)      Funmilayo Adeyemi    mlro@oysterchecks.demo               Financial crime
+   AML Analyst                       Chinedu Eze          analyst@oysterchecks.demo            Financial crime
+   Compliance Officer                Grace Ibekwe         compliance@oysterchecks.demo         Alerts
+   Head of Internal Audit            Tunde Bakare         audit@oysterchecks.demo              Assurance map
+   CISO                              Ngozi Nwosu          ciso@oysterchecks.demo               Control monitoring
+   HR Director                       Ibrahim Musa         hr@oysterchecks.demo                 Vetting
+   Business unit manager (Retail)    Halima Bello         retail.manager@oysterchecks.demo     Self-assessments
+   Business unit manager (Payments)  Olumide Fashola      payments.manager@oysterchecks.demo   Self-assessments
+   Board member                      Emeka Obi            board@oysterchecks.demo              Overview
+   Platform administrator            (Platform Administrator) admin@oysterchecks.demo          Users
+
+
+2. THE WALKTHROUGH (about 25 minutes)
+-------------------------------------
+
+STEP 1. Set up the problem (1 minute, no clicking)
+   Say: "Most organisations find out a control failed weeks later, from a
+   spreadsheet someone filled in. OysterChecks reads the source systems directly
+   and tells you within minutes."
+
+STEP 2. Overview, signed in as the CRO (2 minutes)
+   - Walk across the top figures: critical alerts, rules passing, open AML cases,
+     regulatory returns due.
+   - Point at "Control monitoring": 12 automated checks watching live data.
+   - Point at "Highest residual risks": risk after counting how well the controls
+     actually performed in testing.
+   - Point at the green "Live" dot in the top bar: nobody refreshes this page,
+     it updates itself.
+   - Point at the activity feed: every action anyone takes appears here.
+
+STEP 3. Control monitoring (3 minutes)
+   - Show the rule cards: what each rule watches, where its data comes from, how
+     fast a breach must be fixed, and who it escalates to.
+   - Open a failing rule and point out its escalation chain
+     (for example Compliance, then MLRO, then CCO, then CRO).
+   - Click "Configure" (as the CCO): you cannot change a control without giving a
+     reason, and the old and new values go into the permanent audit log.
+
+STEP 4. One alert from start to finish (5 minutes). THIS IS THE CENTREPIECE.
+   - Go to "Alerts" and open "Unscreened high-value transaction" (the GBP 340,000
+     wire from Hadejia Trading Ltd to Okoya Bay Holdings in the British Virgin
+     Islands).
+   - Show the escalation path, the deadline and the timeline.
+   - Click "Acknowledge", then "Remediation plan".
+   - Attach a file. Point out the fingerprint (SHA-256) shown next to it: proof the
+     file has not been changed since it was attached.
+   - Click "Request closure" and write the evidence.
+   - Try to sign it off yourself. The system refuses: two people must approve
+     (the "four-eyes" rule).
+   - In the second tab, signed in as the CCO, open the same alert and sign off the
+     closure. Point out that the first tab updates by itself.
+   - Say: "This is the difference between a ticket system and an assurance system.
+     Every step has an owner, a deadline and evidence."
+
+STEP 5. Financial crime, signed in as the MLRO (4 minutes)
+   - "Held payments" tab: screen the GBP 340k payment as a "Hit". A case opens
+     automatically with a risk score.
+   - Open the case and show the score breakdown: "No black box. Every point of the
+     score is explained, and a person must review before any decision."
+   - Click "Decide to file SAR": the report draft fills itself in from the case
+     data, and the 7-day deadline to the National Crime Agency starts.
+   - Sign in as the AML Analyst (in a tab) and show they CANNOT submit the report.
+     Only the MLRO can. Then submit it as the MLRO with an NCA reference.
+
+STEP 6. Risk register (3 minutes)
+   - Switch the heat map between "Inherent" and "Residual": "Same risks, before
+     and after controls. The difference is what your controls are worth."
+   - Open a risk to show its linked controls and their tested effectiveness.
+   - Record a key risk indicator (KRI) value above its red limit: an alert is raised
+     to the risk owner straight away (check the Alerts count in the sidebar).
+
+STEP 7. Controls and assurance (3 minutes)
+   - Controls: "Effectiveness comes from test results, not from people marking their
+     own work." Record two failed tests on an effective control and watch its rating
+     drop to ineffective, then show the linked risk's residual score go up.
+   - Self-assessments: show where a manager's own rating disagrees with the test
+     results. It is flagged.
+   - Assurance map: the three lines of defence side by side, with gaps and
+     duplicated effort flagged automatically.
+
+STEP 8. Compliance, policies and incidents (3 minutes)
+   - Compliance: obligations linked to controls, the evidence pack download, and the
+     regulatory returns countdown. "Generate" a return, then "Submit" it.
+   - Policies: "The person who wrote a policy cannot approve it." Show acknowledgement
+     tracking (how many staff have read and accepted each policy).
+   - Incidents: open one with a regulator deadline (for example the 72-hour data
+     protection breach window). It cannot be closed until the root cause, all
+     corrective actions and the regulator notice are done.
+
+STEP 9. Who sees what (2 minutes)
+   - Sign in as the Retail business unit manager: they see only their own unit's
+     alerts and self-assessments, nothing else.
+   - Sign in as Admin: customer names and personal details are masked.
+   - Sign in as Board: read-only overview plus the board report.
+   - Say: "Access rules are checked on every request, not just hidden in the screen."
+
+STEP 10. Board report and trust (2 minutes)
+   - Board report: a written summary generated from the live figures. Every sentence
+     traces back to a number on the page. Click "Print / save PDF".
+   - Audit log (as Admin or CRO): click "Verify integrity". "Every action is chained
+     to the one before it. If anyone edited history, this check would fail." Point
+     out that the actions you took during the demo are already there.
+
+STEP 11. Close (1 minute)
+   - Integrations: the systems it connects to (HR, core banking, CRM, ERP, Active
+     Directory, sanctions lists).
+   - Implementation: the 26-week rollout plan with sign-off gates.
+   - Final line: "Real-time, evidence-based assurance, from the first alert to the
+     board pack."
+
+
+3. SHORTER VERSIONS FOR DIFFERENT AUDIENCES
+-------------------------------------------
+   - Executives (10 minutes): steps 2, 4 (shortened), 9 and 10.
+     Focus on visibility, accountability and board reporting.
+   - Risk and compliance teams (30+ minutes): the full walkthrough, slowing down on
+     steps 4 to 8.
+   - IT and security: steps 3, 4, 9 and 10, plus how it connects to their systems
+     (Integrations page) and the audit trail.
+
+
+4. QUESTIONS YOU WILL GET, AND HONEST ANSWERS
+---------------------------------------------
+   Q: Is this live bank data?
+   A: No. It is realistic demo data. In production the platform reads from your
+      core banking, CRM, HR and identity systems (the Integrations page shows them
+      as "simulated" here).
+
+   Q: Does it send emails or text messages?
+   A: In-app notifications work in the demo. Email and SMS are planned for the
+      production version.
+
+   Q: Single sign-on with our identity provider? Two-step verification?
+   A: Planned for production (SAML or OIDC, plus authenticator-app codes). The demo
+      only checks the demo password.
+
+   Q: Can we change the rules and thresholds?
+   A: Yes, from the Configure screen on Control monitoring, and every change is
+      recorded in the audit log with a reason.
+
+   Q: Is the AML score AI?
+   A: It is a transparent weighted model on purpose, so regulators and analysts can
+      see exactly why a case scored what it did. A machine-learning model can sit
+      behind the same screen later.
+
+   Q: Where is the data stored?
+   A: In this demo, only in your browser. In production, in your own database with
+      evidence files in tamper-proof storage.
+
+
+5. PRACTICAL TIPS
+-----------------
+   - If something gets messy during practice, click "Reset demo data" and you are
+     back to the starting point in a second.
+   - Changes are saved in the browser you used. A different computer or browser
+     starts from the clean demo data.
+   - Uploaded files can be downloaded again only in the tab that uploaded them;
+     other tabs show the file name and fingerprint.
+   - Keep the second tab already signed in as the CCO before you start step 4, so the
+     four-eyes moment flows without typing.
+   - Have the board report open in a spare tab in case you run short of time and
+     want to jump straight to the ending.

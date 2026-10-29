@@ -36,10 +36,8 @@ type Row = { id: number, at: string, actorName: string, action: string, entityTy
 const rows = ref<Row[]>([])
 const nextBefore = ref<number | null>(null)
 
-// useRequestFetch forwards the session cookie during SSR; plain $fetch would not.
-const requestFetch = useRequestFetch()
 async function load(reset = true) {
-  const res = await requestFetch<{ rows: Row[], nextBefore: number | null }>('/api/admin/audit-log', { query: { q: q.value || undefined, before: reset ? undefined : nextBefore.value ?? undefined } })
+  const res = await $fetch<{ rows: Row[], nextBefore: number | null }>('/api/admin/audit-log', { query: { q: q.value || undefined, before: reset ? undefined : nextBefore.value ?? undefined } })
   rows.value = reset ? res.rows : [...rows.value, ...res.rows]
   nextBefore.value = res.nextBefore
 }
@@ -62,9 +60,7 @@ const verifying = ref(false)
 const verification = ref<{ valid: boolean, brokenAt: number | null, checked: number } | null>(null)
 async function verify() {
   verifying.value = true
-  // Plain string URL: Nitro's route-type inference exceeds TS's depth limit here.
-  const url: string = '/api/admin/audit-log/verify'
-  try { verification.value = await $fetch<NonNullable<typeof verification.value>>(url) }
+  try { verification.value = await $fetch<NonNullable<typeof verification.value>>('/api/admin/audit-log/verify') }
   catch (e) { useToast().error(errorMessage(e)) }
   finally { verifying.value = false }
 }

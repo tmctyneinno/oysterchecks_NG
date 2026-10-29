@@ -31,11 +31,17 @@
           <span class="small">{{ d.label }}</span>
         </button>
       </div>
+      <p class="small muted" style="margin:10px 0 0">
+        Changes you make are kept in this browser.
+        <button type="button" class="link-btn small" @click="resetDemo">Reset demo data</button>
+      </p>
     </details>
   </form>
 </template>
 
 <script setup lang="ts">
+import { resetOverlay } from '~/demo/state'
+
 definePageMeta({ layout: 'auth', public: true })
 useHead({ title: 'Sign in' })
 
@@ -61,17 +67,22 @@ async function submit() {
   error.value = null
   try {
     const res = await $fetch<{ next: string }>('/api/auth/login', { method: 'POST', body: { email: email.value, password: password.value } })
-    if (res.next.startsWith('/login/')) return navigateTo({ path: res.next, query: route.query })
     await refreshSession()
     await navigateTo(typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') ? route.query.redirect : res.next)
   }
   catch (e) { error.value = errorMessage(e) }
   finally { pending.value = false }
 }
+
+function resetDemo() {
+  resetOverlay()
+  useToast().success('Demo data reset')
+}
 </script>
 
 <style scoped>
 .demo { border-top: 1px solid var(--border); padding-top: 12px; }
 .demo summary { cursor: pointer; color: var(--text-2); }
+.link-btn { background: none; border: none; padding: 0; color: var(--accent); cursor: pointer; text-decoration: underline; }
 .demo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
 </style>

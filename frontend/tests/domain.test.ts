@@ -4,7 +4,6 @@ import { addBusinessDays, computeDueAt, escalationStepMs } from '../shared/utils
 import { countryRiskOf, ratingForScore, scoreAml } from '../shared/utils/aml'
 import { classifySupplier } from '../shared/utils/tprm'
 import { can, ROLES } from '../shared/utils/rbac'
-import { base32Decode, base32Encode, totpCode, verifyTotp } from '../server/utils/crypto'
 
 describe('risk scoring (§4.3)', () => {
   it('bands scores on the 5×5 matrix', () => {
@@ -55,23 +54,6 @@ describe('SLA computation (§5)', () => {
 
   it('never escalates faster than every 30 minutes', () => {
     expect(escalationStepMs({ type: 'minutes', minutes: 5 })).toBe(30 * 60_000)
-  })
-})
-
-describe('TOTP (RFC 6238)', () => {
-  const secret = base32Encode(Buffer.from('12345678901234567890'))
-  it('round-trips base32', () => {
-    expect(base32Decode(secret).toString()).toBe('12345678901234567890')
-  })
-  it('matches the RFC 6238 SHA-1 test vector', () => {
-    expect(totpCode(secret, 59_000)).toBe('287082')
-    expect(totpCode(secret, 1111111109_000)).toBe('081804')
-  })
-  it('accepts ±1 step drift only', () => {
-    const now = 1_700_000_000_000
-    expect(verifyTotp(secret, totpCode(secret, now - 30_000), now)).toBe(true)
-    expect(verifyTotp(secret, totpCode(secret, now - 90_000), now)).toBe(false)
-    expect(verifyTotp(secret, '12345', now)).toBe(false)
   })
 })
 

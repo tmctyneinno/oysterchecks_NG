@@ -1,5 +1,5 @@
-// Route guard. Pages declare `definePageMeta({ permission })`; the server re-checks on every API
-// call, so this only prevents rendering screens a role cannot use.
+// Route guard. Pages declare `definePageMeta({ permission })`; the API re-checks on every call,
+// so this only prevents rendering screens a role cannot use.
 declare module '#app' {
   interface PageMeta { permission?: Permission, public?: boolean }
 }

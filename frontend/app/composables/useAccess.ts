@@ -1,4 +1,4 @@
-/** Client-side view of the RBAC matrix. Only decides what to render, the server enforces access. */
+/** Client-side view of the RBAC matrix. Only decides what to render; the API (app/demo/api.ts) enforces access. */
 export function useAccess() {
   const { user, loggedIn } = useUserSession()
   const role = computed(() => user.value?.role ?? null)

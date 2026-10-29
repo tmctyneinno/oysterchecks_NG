@@ -2,7 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['nuxt-auth-utils'],
+  // Static demo: the whole app runs in the browser and answers its own /api calls from hardcoded
+  // data (app/demo). `npm run generate` produces plain files that any static host can serve.
+  ssr: false,
 
   app: {
     head: {
@@ -18,27 +20,12 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap' },
       ],
+      // Applies the saved theme before the app boots, so there is no light flash in dark mode.
+      script: [{ innerHTML: `(function(){var m=document.cookie.match(/(?:^|; )oc-theme=(light|dark)/);if(m)document.documentElement.setAttribute('data-theme',m[1])})()` }],
     },
   },
 
   css: ['bootstrap-icons/font/bootstrap-icons.css', '~/assets/css/main.css'],
-
-  runtimeConfig: {
-    // Overridable via NUXT_DB_PATH etc. See .env.example.
-    dbPath: '.data/oysterchecks.db',
-    evidenceDir: '.data/evidence',
-    mfaEnforced: true,
-    seedPassword: 'OysterDemo!2026',
-    demoSimulator: true,
-    ccmIntervalSeconds: 60,
-    session: {
-      maxAge: 60 * 60 * 8,
-    },
-  },
-
-  nitro: {
-    serverAssets: [{ baseName: 'migrations', dir: './database/migrations' }],
-  },
 
   typescript: { strict: true },
 })

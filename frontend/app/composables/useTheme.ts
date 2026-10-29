@@ -3,7 +3,7 @@ export type ThemeChoice = 'system' | 'light' | 'dark'
 const ORDER: ThemeChoice[] = ['system', 'light', 'dark']
 
 /**
- * Theme preference stored in a cookie, so the server renders the right theme on first paint.
+ * Theme preference stored in a cookie; an inline script in nuxt.config applies it before the app boots.
  * "system" leaves the attribute off and the CSS follows prefers-color-scheme.
  */
 export function useTheme() {

@@ -47,6 +47,7 @@
         <span class="small" style="font-weight:500">{{ user?.name }}</span>
         <span class="small muted">{{ roleDef?.label }}</span>
       </span>
+      <button class="icon-btn" type="button" aria-label="Reset demo data" title="Reset demo data" @click="resetDemo"><i class="bi bi-arrow-counterclockwise" /></button>
       <button class="icon-btn" type="button" aria-label="Sign out" title="Sign out" @click="signOut"><i class="bi bi-box-arrow-right" /></button>
     </div>
 
@@ -55,6 +56,8 @@
 </template>
 
 <script setup lang="ts">
+import { resetOverlay } from '~/demo/state'
+
 const emit = defineEmits<{ 'toggle-nav': [] }>()
 const { user, roleDef, landing } = useAccess()
 const { clear } = useUserSession()
@@ -62,13 +65,12 @@ const status = useLiveStatus()
 const { cycle: cycleTheme, label: themeLabel, icon: themeIcon } = useTheme()
 
 const initials = computed(() => (user.value?.name ?? '').split(' ').map(p => p[0]).slice(0, 2).join(''))
-const liveTitle = computed(() => status.value === 'live' ? 'Receiving live updates' : 'Live updates unavailable. Data refreshes every 30 seconds.')
+const liveTitle = computed(() => status.value === 'live' ? 'Receiving live updates' : 'Connecting to live updates')
 
 const q = ref('')
 const results = ref<{ domain: string, ref: string, title: string, to: string }[]>([])
 const searching = ref(false)
-// Plain string URL: Nitro's route-type inference exceeds TS's depth limit on this call.
-const SEARCH_URL: string = '/api/search'
+const SEARCH_URL = '/api/search'
 let searchTimer: ReturnType<typeof setTimeout>
 watch(q, (v) => {
   clearTimeout(searchTimer)
@@ -95,6 +97,12 @@ async function signOut() {
   disconnectLive()
   await clear()
   await navigateTo('/login')
+}
+
+function resetDemo() {
+  if (!confirm('Reset the demo? Every change made in this browser (alerts, cases, uploads, audit entries) is discarded.')) return
+  resetOverlay()
+  location.reload()
 }
 </script>
 
