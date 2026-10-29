@@ -14,9 +14,12 @@ export default defineNuxtPlugin({
     // Intercept at the fetch level: $fetch, useFetch and plain fetch all end up here, including the
     // $fetch references Nuxt compiles into components as direct imports.
     const nativeFetch = window.fetch.bind(window)
+    // When hosted in a sub-folder, $fetch prefixes requests with it (/sub-folder/api/...).
+    const base = useRuntimeConfig().app.baseURL.replace(/\/$/, '')
     window.fetch = async (input: RequestInfo | URL, init: RequestInit = {}) => {
       const url = new URL(input instanceof Request ? input.url : String(input), location.origin)
-      if (url.origin !== location.origin || !url.pathname.startsWith('/api/')) return nativeFetch(input, init)
+      const path = base && url.pathname.startsWith(`${base}/api/`) ? url.pathname.slice(base.length) : url.pathname
+      if (url.origin !== location.origin || !path.startsWith('/api/')) return nativeFetch(input, init)
 
       const method = String(init.method ?? (input instanceof Request ? input.method : 'GET')).toUpperCase()
       let body: unknown = init.body
@@ -27,7 +30,7 @@ export default defineNuxtPlugin({
       // A short pause so pending states and spinners behave as they would against a real API.
       if (method !== 'GET') await new Promise(r => setTimeout(r, 150 + Math.random() * 150))
       try {
-        const result = await handle(method, url.pathname, Object.fromEntries(url.searchParams), body)
+        const result = await handle(method, path,Object.fromEntries(url.searchParams), body)
         return new Response(JSON.stringify(result), { status: 200, headers: { 'content-type': 'application/json' } })
       }
       catch (err) {

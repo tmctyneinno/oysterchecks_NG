@@ -7,6 +7,8 @@ export default defineNuxtConfig({
   ssr: false,
 
   app: {
+    // Compiled scripts, styles and fonts are published here (Nuxt's default is /_nuxt/).
+    buildAssetsDir: '/_assets/',
     head: {
       htmlAttrs: { lang: 'en-GB' },
       title: 'OysterChecks',

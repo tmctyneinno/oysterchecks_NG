@@ -1,0 +1,41 @@
+# OysterChecks static demo on Apache (needs mod_rewrite; the other modules are optional).
+# Copied into .output/public by `npm run generate`; upload it alongside index.html.
+
+Options -MultiViews -Indexes
+DirectoryIndex index.html
+# Let the app handle /alerts instead of Apache redirecting it to /alerts/
+DirectorySlash Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Hosting in a sub-folder? Set it here and build with NUXT_APP_BASE_URL=/sub-folder/
+  # RewriteBase /sub-folder/
+
+  # Real files (scripts, styles, icons) are served as they are.
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # Every page URL goes to the app shell; the app's router shows the right screen.
+  RewriteRule ^ 200.html [L]
+</IfModule>
+
+# Unknown paths fall back to the app too, if mod_rewrite is unavailable.
+# In a sub-folder, change this to /sub-folder/404.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  # Compiled files have content hashes in their names, so they can be cached for a year.
+  <If "%{REQUEST_URI} =~ m#/_assets/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  # Pages are always revalidated, so a new upload is picked up immediately.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript text/javascript application/json image/svg+xml
+</IfModule>

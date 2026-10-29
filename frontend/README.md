@@ -27,11 +27,26 @@ all at `@oysterchecks.demo`. Each role lands on its own screen (§1.3).
 
 ## Deploying the static site
 
-`npm run generate`, then upload the contents of `.output/public`. The app is a single-page app:
-deep links such as `/alerts?id=12` are served by `200.html` / `404.html`, which Netlify, Vercel and
-GitHub Pages pick up automatically. On other hosts, rewrite unknown paths to `/200.html`.
-To serve from a sub-path (e.g. GitHub Pages project sites), build with
-`NUXT_APP_BASE_URL=/repo-name/ npm run generate`.
+`npm run generate`, then upload the **contents** of `.output/public` (including the hidden
+`.htaccess` file). Compiled scripts and styles are in `_assets/`.
+
+- **Apache / cPanel:** the included `.htaccess` (from `public/.htaccess`) sends every page URL to
+  the app, caches `_assets/` for a year and never caches the HTML. It needs `mod_rewrite`, which
+  shared hosts enable by default.
+- **Netlify, Vercel, GitHub Pages:** nothing extra; they serve `200.html` / `404.html` automatically.
+- **Nginx:** `try_files $uri $uri/ /200.html;`
+- **IIS:** a URL Rewrite rule that sends non-file requests to `/200.html`.
+
+**Sub-folder** (e.g. `example.com/oysterchecks/`): build with the folder as the base path, then
+uncomment `RewriteBase` in `.htaccess` and point `ErrorDocument` at the folder.
+
+```powershell
+$env:NUXT_APP_BASE_URL = '/oysterchecks/'; npm run generate; Remove-Item Env:NUXT_APP_BASE_URL
+```
+
+In Git Bash, prefix the command with `MSYS_NO_PATHCONV=1`
+(`MSYS_NO_PATHCONV=1 NUXT_APP_BASE_URL=/oysterchecks/ npm run generate`); otherwise Git Bash
+rewrites `/oysterchecks/` into a Windows path and the build produces "Redirecting..." pages.
 
 ## How the demo works
 
