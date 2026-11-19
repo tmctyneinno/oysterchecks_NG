@@ -94,7 +94,7 @@
 
         <section>
           <div class="section-title">History</div>
-          <ol class="timeline">
+          <ol class="change-log">
             <li v-for="(h, i) in [...c.history].reverse()" :key="i">
               <div class="small"><span style="font-weight:500">{{ h.action }}</span> · {{ h.actorName }} <span class="mono muted">{{ fmtDateTime(h.at) }}</span></div>
               <div v-if="h.note" class="small text-2">{{ h.note }}</div>
@@ -236,7 +236,7 @@ async function send(action: string, body: object, message: string) {
 .flow li { display: inline-flex; align-items: center; gap: 6px; }
 .step { width: 20px; height: 20px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: inline-grid; place-items: center; font-size: 11px; }
 .list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.timeline { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
+.change-log { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
 .map-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-height: 50vh; overflow-y: auto; }
 @media (max-width: 640px) { .map-grid { grid-template-columns: minmax(0, 1fr); } }
 .map-grid fieldset { border: 1px solid var(--border); border-radius: var(--r-md); padding: 8px 10px; margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }

@@ -29,11 +29,21 @@
 const props = defineProps<{ open: boolean, title: string, submitLabel?: string, pending?: boolean, disabled?: boolean, danger?: boolean }>()
 const emit = defineEmits<{ close: [], submit: [] }>()
 const box = ref<HTMLElement | null>(null)
+// Return focus to whatever opened the dialog (often a button inside a drawer), so Escape keeps working there.
+let opener: HTMLElement | null = null
 watch(() => props.open, async (v) => {
-  if (v && import.meta.client) {
+  if (!import.meta.client) return
+  if (v) {
+    opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
     await nextTick()
     const first = box.value?.querySelector<HTMLElement>('input, select, textarea')
     ;(first ?? box.value)?.focus()
+  }
+  else {
+    await nextTick()
+    const target = opener?.isConnected ? opener : document.querySelector<HTMLElement>('.drawer')
+    target?.focus()
+    opener = null
   }
 })
 </script>
