@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <UiPageHeader title="Compliance" :subtitle="`${obligations.length} obligations, ${compliantPct}% compliant`">
+    <UiPageHeader title="Obligations and returns" :subtitle="`${obligations.length} obligations, ${compliantPct}% compliant`">
       <a href="/api/export/obligations" class="btn"><i class="bi bi-file-earmark-zip" aria-hidden="true" /> Evidence pack (CSV)</a>
       <button v-if="allowed('compliance:write')" class="btn btn-primary" type="button" @click="formOpen = 'new'"><i class="bi bi-plus-lg" aria-hidden="true" /> Add obligation</button>
     </UiPageHeader>
@@ -61,6 +61,7 @@
             <button v-for="s in statuses" :key="s" type="button" class="btn btn-sm" :class="{ 'btn-primary': selected.status === s }" @click="assess(s)">{{ labelize(s) }}</button>
           </div>
         </section>
+        <ComplianceTraceChain :obligation-id="selected.id" />
         <UiEvidence entity-type="obligation" :entity-id="selected.id" :can-upload="allowed('compliance:write')" />
       </template>
       <template v-if="selected && allowed('compliance:write')" #footer><button class="btn" type="button" @click="formOpen = selected.id">Edit &amp; map controls</button></template>
@@ -76,7 +77,7 @@
 
 <script setup lang="ts">
 definePageMeta({ permission: 'compliance:read' })
-useHead({ title: 'Compliance' })
+useHead({ title: 'Obligations and returns' })
 const route = useRoute()
 const { can: allowed } = useAccess()
 

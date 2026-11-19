@@ -3,6 +3,7 @@
 
 import { loadFixtures } from '~/demo/fixtures'
 import { download, handle, setChangeListener } from '~/demo/api'
+import '~/demo/api-v12'
 import { OVERLAY_STORAGE_KEY, reloadOverlay } from '~/demo/state'
 
 export default defineNuxtPlugin({

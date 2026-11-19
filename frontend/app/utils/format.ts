@@ -36,7 +36,11 @@ export const fmtNumber = (n: number | null | undefined) => (n == null ? '-' : ne
 export const fmtGBP = (n: number | null | undefined, compact = false) =>
   n == null ? '-' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0, notation: compact ? 'compact' : 'standard' }).format(n)
 
-const ACRONYMS = new Set(['kyc', 'kyb', 'edd', 'sar', 'ccm', 'aml', 'kri', 'csa', 'pep', 'nca', 'sla', 'esg', 'mfa', 'dpa', 'rca'])
+/** Any currency, e.g. fmtMoney(4850000, 'NGN') is 'NGN 4,850,000'. Uses the ISO code so naira, dirhams and pounds read the same way. */
+export const fmtMoney = (n: number | null | undefined, currency: string) =>
+  n == null ? '-' : `${currency} ${new Intl.NumberFormat('en-GB', { maximumFractionDigits: n < 10 ? 2 : 0 }).format(n)}`
+
+const ACRONYMS = new Set(['kyc', 'kyb', 'edd', 'sar', 'ccm', 'aml', 'kri', 'csa', 'pep', 'nca', 'sla', 'esg', 'mfa', 'dpa', 'rca', 'str', 'vasp', 'ubo'])
 
 /** 'partially_effective' to 'Partially effective'; known acronyms stay upper case ('sar_decided' to 'SAR decided'). */
 export const labelize = (s: string | null | undefined) => {
@@ -57,7 +61,14 @@ export function toneFor(value: string | null | undefined): Tone {
   switch (value) {
     case 'critical': case 'fail': case 'ineffective': case 'non_compliant': case 'overdue': case 'off_track': case 'red':
     case 'unsatisfactory': case 'confirmed_match': case 'failed': case 'gap': case 'escalated': case 'hit':
+    case 'blocked': case 'exception': case 'not_assured':
       return 'critical'
+    case 'pending_approval': case 'returned': case 'review': case 'pending_info': case 'partially_assured': case 'pending_decision':
+      return 'high'
+    case 'triage': case 'applicability': case 'testing': case 'local_variant': case 'deferred': case 'applicable': case 'partially_applicable':
+      return 'medium'
+    case 'assured': case 'resolved': case 'active': case 'reused':
+      return 'ok'
     case 'high': case 'warn': case 'partially_effective': case 'partial': case 'due_soon': case 'at_risk': case 'amber':
     case 'needs_improvement': case 'potential_match': case 'pending_closure': case 'in_review': case 'thin': case 'sar_decided':
       return 'high'

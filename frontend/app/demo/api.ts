@@ -10,6 +10,7 @@ import { SUPPLIER_REVIEW_MONTHS, classifySupplier } from '#shared/utils/tprm'
 import { NOTIFICATION_RULES } from '#shared/utils/incidents'
 import { type DemoUser, captured, capturedAny, demoUsers, fail, indexOf, userByEmail } from './fixtures'
 import { addEvent, applyPatch, create, createdOf, eventsOf, nextId, overlay, patch, readSession, saveOverlay, writeSession } from './state'
+import { GATES } from './extended'
 
 export const DEMO_PASSWORD = 'OysterDemo!2026'
 
@@ -19,7 +20,7 @@ interface Ctx { user: DemoUser | null, query: Record<string, string>, body: any,
 type Handler = (ctx: Ctx) => unknown
 
 const routes: { method: string, re: RegExp, handler: Handler }[] = []
-function route(method: string, pattern: string, handler: Handler) {
+export function route(method: string, pattern: string, handler: Handler) {
   routes.push({ method, re: new RegExp(`^${pattern.replace(/:\w+/g, '([^/]+)')}$`), handler })
 }
 
@@ -44,16 +45,16 @@ export async function handle(method: string, path: string, query: Record<string,
 
 // ── Helpers ──────────────────────────────────────────────────────────────────────────────────
 
-const nowIso = () => new Date().toISOString()
-const DAY = 86_400_000
-const OPEN_STATUSES = ['open', 'acknowledged', 'investigating', 'escalated', 'pending_closure']
+export const nowIso = () => new Date().toISOString()
+export const DAY = 86_400_000
+export const OPEN_STATUSES = ['open', 'acknowledged', 'investigating', 'escalated', 'pending_closure']
 
-function requireUser(ctx: Ctx): DemoUser {
+export function requireUser(ctx: Ctx): DemoUser {
   if (!ctx.user) fail(401, 'Authentication required')
   return ctx.user
 }
 
-function requirePerm(ctx: Ctx, ...permissions: Permission[]): DemoUser {
+export function requirePerm(ctx: Ctx, ...permissions: Permission[]): DemoUser {
   const user = requireUser(ctx)
   const missing = permissions.filter(p => !can(user.role, p))
   if (missing.length) fail(403, `Your role does not permit: ${missing.join(', ')}`)
@@ -61,11 +62,11 @@ function requirePerm(ctx: Ctx, ...permissions: Permission[]): DemoUser {
 }
 
 /** BU-scoped roles only see records from their own business unit. */
-const visible = (user: DemoUser, row: Row) =>
+export const visible = (user: DemoUser, row: Row) =>
   ROLES[user.role].scope !== 'bu' || !('businessUnit' in row) || row.businessUnit === user.businessUnit
 
 /** Fixture reads are captured per role; a missing capture means the role cannot see that record. */
-function read<T = any>(user: DemoUser, url: string, what = 'Record'): T {
+export function read<T = any>(user: DemoUser, url: string, what = 'Record'): T {
   const body = captured<T>(user.email, url)
   if (body === undefined) fail(404, `${what} not found`)
   return body
@@ -78,13 +79,13 @@ function required(input: Row, ...fields: string[]) {
   }
 }
 
-function minLength(value: unknown, min: number, message: string) {
+export function minLength(value: unknown, min: number, message: string) {
   if (typeof value !== 'string' || value.trim().length < min) fail(400, message)
   return value.trim()
 }
 
 const labelOf = (f: string) => f.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase())
-const toIso = (v: unknown) => (v ? new Date(v as string).toISOString() : null)
+export const toIso = (v: unknown) => (v ? new Date(v as string).toISOString() : null)
 const addMonths = (iso: string, months: number) => { const d = new Date(iso); d.setMonth(d.getMonth() + months); return d.toISOString() }
 
 // Every distinct record per resource across all roles' captures, keyed by id.
@@ -110,8 +111,9 @@ const SOURCES: Record<string, [string[], ((b: any) => Row[])?]> = {
   esg: [['/api/esg']],
   vetting: [['/api/vetting']],
   access: [['/api/security/access']],
-  phases: [['/api/programme']],
-  tasks: [['/api/programme'], b => b.flatMap((p: Row) => p.tasks)],
+  // Version 1.2: the programme is at pre-initiation, so the provisional phases start with nothing done.
+  phases: [['/api/programme'], b => b.map(resetPhase)],
+  tasks: [['/api/programme'], b => b.flatMap((p: Row) => resetPhase(p).tasks)],
   integrations: [['/api/integrations'], b => b.integrations],
   users: [['/api/admin/users']],
   directory: [['/api/users/lookup']],
@@ -126,32 +128,32 @@ function idx(resource: string) {
 }
 
 /** The record as it stands now (fixture or created, plus demo changes), or null. */
-function current(resource: string, id: number | string): Row | null {
+export function current(resource: string, id: number | string): Row | null {
   const key = String(id)
   const made = overlay.created[resource]?.find(r => String(r.id) === key)
   const base = made ?? idx(resource).get(Number.isNaN(Number(id)) ? id : Number(id)) ?? idx(resource).get(key)
   return base ? applyPatch(resource, structuredClone(base)) : null
 }
 
-function mustFind(resource: string, id: number | string, what: string): Row {
+export function mustFind(resource: string, id: number | string, what: string): Row {
   const row = current(resource, id)
   if (!row) fail(404, `${what} not found`)
   return row
 }
 
 /** Fixture list + records created in the demo (newest first), with demo changes applied. */
-function listView(resource: string, base: Row[], user: DemoUser): Row[] {
+export function listView(resource: string, base: Row[], user: DemoUser): Row[] {
   const ids = new Set(base.map(r => String(r.id)))
   const made = createdOf(resource).filter(r => !ids.has(String(r.id)) && visible(user, r))
   return [...made, ...base].map(r => applyPatch(resource, r))
 }
 
-const allUsers = () => [...demoUsers(), ...createdOf<DemoUser>('users')]
-function userName(id: number | null | undefined) {
+export const allUsers = () => [...demoUsers(), ...createdOf<DemoUser>('users')]
+export function userName(id: number | null | undefined) {
   if (!id) return null
   return allUsers().find(u => u.id === id)?.name ?? idx('directory').get(id)?.name ?? null
 }
-const usersWithRole = (role: RoleKey) => allUsers().filter(u => u.role === role)
+export const usersWithRole = (role: RoleKey) => allUsers().filter(u => u.role === role)
 
 function nextRef(resource: string, fallback: string): string {
   const refs = [...idx(resource).values(), ...createdOf(resource)].map(r => r.ref as string).filter(Boolean)
@@ -182,7 +184,7 @@ async function sha256(data: ArrayBuffer | string): Promise<string> {
 let fixtureAudit: Row[] | null = null
 const fixtureAuditLog = () => (fixtureAudit ??= capturedAny<Row[]>('/api/admin/audit-log') ?? [])
 
-async function audit(user: DemoUser | null, action: string, entityType: string | null, entityId: number | string | null, detail: Row | null = null) {
+export async function audit(user: DemoUser | null, action: string, entityType: string | null, entityId: number | string | null, detail: Row | null = null) {
   const prev = overlay.audit[0] ?? fixtureAuditLog()[0]
   const row: Row = {
     id: (prev?.id ?? 0) + 1, at: nowIso(), actorId: user?.id ?? null, actorName: user?.name ?? 'System', action, entityType,
@@ -193,16 +195,16 @@ async function audit(user: DemoUser | null, action: string, entityType: string |
   changed.add('activity')
 }
 
-function notifyUser(userId: number | null | undefined, n: { severity: string, title: string, body?: string | null, link?: string | null }) {
+export function notifyUser(userId: number | null | undefined, n: { severity: string, title: string, body?: string | null, link?: string | null }) {
   if (!userId) return
   overlay.notifications.unshift({ id: nextId(), userId, at: nowIso(), body: null, link: null, readAt: null, ...n })
   changed.add('notification')
 }
-const notifyRole = (role: RoleKey, n: Parameters<typeof notifyUser>[1]) => usersWithRole(role).forEach(u => notifyUser(u.id, n))
+export const notifyRole = (role: RoleKey, n: Parameters<typeof notifyUser>[1]) => usersWithRole(role).forEach(u => notifyUser(u.id, n))
 
 /** Uploaded files stay in this tab's memory; other tabs get a placeholder on download. */
 export const evidenceBlobs = new Map<number, Blob>()
-const evidenceFor = (entityType: string, entityId: number | string) => structuredClone(overlay.evidence[`${entityType}:${entityId}`] ?? [])
+export const evidenceFor = (entityType: string, entityId: number | string) => structuredClone(overlay.evidence[`${entityType}:${entityId}`] ?? [])
 const evidenceCount = (entityType: string, entityId: number) => overlay.evidence[`${entityType}:${entityId}`]?.length ?? 0
 
 // ── Sign-in ─────────────────────────────────────────────────────────────────────────────────
@@ -228,7 +230,7 @@ route('POST', '/api/auth/logout', () => {
 
 // ── Dashboard and reports ───────────────────────────────────────────────────────────────────
 
-function allAlerts(): Row[] {
+export function allAlerts(): Row[] {
   const ids = new Set<number>()
   return [...createdOf('alerts'), ...idx('alerts').values()]
     .filter(a => !ids.has(a.id) && ids.add(a.id))
@@ -292,9 +294,14 @@ route('GET', '/api/search', (ctx) => {
   add('governance:read', 'policies', 'Policy', 4, r => r.title, r => `/governance?id=${r.id}`, r => [r.title])
   add('tprm:read', 'suppliers', 'Supplier', 4, r => r.name, r => `/tprm?id=${r.id}`, r => [r.name])
   add('incidents:read', 'incidents', 'Incident', 4, r => r.title, r => `/incidents?id=${r.id}`, r => [r.title, r.ref])
-  add('aml:read', 'cases', 'AML case', 4, r => `${r.type} case`, r => `/aml?case=${r.id}`, r => [r.ref])
+  add('aml:read', 'cases', 'AML case', 4, r => `${r.type} case`, r => `/cases?case=${r.id}`, r => [r.ref])
+  for (const provider of searchProviders) out.push(...provider(user, hit))
   return out.slice(0, 20)
 })
+
+type SearchHit = { domain: string, ref: string, title: string, to: string }
+/** Other demo modules (api-v12.ts) add their records to global search here. */
+export const searchProviders: ((user: DemoUser, hit: (...v: unknown[]) => boolean) => SearchHit[])[] = []
 
 // ── Alerts ──────────────────────────────────────────────────────────────────────────────────
 
@@ -540,7 +547,7 @@ route('POST', '/api/ccm/run', async (ctx) => {
 
 const kriStatus = (k: Row) => (k.value >= k.red ? 'red' : k.value >= k.amber ? 'amber' : 'green')
 
-function riskView(r: Row): Row {
+export function riskView(r: Row): Row {
   const controls: Row[] = r.controlIds
     ? r.controlIds.map((id: number) => current('controls', id)).filter(Boolean)
     : (r.controls ?? []).map((c: Row) => current('controls', c.id) ?? c)
@@ -610,7 +617,7 @@ route('PATCH', '/api/kris/:id', async (ctx) => {
   return current('kris', id)
 })
 
-function controlView(c: Row): Row {
+export function controlView(c: Row): Row {
   c.ownerName = userName(c.ownerId)
   const rule = c.ccmRuleId ? current('rules', c.ccmRuleId) : null
   c.rule = rule ? { id: rule.id, state: rule.state, name: rule.name } : null
@@ -964,7 +971,7 @@ route('POST', '/api/csa/:id/submit', async (ctx) => {
 
 // ── Financial crime ─────────────────────────────────────────────────────────────────────────
 
-const casesNow = () => [...createdOf('cases'), ...idx('cases').values()].map(c => applyPatch('cases', structuredClone(c)))
+export const casesNow = () => [...createdOf('cases'), ...idx('cases').values()].map(c => applyPatch('cases', structuredClone(c)))
 
 function caseView(c: Row): Row {
   c.analystName = userName(c.analystId)
@@ -1019,12 +1026,12 @@ route('POST', '/api/aml/cases/:id/:action', async (ctx) => {
   switch (action) {
     case 'assign':
       p = { analystId: b.analystId, status: c.status === 'new' ? 'under_review' : c.status }
-      notifyUser(b.analystId, { severity: 'info', title: `AML case ${c.ref} assigned to you`, link: `/aml?case=${id}` })
+      notifyUser(b.analystId, { severity: 'info', title: `AML case ${c.ref} assigned to you`, link: `/cases?case=${id}` })
       break
     case 'escalate':
       minLength(b.note, 5, 'Add an escalation note (at least 5 characters)')
       p = { status: 'escalated' }
-      notifyRole('MLRO', { severity: 'high', title: `AML case escalated: ${c.ref}`, body: b.note, link: `/aml?case=${id}` })
+      notifyRole('MLRO', { severity: 'high', title: `AML case escalated: ${c.ref}`, body: b.note, link: `/cases?case=${id}` })
       break
     case 'dismiss':
       p = { status: 'closed', outcome: minLength(b.outcome, 10, 'Record the outcome (at least 10 characters)'), closedAt: now }
@@ -1054,7 +1061,7 @@ route('POST', '/api/aml/cases/:id/:action', async (ctx) => {
   return current('cases', id)
 })
 
-function openCase(fields: Row): Row {
+export function openCase(fields: Row): Row {
   const customer = current('customers', fields.customerId)!
   return create('cases', {
     id: nextId(), ref: nextRef('cases', 'AML-0001'), transactionId: null, alertId: null, sarDecisionAt: null, sarDraft: null, sarSubmittedAt: null,
@@ -1210,7 +1217,7 @@ route('POST', '/api/suppliers/:id/:action', async (ctx) => {
 
 // ── Incidents and actions ───────────────────────────────────────────────────────────────────
 
-const actionsNow = () => [...createdOf('actions'), ...idx('actions').values()].map(a => applyPatch('actions', structuredClone(a)))
+export const actionsNow = () => [...createdOf('actions'), ...idx('actions').values()].map(a => applyPatch('actions', structuredClone(a)))
 const actionView = (a: Row) => ({ ...a, ownerName: userName(a.ownerId), overdue: a.status !== 'done' && Date.parse(a.dueAt) < Date.now() })
 
 function incidentView(i: Row): Row {
@@ -1411,9 +1418,19 @@ route('POST', '/api/security/access/:id/review', async (ctx) => {
   return current('access', id)
 })
 
+function resetPhase(p: Row): Row {
+  return { ...p, status: 'not_started', signedOffAt: null, tasks: p.tasks.map((t: Row) => ({ ...t, done: false, doneAt: null })) }
+}
+
+/** Delivery gates 0 to 4 (Version 1.2, section 9); build work is locked until Gate 4 is approved. */
+export const gateStatus = (id: number): string => applyPatch('gates', structuredClone(GATES.find(g => g.id === id)!)).status
+function requireBuildAuthorised() {
+  if (gateStatus(4) !== 'approved') fail(409, 'Build is not authorised yet. Gate 4 (Build authorisation) must be approved first.')
+}
+
 route('GET', '/api/programme', (ctx) => {
   const user = requirePerm(ctx, 'programme:read')
-  return listView('phases', read(user, '/api/programme'), user).map((p) => {
+  return listView('phases', read<Row[]>(user, '/api/programme').map(resetPhase), user).map((p) => {
     const tasks = p.tasks.map((t: Row) => applyPatch('tasks', t))
     return { ...p, tasks, progress: tasks.length ? Math.round(100 * tasks.filter((t: Row) => t.done).length / tasks.length) : 0 }
   })
@@ -1421,6 +1438,7 @@ route('GET', '/api/programme', (ctx) => {
 
 route('PATCH', '/api/programme/tasks/:id', async (ctx) => {
   const user = requirePerm(ctx, 'programme:write')
+  requireBuildAuthorised()
   const id = Number(ctx.params[0])
   const task = mustFind('tasks', id, 'Task')
   const phase = mustFind('phases', task.phaseId, 'Phase')
@@ -1434,6 +1452,7 @@ route('PATCH', '/api/programme/tasks/:id', async (ctx) => {
 
 route('POST', '/api/programme/phases/:id/signoff', async (ctx) => {
   const user = requirePerm(ctx, 'programme:write')
+  requireBuildAuthorised()
   const id = Number(ctx.params[0])
   const phase = mustFind('phases', id, 'Phase')
   if (phase.status === 'complete') fail(409, 'Already signed off')
@@ -1449,10 +1468,19 @@ route('POST', '/api/programme/phases/:id/signoff', async (ctx) => {
 route('GET', '/api/integrations', (ctx) => {
   const user = requirePerm(ctx, 'integrations:read')
   const d = read(user, '/api/integrations')
-  d.integrations = listView('integrations', d.integrations, user)
+  d.integrations = [...listView('integrations', d.integrations, user), ...PLANNED_INTEGRATIONS]
     .map(i => ({ ...i, minutesSinceSync: i.lastSyncAt ? Math.floor((Date.now() - Date.parse(i.lastSyncAt)) / 60_000) : null }))
   return d
 })
+
+/** Version 1.2 connectors that are planned but not contracted or built. */
+const PLANNED_INTEGRATIONS: Row[] = [
+  { id: 'regulatory-content', name: 'Regulatory content sources (Perimeter Intelligence)', method: 'Publisher feeds and curated packs', direction: 'Sources → OC', frequency: 'Daily change capture', dataElements: 'Laws, rules, guidance, consultations, effective dates, provenance', status: 'planned', lastSyncAt: null, recordsIngested: 0, dataQuality: null },
+  { id: 'card-processor', name: 'Card processor', method: 'REST API / file', direction: 'Processor → OC', frequency: 'Near real-time', dataElements: 'Card authorisations, settlements, merchant data', status: 'planned', lastSyncAt: null, recordsIngested: 0, dataQuality: null },
+  { id: 'mobile-money', name: 'Mobile money platform', method: 'REST API / events', direction: 'Platform → OC', frequency: 'Near real-time', dataElements: 'Wallet transfers, agent cash-in and cash-out', status: 'planned', lastSyncAt: null, recordsIngested: 0, dataQuality: null },
+  { id: 'blockchain-analytics', name: 'Blockchain analytics provider', method: 'REST API', direction: 'Provider → OC', frequency: 'On demand and continuous', dataElements: 'Wallet attribution, exposure categories, transaction tracing', status: 'planned', lastSyncAt: null, recordsIngested: 0, dataQuality: null },
+  { id: 'travel-rule', name: 'Travel Rule network', method: 'Messaging protocol', direction: 'Bi-directional', frequency: 'Per transfer', dataElements: 'Originator and beneficiary information, counterparty VASP details', status: 'planned', lastSyncAt: null, recordsIngested: 0, dataQuality: null },
+]
 
 route('POST', '/api/integrations/:id/sync', async (ctx) => {
   const user = requirePerm(ctx, 'integrations:manage')

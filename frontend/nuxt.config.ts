@@ -13,7 +13,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en-GB' },
       title: 'OysterChecks',
       meta: [
-        { name: 'description', content: 'OysterChecks governance, risk, compliance and assurance platform.' },
+        { name: 'description', content: 'OysterChecks Integrated Platform: GRC and assurance, financial crime, Perimeter Intelligence and Digital Assets Intelligence.' },
         { name: 'theme-color', content: '#F5F6F8', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#0F1113', media: '(prefers-color-scheme: dark)' },
       ],

@@ -13,11 +13,24 @@
           :sub="`${data.alerts.pendingClosure} awaiting sign-off`" />
         <UiKpiCard label="Rules passing" :value="data.ccm.pass" :suffix="`of ${data.ccm.total}`" :tone="data.ccm.fail ? 'high' : 'ok'" to="/ccm"
           :sub="`${data.ccm.fail} failing, ${data.ccm.warn} near threshold`" />
-        <UiKpiCard v-if="allowed('aml:read')" label="Open AML cases" :value="data.aml.open" to="/aml"
+        <UiKpiCard v-if="allowed('aml:read')" label="Open AML cases" :value="data.aml.open" to="/cases"
           :sub="`${data.aml.sarPending} SARs to submit`" />
         <UiKpiCard label="Returns due in 30 days" :value="data.reports.due" :tone="data.reports.overdue ? 'critical' : data.reports.dueSoon ? 'high' : 'ok'" to="/compliance?tab=reports"
           :sub="`${data.reports.dueSoon} due this week`" />
       </div>
+
+      <UiPanel title="Group exposure by legal entity" sub="Entity, jurisdiction, risk, control, financial crime and assurance in one view" flush>
+        <template v-if="allowed('perimeter:read')" #actions><NuxtLink to="/perimeter" class="small">Perimeter intelligence</NuxtLink></template>
+        <UiDataTable :columns="entityColumns" :rows="entities">
+          <template #cell-name="{ row }"><div class="cell-title">{{ row.name }}</div><div class="cell-sub"><span class="mono">{{ row.jurisdiction }}</span> · {{ row.activities.join(', ') }}</div></template>
+          <template #cell-openChanges="{ row }"><span class="num" :class="{ attention: row.openChanges }">{{ row.openChanges }}</span></template>
+          <template #cell-openAlerts="{ row }"><span class="num">{{ row.openAlerts }}</span></template>
+          <template #cell-highRisks="{ row }"><span class="num" :class="{ attention: row.highRisks }">{{ row.highRisks }}</span></template>
+          <template #cell-failingControls="{ row }"><span class="num" :class="{ bad: row.failingControls }">{{ row.failingControls }}</span></template>
+          <template #cell-openCases="{ row }"><span class="num">{{ row.openCases }}</span><span v-if="row.tmOpen" class="cell-sub"> +{{ row.tmOpen }} alerts</span></template>
+          <template #cell-assurance="{ row }"><UiPill :value="row.assurance" /></template>
+        </UiDataTable>
+      </UiPanel>
 
       <div class="dash-grid">
         <UiPanel title="Alerts raised" sub="Last 14 days">
@@ -83,7 +96,18 @@ useHead({ title: 'Overview' })
 
 const { can: allowed } = useAccess()
 const { data, error, refresh } = await useFetch('/api/dashboard')
-useLiveRefresh(['alert', 'ccm', 'activity'], refresh, 1500)
+const { data: entityData, refresh: refreshEntities } = await useFetch('/api/perimeter/entities', { default: () => [] })
+const entities = computed(() => entityData.value)
+useLiveRefresh(['alert', 'ccm', 'activity'], () => Promise.all([refresh(), refreshEntities()]), 1500)
+const entityColumns = [
+  { key: 'name', label: 'Legal entity' },
+  { key: 'openChanges', label: 'Reg. changes', width: '110px', align: 'right' as const },
+  { key: 'openAlerts', label: 'Open alerts', width: '100px', align: 'right' as const },
+  { key: 'highRisks', label: 'High risks', width: '100px', align: 'right' as const },
+  { key: 'failingControls', label: 'Failing controls', width: '120px', align: 'right' as const },
+  { key: 'openCases', label: 'Open cases', width: '140px', align: 'right' as const },
+  { key: 'assurance', label: 'Assurance', width: '170px' },
+]
 
 const trendSeries = [
   { key: 'critical', label: 'Critical', color: 'var(--critical)' },
@@ -99,11 +123,17 @@ const ACTIONS: Record<string, string> = {
   'risk.created': 'added', 'risk.updated': 'updated', 'control.tested': 'tested', 'policy.approve': 'approved',
   'incident.logged': 'logged', 'csa.submitted': 'submitted self-assessment', 'transaction.screened': 'screened',
   'regulatory_report.submitted': 'submitted', 'customer.verify_kyc': 'verified KYC for', 'aml.sar_submit': 'submitted SAR for',
+  'regulatory_change.submit': 'submitted for approval', 'regulatory_change.approve': 'approved regulatory change', 'regulatory_change.return': 'returned',
+  'tm_alert.escalate': 'escalated monitoring alert', 'tm_alert.close': 'closed monitoring alert', 'crypto_transfer.escalate': 'escalated crypto transfer',
+  'wallet.screened': 'screened wallet', 'programme.gate_approved': 'approved gate', 'crypto_transfer.clear': 'cleared crypto transfer',
+  'travel_rule.request_info': 'requested Travel Rule information', 'travel_rule.complete_vasp_dd': 'completed VASP due diligence',
+  'travel_rule.resolve': 'released Travel Rule transfer', 'travel_rule.reject': 'rejected Travel Rule transfer',
+  'regulatory_change.validate': 'validated a requirement of', 'regulatory_change.applicability': 'assessed applicability of',
 }
 const describe = (action: string) => ACTIONS[action] ?? action.split('.').pop()!.replace(/_/g, ' ')
 const detailOf = (a: { entityType: string, entityId: string | null, detail: Record<string, unknown> | null }) => {
   const d = a.detail ?? {}
-  return String(d.ref ?? d.name ?? d.title ?? (a.entityId ? `#${a.entityId}` : ''))
+  return String(d.ref ?? d.name ?? d.title ?? d.gate ?? d.asset ?? (a.entityId ? `#${a.entityId}` : ''))
 }
 </script>
 
@@ -113,4 +143,6 @@ const detailOf = (a: { entityType: string, entityId: string | null, detail: Reco
 .feed li:last-child { border-bottom: none; }
 .bands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--border); }
 .bands dd { margin: 0; font-size: 18px; font-weight: 600; }
+.attention { color: var(--warning-text); font-weight: 600; }
+.bad { color: var(--critical-text); font-weight: 600; }
 </style>

@@ -1,12 +1,35 @@
-OYSTERCHECKS: PRESENTATION GUIDE
-================================
+OYSTERCHECKS INTEGRATED PLATFORM: PRESENTATION GUIDE
+====================================================
+Matches: OysterChecks Integrated Platform Documentation, Version 1.2 (31 October 2026)
 
-This guide has two parts.
-   PART A explains the platform: what it is, how it works, every screen, every role.
+This guide has three parts.
+   PART A explains the platform: what it is, how it works, every screen and every role.
           Read it before you present, so you can answer any question.
    PART B is the demo script: what to click, in what order, and what to say.
+   PART C is reference: questions and honest answers, glossary, practical tips.
 
 All demo accounts use the password:  OysterDemo!2026
+
+
+==========================================================================================
+BEFORE ANYTHING ELSE: HOW TO DESCRIBE THE STATUS (IMPORTANT)
+==========================================================================================
+Version 1.2 is explicit that the programme is at PRE-INITIATION. Documentation and planning
+exist, but discovery, funding approval, delivery team, environments, development, testing and
+production readiness have not happened yet. Transaction monitoring and Digital Assets
+Intelligence are PLANNED capabilities and must not be represented as operational.
+
+So always present this as:
+   "A working product demonstration of the intended OysterChecks Integrated Platform,
+    running on illustrative data."
+
+Never say:
+   - "This is live", "customers are using it", "it is connected to your systems".
+   - "Our blockchain monitoring is operational" or "our transaction monitoring is in production".
+
+The app helps you here: the Transaction monitoring and Digital assets screens carry a
+"Planned capability, shown with illustrative data" notice, the Integrations screen marks
+connectors as "simulated" or "planned", and the regulatory content is labelled illustrative.
 
 
 ==========================================================================================
@@ -15,331 +38,286 @@ PART A. UNDERSTAND THE PLATFORM
 
 A1. WHAT OYSTERCHECKS IS
 ------------------------
-OysterChecks is a governance, risk and compliance (GRC) platform for banks, payment
-companies and other regulated financial firms.
+OysterChecks is one platform for governance, risk, compliance, financial crime and assurance,
+for banks, payment companies, remittance firms, digital-asset businesses and other regulated
+organisations. Version 1.2 integrates two new capabilities natively:
 
-The problem it solves: in most firms, risk and compliance teams find out that something
-went wrong weeks later, from spreadsheets and emails that people fill in by hand.
-Controls are marked "effective" because someone said so. Evidence is scattered.
-Nobody can prove who did what, and the board gets a report that is already out of date.
+   - Perimeter Intelligence: global regulatory intelligence. It tracks the laws and rules in
+     every jurisdiction where the group operates, spots changes, works out which legal
+     entities they apply to, and maps them to obligations, controls and actions.
+     (This used to be planned as a separate product, "Morgans Perimeter". It is now part of
+     OysterChecks.)
+   - Digital Assets Intelligence: crypto and virtual-asset risk: wallet screening, blockchain
+     monitoring, tracing and the Travel Rule.
 
-What OysterChecks does instead:
-   - It connects to the firm's own systems (core banking, CRM, HR, identity, ERP,
-     sanctions lists) and checks the data automatically, all the time.
-   - When a check fails, it raises an alert, gives it an owner and a deadline, and
-     escalates it up the chain if nobody acts.
-   - People resolve the alert with evidence, and a second person must approve closure.
-   - Risk scores, control ratings and compliance status update from real results,
-     not from opinions.
-   - The board report is written from live figures.
-   - Every action is recorded in a tamper-evident audit log.
+The five layers:
+   1. OysterChecks core: identity, legal entities, roles, workflow, evidence, audit, integrations
+      and reporting, shared by everything else.
+   2. Financial Crime Intelligence: KYC, KYB, beneficial owners, sanctions, PEP, adverse media,
+      transaction monitoring, EDD, investigations and SAR or STR reporting.
+   3. Enterprise GRC and Assurance: policies, risks, controls, continuous control monitoring,
+      incidents, third parties, three-lines assurance and regulatory reporting.
+   4. Perimeter Intelligence: jurisdiction packs, regulatory sources, change detection,
+      applicability, obligation mapping and cross-border impact.
+   5. Digital Assets Intelligence: wallet screening, blockchain monitoring, tracing, Travel
+      Rule workflows and crypto investigations.
 
-Who uses it: the Chief Risk Officer, Chief Compliance Officer, MLRO (money laundering
-lead) and AML analysts, compliance officers, internal audit, the CISO, HR, business unit
-managers, the board, and a platform administrator. Each sees a different starting screen
-and only what their role allows.
+The problem it solves: risk and compliance teams usually find out something went wrong weeks
+later, from spreadsheets. Regulatory changes are tracked in emails. Each country has its own
+spreadsheet. Controls are "effective" because someone said so, evidence is scattered, and the
+board report is out of date before it is read.
+
+The demo company: "Ajala Financial Group", with five legal entities:
+   Ajala Bank UK Ltd (UK, PRA and FCA) . . . . . . . . most detailed records live here
+   Ajala Bank Nigeria Plc (Nigeria, CBN, NFIU, NDPC)
+   Ajala Remittance LLC (UAE, CBUAE)
+   Ajala Digital Assets Ltd (Nigeria, SEC Nigeria)
+   Ajala Payments Ireland Ltd (Ireland, EU)
 
 
-A2. HOW IT WORKS (THE FLOW)
+A2. THE BIG IDEA: ONE TRACEABILITY CHAIN
+----------------------------------------
+Version 1.2 makes this the spine of the product. Every module uses the same chain of records:
+
+   Regulatory source  >  Obligation  >  Legal entity  >  Risk  >  Control
+      >  Monitoring rule  >  Alert or issue  >  Action  >  Evidence  >  Assurance conclusion
+
+Why it matters: when a regulator asks "how do you know you comply with this rule, in this
+country?", you can follow one line from the rule itself to the evidence and the conclusion.
+No separate spreadsheets per module or per country, so nothing has to be reconciled.
+
+In the app: Obligations and returns, open any obligation, section "Traceability".
+
+
+A3. HOW IT WORKS (THE FLOW)
 ---------------------------
 
-   Source systems        Core banking, CRM, HR, Active Directory, ERP, sanctions lists
-         |
-         v
-   Automatic checks      12 control monitoring rules run continuously
-         |
-         v
-   Alerts                Owner, deadline (SLA), escalation path
-         |
-         v
-   People act            Acknowledge, plan the fix, attach evidence, request closure
-         |
-         v
-   Four-eyes sign-off    A second authorised person approves or rejects the closure
-         |
-         v
-   Registers update      Risks, controls, compliance, assurance, incidents
-         |
-         v
-   Board report          Written from the live figures, printable as PDF
+   Regulatory sources     Laws and rules per jurisdiction (Perimeter Intelligence)
+          |
+          v
+   Regulatory change      Validate, check which entities it applies to, map impact,
+                          approve (a second person must approve)
+          |
+          v
+   Obligations            Linked to risks, controls and policies, per legal entity
+          |
+   Source systems ------> Automatic checks: 12 control rules + transaction monitoring
+   (banking, cards,        scenarios across bank, card, mobile money, remittance,
+    mobile money, CRM,      wallet and crypto activity
+    HR, identity, ERP,           |
+    sanctions, blockchain)       v
+                          Alerts and cases     Owner, deadline, escalation; one case
+                                               model for fiat and crypto
+          |
+          v
+   People act             Evidence, four-eyes sign-off, SAR or STR decisions
+          |
+          v
+   Registers update       Risks, controls, compliance, assurance
+          |
+          v
+   Executive view and board report   Exposure by legal entity and jurisdiction
 
-   Underneath everything: the audit log records every action and can be verified.
-
-
-A3. THE SIX IDEAS TO GET ACROSS
--------------------------------
-1. Continuous, not periodic. Checks run against live data, not quarterly spreadsheets.
-2. Evidence, not opinion. A control is "effective" because its tests passed, not because
-   its owner said so. Self-assessments are shown next to test results, never instead.
-3. Accountability. Every alert has an owner, a deadline and an escalation path.
-4. Separation of duties. Nobody approves their own work: alert closures need a second
-   person, policy authors cannot approve their own policy, only the MLRO can submit a
-   suspicious activity report, and EDD needs a different senior approver.
-5. Need-to-know access. Each role sees only what it needs. Business unit managers see
-   only their own unit. The administrator sees customer and staff details masked.
-   Access is checked on every request, not just hidden on screen.
-6. Proof. Every action goes into an audit log where each entry is chained to the one
-   before it, so any tampering would be detected.
+   Underneath everything: a tamper-evident audit log.
 
 
-A4. TOUR OF EVERY SCREEN (in sidebar order)
--------------------------------------------
-For each screen: what it is, who mainly uses it, what to show, and one line to say.
+A4. THE EIGHT IDEAS TO GET ACROSS
+---------------------------------
+1. One platform, one chain of records (A2), across every entity and jurisdiction.
+2. Regulatory change becomes action. A new rule is assessed per legal entity, mapped to the
+   obligations, controls and policies it affects, and turned into actions with owners.
+3. Continuous, not periodic. Automatic checks on live data, not quarterly spreadsheets.
+4. Evidence, not opinion. Control ratings come from test results; self-assessments are checked
+   against them.
+5. Accountability. Every alert and action has an owner, a deadline and an escalation path.
+6. Separation of duties. Nobody approves their own work: alert closure (four-eyes), regulatory
+   change approval (maker-checker), policy approval (author cannot approve), SAR submission
+   (MLRO only), EDD (different senior approver).
+7. Need-to-know access. Each role sees only what it needs; business unit managers see only
+   their unit; the administrator sees personal data masked.
+8. Human in control of automation. Requirements drafted automatically from regulations must be
+   validated by a person; risk scores show every contributing factor; a person decides.
 
-GENERAL
+
+A5. TOUR OF EVERY SCREEN (in sidebar order: the 14 Version 1.2 sections)
+-------------------------------------------------------------------------
+For each screen: what it is, who uses it, what to show, one line to say.
+
+1. EXECUTIVE INTELLIGENCE
 
 Overview
-   What: the executive dashboard. Top figures (critical alerts, open alerts, rules
-   passing, open AML cases, regulatory returns due), alerts raised over 14 days, recent
-   activity, control monitoring status, risks by category, highest residual risks.
+   What: top figures (critical alerts, open alerts, rules passing, open AML cases, returns due);
+   NEW: "Group exposure by legal entity": each entity with its jurisdiction, open regulatory
+   changes, open alerts, high risks, failing controls, open cases and assurance rating; then
+   alert trend, recent activity, control monitoring, risks by category, top residual risks.
    Who: CRO, CCO, Head of Audit, Board.
-   Say: "One screen to see the firm's risk position right now, not last quarter."
+   Say: "The whole group's exposure, entity by entity, in one view."
 
-Alerts
-   What: every alert raised by the automatic checks, KRIs or people. Filter by severity,
-   switch between open, all and closed, assign several at once, export to CSV, or
-   "Raise alert" manually. Opening an alert shows the escalation path, deadlines,
-   timeline and evidence, with the buttons Acknowledge, Assign, Add note, Remediation
-   plan, Escalate, Request closure, and for a second person, Sign off closure or Reject
-   closure.
-   Who: everyone who handles issues.
-   Say: "Every issue has an owner, a deadline and a full history."
+2. PERIMETER INTELLIGENCE (new)
 
-Board report
-   What: a board pack written automatically from live figures: key numbers, top risks,
-   failing rules, overdue alerts, non-compliant obligations, returns due and assurance
-   coverage. "Print / save PDF" produces the paper version.
-   Who: CRO, CCO, Head of Audit, Board.
-   Say: "The board pack writes itself, and every sentence traces back to a number."
+Coverage and sources
+   What: three tabs.
+   - Coverage: jurisdiction packs (UK, Nigeria, UAE, EU/Ireland, international standards) with
+     coverage, regulators, how suspicious activity is reported there (for example "SAR to NCA"
+     in the UK, "STR to NFIU within 24 hours" in Nigeria), breach notification deadlines, and
+     local language, currency, time zone and data residency. Packs for Kenya, Ghana and South
+     Africa are "available" to switch on. Plus the legal entities table and the regulatory
+     horizon (open changes and future effective dates).
+   - Sources: the inventory of authoritative sources with provenance: where each came from,
+     version, when it was retrieved and checked, and a fingerprint of the exact version used.
+   - Cross-border comparison: how the same requirement differs by country, and whether the
+     group's existing control can be reused, needs a local variant, or is a gap.
+   Top figures include content freshness (days since sources were checked) and quality.
+   Who: CCO, regulatory counsel, CRO, Board (read only).
+   Say: "We know what the rules are in every country we operate in, where they came from, and
+   how fresh our copy is."
 
-MONITORING
+Regulatory change
+   What: each regulatory change moves through: Capture, Validate extraction, Assess
+   applicability, Map impact and actions, Submit, Approve (different person). Opening a change
+   shows the summary, source and provenance, "Extracted requirements" (drafted automatically;
+   each needs "Validate"), "Applicability by legal entity" ("Assess"), "Impact" (obligations,
+   controls, policies, risks: "Edit mapping"), "Actions" ("Add action") and "History".
+   Buttons: "Triage", "Submit for approval"; for the approver: "Approve" or "Return to
+   preparer". The person who prepared it cannot approve it (maker-checker). Submission is
+   refused until every requirement is validated, every entity assessed and the impact mapped.
+   Who: Compliance Officer prepares (maker); CCO approves (checker).
+   Say: "A new rule becomes owned actions, per entity, with a second pair of eyes."
 
-Control monitoring
-   What: the 12 automatic checks, each with a status light (passing, near threshold,
-   failing), what it watches, its data source, its deadline and who it escalates to.
-   The 12 checks are:
-      CCM-001 Unverified onboarding (no verified KYC 24 hours after account opening)
-      CCM-002 Unscreened high-value transaction (payment over the threshold not screened)
-      CCM-003 SAR overdue (suspicious activity report not filed within 7 days)
-      CCM-004 EDD incomplete for a high-risk customer
-      CCM-005 KYC refresh overdue
-      CCM-006 New starter without vetting
-      CCM-007 Privileged access not reviewed in 90 days
-      CCM-008 Regulatory return due
-      CCM-009 Self-assessment overdue
-      CCM-010 Audit recommendation overdue
-      CCM-011 Unusual transaction volume
-      CCM-012 Control failed twice in a row
-   The CCO and Admin can "Configure" a rule (a reason is required and recorded),
-   add a "New rule" and "Run now".
-   Who: CCO, CISO, Compliance.
-   Say: "These are your controls being tested every minute, not once a year."
+3. REGULATORY OBLIGATIONS
 
-Controls
-   What: the control library. Each control shows its owner, type, frequency, whether it
-   is a key control or automated, its linked monitoring rule, its test history and pass
-   rate, and its effectiveness. "Record test result" adds a test; the rating is
-   recalculated: last three tests passed = effective, last two failed = ineffective,
-   otherwise partially effective. Export available.
-   Who: CCO and CISO record tests; others read.
-   Say: "Effectiveness comes from test results, not from people marking their own work."
-
-Integrations
-   What: the eight connected systems (HR, core banking, CRM, ERP, Active Directory,
-   sanctions database, audit management, document management), with last sync time,
-   records received and data quality. In the demo they are labelled "simulated".
-   Admin can "Sync now".
-   Who: Admin, IT.
-   Say: "It reads from the systems you already have. Nobody re-keys data."
-
-RISK AND COMPLIANCE
-
-Risk register
-   What: all open risks on a 5 by 5 heat map you can switch between Inherent (before
-   controls) and Residual (after controls). Residual risk is calculated from how well
-   the linked controls performed in testing. Each risk has key risk indicators (KRIs)
-   with amber and red limits. The CRO can "Add risk", "Mark reviewed" and
-   "Escalate to board" (which notifies the board), and record KRI values. A KRI above
-   its red limit raises an alert immediately.
-   Who: CRO (edits); others read.
-   Say: "The gap between inherent and residual is what your controls are actually worth."
-
-Compliance
-   What: two tabs. Obligations: the laws and rules the firm must meet, each linked to
-   controls and policies, with a status (compliant, partial, non-compliant, not
-   assessed) and an evidence pack download. Regulatory returns: the reports due to
-   regulators with countdowns. "Generate" builds a return from platform data and
-   "Confirm submission" records it with the regulator's reference.
-   Who: CCO (everything), Compliance Officer (obligations and generating returns).
-   Say: "Every obligation is tied to the controls that prove you meet it."
+Obligations and returns
+   What: Obligations tab: laws and rules the group must meet, each with status, mapped controls,
+   evidence and, NEW, the "Traceability" chain from source to assurance conclusion with the
+   reasons for that conclusion. Regulatory returns tab: reports due, "Generate" and "Confirm
+   submission".
+   Who: CCO, Compliance Officer.
+   Say: "Every obligation traces to its source, its controls, and whether we can prove it."
 
 Policies
-   What: the policy library with a full lifecycle: draft, "Submit for approval",
-   "Approve" or "Return to owner", "Start new version", "Retire". Staff confirm with
-   "I have read and accept this policy", and the screen shows how many have accepted.
-   The author of a policy can never approve it.
+   What: lifecycle (draft, submit, approve or return, new version, retire) and acknowledgement
+   tracking. Authors cannot approve their own policy.
    Who: CCO approves; everyone acknowledges.
-   Say: "You can prove who has read which version of every policy."
 
-ESG
-   What: environmental, social and governance metrics under TCFD, CSRD and GRI
-   (emissions, renewable energy, gender pay gap, board independence, training,
-   supplier modern slavery attestations). "Record value" needs an evidence source,
-   and the status (on track, at risk, off track) is calculated against the target.
-   Who: CCO.
-   Say: "ESG figures with their evidence, ready for the annual report."
+4. ENTERPRISE RISK
 
-ASSURANCE
+Risk register
+   What: 5x5 heat map, Inherent vs Residual. Residual is calculated from tested control
+   effectiveness. KRIs with amber and red limits; above red raises an alert.
+   Who: CRO edits; others read.
+   Say: "The gap between inherent and residual is what your controls are worth."
 
-Assurance map
-   What: all assurance work across the three lines of defence: first line (business
-   management), second line (risk and compliance), third line (internal audit,
-   external audit, regulators). It shows coverage per control, flags controls with no
-   assurance (gaps) and controls checked too often (over-assurance). "Plan activity"
-   adds new work.
-   Who: Head of Audit, CRO, CCO.
-   Say: "One map of who checks what, so nothing is missed and nothing is checked twice."
+5. CONTROLS AND CCM
 
-Internal audit
-   What: audit engagements moving through planned, fieldwork, reporting and closed
-   (with an overall rating), and audit findings rated high, medium or low with an owner
-   and due date. Owners write a "Management response"; only internal audit can
-   "Change due date" or close a finding. A finding can raise an incident.
-   Overdue recommendations trigger rule CCM-010.
-   Who: Head of Audit.
-   Say: "Audit findings are tracked to closure, and overdue ones escalate on their own."
+Alerts: every alert with owner, deadlines, escalation path, timeline and evidence;
+   four-eyes closure ("Request closure", then someone else "Sign off closure").
+Control monitoring: the 12 automatic control rules (CCM-001 to CCM-012), with "Configure"
+   (reason required), "New rule", "Run now".
+Controls: the control library; "Record test result" recalculates effectiveness.
+Access reviews: privileged accounts recertified every 90 days (CISO).
+Vetting: background checks for new starters (HR).
 
-Self-assessments
-   What: business unit managers rate their own controls each period. A rating below
-   "effective" needs an explanation. Where a manager's rating disagrees with the test
-   results, it is flagged.
-   Who: business unit managers submit; audit and risk review.
-   Say: "We ask managers, but we check their answers against the evidence."
+6. FINANCIAL CRIME
 
-FINANCIAL CRIME
+Customers and screening
+   What: Customers tab (KYC status, risk rating, PEP and sanctions; "Verify KYC", "Refresh KYC",
+   "Start EDD", "Complete EDD", "Re-screen") and Held payments tab (high-value payments waiting
+   for sanctions screening; "Screen": clear, or hit which opens a case).
+   Who: MLRO, AML Analyst.
 
-Cases and screening
-   What: three tabs. Cases: AML investigations with a risk score where every point is
-   explained, assigned to an analyst, escalated to the MLRO, then dismissed or reported.
-   "Decide to file SAR" (MLRO only) drafts the suspicious activity report from case
-   data and starts a 7-day clock; "Confirm NCA submission" (MLRO only) records it.
-   Held payments: high-value payments waiting for sanctions screening; "Screen" as clear
-   or hit, where a hit opens a case automatically. Customers: KYC status, risk rating,
-   PEP and sanctions flags, with "Verify KYC", "Refresh KYC", "Start EDD",
-   "Complete EDD" (needs a different senior approver) and "Re-screen".
-   Who: MLRO and AML Analysts.
-   Say: "No black box: every score is explained and a person decides."
+7. TRANSACTION MONITORING (new, planned capability)
 
-OPERATIONS
+Alert queues and scenarios
+   What: three tabs.
+   - Alert queue: fiat and crypto alerts from all channels and entities (filter All, Fiat,
+     Crypto). Opening an alert shows the customer's usual pattern next to what triggered the
+     alert, the linked transactions (in local currency: naira, dirham, euro, pound), the
+     customer, entity and scenario. Buttons: "Assign to me", "Close, no case" (rationale, can be
+     marked false positive), "Escalate to case" (opens a case with an explained score and
+     notifies the MLRO).
+   - Scenarios: 11 rules and behavioural analytics (structuring, velocity, pass-through, money
+     mule indicators, dormant accounts, high-risk geography, behavioural change, mobile money
+     agent cash-out, round-amount remittances, crypto off-ramp) with alerts, false-positive
+     rate, conversion to case and last tuned. "Tune" needs a reason and is audited.
+   - Channels: bank transfers, cards, mobile money, remittance, e-wallets, crypto; mode
+     (real-time, near-real-time, batch) and volumes.
+   Who: AML Analyst (starts here), MLRO, fraud teams.
+   Say: "Bank, card, mobile money, remittance and crypto in one queue, feeding one case model."
 
-Incidents
-   What: incidents and corrective actions. "Log incident", record the root cause
-   (5 whys or fishbone), "Link records" to risks, controls and obligations,
-   "Mark notifiable" (which sets the regulator and the legal deadline, for example
-   72 hours for a personal data breach), "Add action" for corrective actions, and
-   "Close incident" with lessons learned. Closure is blocked until the root cause, all
-   actions and any regulator notice are done.
-   Who: CCO, Compliance, CISO, business unit managers (log, but cannot close).
-   Say: "From the first report to lessons learned, with the regulator deadline on screen."
+8. DIGITAL ASSETS INTELLIGENCE (new, planned capability)
 
-Third parties
-   What: the supplier register. "Onboard supplier" classifies it automatically as
-   critical, high, medium or low based on data access, spend, country and importance.
-   "Complete due diligence", "Record periodic review" (every 12, 18, 24 or 36 months
-   by tier), monitoring flags, "Exit supplier".
-   Who: CCO, Compliance.
-   Say: "Your outsourcing risk is tiered and reviewed on schedule."
+Wallets and Travel Rule
+   What: four tabs.
+   - Transfers and tracing: crypto transfers with risk; selecting one shows the path of funds
+     (for example: mixing service, intermediate wallet, then the customer's deposit address).
+     "Escalate to case" or "Clear transfer".
+   - Wallets: screened wallets with exposure categories (sanctioned, mixer, darknet,
+     ransomware, scam, stolen funds, high-risk services, gambling) and status.
+   - Travel Rule: transfers missing originator or beneficiary information, unhosted wallets,
+     counterparty VASPs; "Request info", "VASP due diligence", "Release", "Reject". Release is
+     refused until the counterparty VASP's due diligence is complete.
+   - Exposure: wallets by risk category.
+   "Screen a wallet" gives an illustrative result (no analytics provider is connected).
+   Who: MLRO, crypto compliance, investigators.
+   Say: "Specialist blockchain data comes from approved providers; OysterChecks keeps the
+   score, the decision, the evidence and the SAR or STR."
 
-Vetting
-   What: background checks for new starters (BPSS, DBS, BS7858), with start dates.
-   Anyone due to start without clearance is flagged, and a failed check notifies the
-   CISO so no system access is given. Rule CCM-006 watches this.
-   Who: HR.
-   Say: "Nobody gets access before they are cleared."
+9. CASES AND INVESTIGATIONS
 
-Access reviews
-   What: privileged system accounts that must be recertified every 90 days.
-   "Recertify" with a decision to keep or remove access. Rule CCM-007 watches this.
-   Who: CISO.
-   Say: "Powerful accounts are reviewed on time, with proof."
+Cases
+   What: one queue for every investigation: from screening, transaction monitoring and digital
+   assets (filter by type). SAR pipeline (New, Analyst review, MLRO review, SAR decided,
+   Submitted to NCA). Each case: score breakdown, customer, transactions, evidence;
+   "Decide to file SAR" and "Confirm NCA submission" for the MLRO only.
+   Who: MLRO (starts here), AML Analyst.
+   Say: "Fiat and crypto in one case, one decision, one audit trail."
 
-DELIVERY
+10. THIRD PARTY RISK: Third parties: automatic tiering, due diligence, review cadence, exit.
 
-Implementation
-   What: the rollout plan: six phases over 26 weeks, each with tasks and a sign-off gate.
-   A phase can only be signed off when all its tasks are done and the previous phase
-   is signed off.
-   Who: Admin edits; executives read.
-   Say: "A clear, gated path from contract to go-live."
+11. INCIDENTS AND REMEDIATION: Incidents and actions: root cause, links, regulator deadlines,
+    corrective actions, gated closure.
 
-ADMIN
+12. THREE LINES ASSURANCE: Assurance map (coverage, gaps and over-assurance across the three
+    lines), Internal audit (engagements and findings), Self-assessments (flagged when they
+    disagree with test results).
 
-Users
-   What: user accounts: "Add user", change role or business unit, deactivate, "Unlock",
-   "Reset MFA". The administrator cannot change their own role.
-   Who: Admin.
+13. EVIDENCE AND REPORTING: Board report (written from live figures, "Print / save PDF") and
+    ESG (TCFD, CSRD, GRI metrics with evidence).
 
-Audit log
-   What: every user action and system event, searchable, kept for 7 years.
-   "Verify integrity" checks the whole chain.
-   Who: Admin, CRO, CCO, Head of Audit.
-   Say: "If anyone tried to change history, this check would fail."
-
-ALWAYS AVAILABLE (top bar)
-   Search across alerts, risks, controls, policies and more; the "Live" indicator;
-   light and dark theme; notifications bell; reset demo data; sign out.
+14. ADMINISTRATION AND INTEGRATIONS
+   Integrations: connected systems ("simulated") plus the Version 1.2 connectors marked
+      "planned": regulatory content sources, card processor, mobile money platform, blockchain
+      analytics provider, Travel Rule network.
+   Users, Audit log ("Verify integrity").
+   Delivery programme (internal): ONLY Admin and Board see it. Status pre-initiation;
+      governance gates 0 to 4 ("Record decision"; each needs the previous one approved); six
+      provisional phases locked until Gate 4; the five MVP journeys. Do NOT show this screen to
+      customers; it is for delivery and programme governance.
 
 
-A5. THE ROLES
+A6. THE ROLES
 -------------
-   Role (name)                         Starts on            Can do                                 Cannot see or do
-   CRO (Adaeze Okonkwo)                Overview             See everything; edit risks and KRIs;   Change rules, record control
-                                                            act on and sign off alerts; board      tests, approve policies,
-                                                            report                                 submit returns
-   CCO (Daniel Okafor)                 Compliance           Configure rules; record tests;         Executive financial figures
-                                                            approve policies; submit returns;
-                                                            incidents; suppliers; ESG
-   MLRO (Funmilayo Adeyemi)            Cases and screening  All AML work; decide and submit SARs   HR data, board financials
-   AML Analyst (Chinedu Eze)           Cases and screening  Screen payments, work cases            Submit SARs, HR data
-   Compliance Officer (Grace Ibekwe)   Alerts               Work alerts, obligations, generate     Submit returns
-                                                            returns, suppliers, incidents
-   Head of Internal Audit (Tunde Bakare) Assurance map      Audit engagements and findings,        AML case details, HR data
-                                                            assurance planning
-   CISO (Ngozi Nwosu)                  Control monitoring   Access reviews, control tests,         AML data, submissions
-                                                            incidents
-   HR Director (Ibrahim Musa)          Vetting              Vetting, incidents                     Risk, AML, financial data
-   BU manager, Retail (Halima Bello)   Self-assessments     Own unit only: alerts, controls,       Everything outside their
-   BU manager, Payments (Olumide Fashola)                   self-assessments, incidents, policies  unit; second and third line
-   Board member (Emeka Obi)            Overview             Read: overview, board report, alerts,  Case details, personal data;
-                                                            risks, compliance, assurance, ESG,     cannot change anything
-                                                            implementation
-   Platform administrator              Users                Users, rules, integrations,            Customer and staff personal
-                                                            implementation, read all               details (shown masked)
-
-
-A6. GLOSSARY
-------------
-   GRC           Governance, risk and compliance.
-   CCM           Continuous control monitoring: automatic checks on live data.
-   SLA           The deadline to acknowledge and resolve an alert.
-   Escalation    Moving an alert up a chain of people when its deadline passes.
-   Four-eyes     A second person must approve; nobody signs off their own work.
-   Inherent risk Risk before any controls.
-   Residual risk Risk remaining after controls, based on how well they tested.
-   KRI           Key risk indicator: a measured figure with amber and red limits.
-   Control       A process or check that reduces a risk.
-   Three lines   1st line: business managers. 2nd line: risk and compliance.
-                 3rd line: internal audit (plus external audit and regulators).
-   CSA           Control self-assessment: managers rate their own controls.
-   AML           Anti-money laundering.
-   KYC / EDD     Know your customer / enhanced due diligence for high-risk customers.
-   PEP           Politically exposed person.
-   SAR           Suspicious activity report, filed with the financial intelligence unit.
-   MLRO          Money laundering reporting officer, the only person who files SARs.
-   NCA           National Crime Agency (the UK body that receives SARs).
-   ESG           Environmental, social and governance reporting.
-   TPRM          Third-party (supplier) risk management.
-   SHA-256       A file fingerprint; any change to the file changes the fingerprint.
+   Role (name)                            Starts on                 Key powers
+   CRO (Adaeze Okonkwo)                   Overview                  Reads everything; risks and KRIs;
+                                                                     alerts; board report
+   CCO (Daniel Okafor)                    Obligations and returns   APPROVES regulatory change (checker);
+                                                                     rules, tests, policies, returns
+   MLRO (Funmilayo Adeyemi)               Cases                     SAR decisions and submission;
+                                                                     monitoring; digital assets
+   AML Analyst (Chinedu Eze)              Transaction monitoring    Works alerts, screening, cases;
+                                                                     cannot submit SARs
+   Compliance Officer (Grace Ibekwe)      Alerts                    PREPARES regulatory change (maker);
+                                                                     obligations, suppliers, incidents
+   Head of Internal Audit (Tunde Bakare)  Assurance map             Audit and assurance; no AML,
+                                                                     monitoring or crypto data
+   CISO (Ngozi Nwosu)                     Control monitoring        Access reviews, control tests
+   HR Director (Ibrahim Musa)             Vetting                   Vetting only
+   BU manager Retail (Halima Bello)       Self-assessments          Own unit only
+   BU manager Payments (Olumide Fashola)  Self-assessments          Own unit only
+   Board member (Emeka Obi)               Overview                  Read only, including Perimeter
+                                                                     Intelligence and the programme
+   Platform administrator                 Users                     Users, rules, integrations, programme;
+                                                                     personal data masked
 
 
 ==========================================================================================
@@ -348,192 +326,238 @@ PART B. THE DEMO SCRIPT
 
 B1. BEFORE THE DEMO (about 15 minutes)
 --------------------------------------
-a) Open the demo: the hosted link, or on your laptop:
-         cd frontend
-         npm run dev            (opens on http://localhost:3000)
-
-b) Start from clean data: on the sign-in page open "Demo accounts" and click
-   "Reset demo data". (When signed in, it is the circular-arrow button in the top bar.)
-   Dates always count from today, so "overdue" and "due in 3 days" read correctly.
-
-c) Open TWO TABS in the SAME browser window, side by side:
+a) Open the demo (hosted link, or on a laptop: cd frontend, then npm run dev).
+b) On the sign-in page open "Demo accounts" and click "Reset demo data".
+c) Open TWO TABS in the SAME browser window (not incognito):
       Tab 1: CRO  (cro@oysterchecks.demo)
       Tab 2: CCO  (cco@oysterchecks.demo)
-   Changes in one tab appear in the other a moment later. Do NOT use an incognito
-   window for the second person: incognito does not share the demo data.
-   On the sign-in page, "Demo accounts" fills the email and password with one click.
-
-d) Light theme on a projector (half-circle icon in the top bar). Browser zoom 110 to
-   125 percent.
-
-e) Rehearse once, then click "Reset demo data" again before the real session.
+   You will switch accounts in a tab during the demo with the sign-out button (top right) and
+   "Demo accounts" on the sign-in page.
+d) Light theme on a projector; browser zoom 110 to 125 percent.
+e) Rehearse once, then "Reset demo data" again before the real session.
 
 
-B2. THE WALKTHROUGH (about 30 minutes)
---------------------------------------
-Each step says which tab or account to use.
+B2. THE WALKTHROUGH (about 40 minutes; a 20-minute version is in B3)
+---------------------------------------------------------------------
 
-STEP 1. The problem (1 minute, no clicking)
-   Say: "Most firms find out a control failed weeks later, from a spreadsheet someone
-   filled in. OysterChecks reads your systems directly and tells you within minutes,
-   with an owner, a deadline and evidence for every issue."
+STEP 1. The problem and the status (2 minutes, no clicking)
+   Say: "Groups operating in several countries track regulation in emails, controls in
+   spreadsheets and financial crime in separate tools. They find out weeks later. OysterChecks
+   is one platform with one chain of records, from the regulation to the evidence."
+   Then: "What you are about to see is a working demonstration of the intended platform, on
+   illustrative data. The programme is at pre-initiation."
 
-STEP 2. Overview  [Tab 1, CRO]  (2 minutes)
-   - The top figures: critical alerts, open alerts, rules passing, open AML cases,
-     returns due.
-   - "Control monitoring" panel: the 12 automatic checks.
-   - "Highest residual risks": risk after counting how controls performed in tests.
-   - The "Live" dot: the page updates itself.
-   - "Recent activity": every action appears here.
+STEP 2. Executive view  [Tab 1, CRO]  (3 minutes)
+   - Overview: the top figures, then "Group exposure by legal entity": five entities in four
+     jurisdictions, each with regulatory changes, alerts, high risks, failing controls, cases
+     and assurance rating.
+   - Say: "This is the group, entity by entity, in one view."
 
-STEP 3. Control monitoring  [Tab 2, CCO]  (3 minutes)
-   - Open "Control monitoring". Show the rule cards: what each watches, its data
-     source, its deadline, and who it escalates to.
-   - Point at a failing rule and its escalation chain (for example Compliance, then
-     MLRO, then CCO, then CRO).
-   - Click "Configure" on a rule: a reason is required, and the before and after
-     values go into the audit log. Cancel or save.
+STEP 3. Perimeter Intelligence  [Tab 1, CRO]  (4 minutes)
+   - "Coverage and sources", Coverage tab: open the Nigeria pack. Point at "STR to NFIU within
+     24 hours", "NDPC within 72 hours", currency NGN, time zone Africa/Lagos, data residency.
+     Compare with the UK pack ("SAR to NCA").
+   - Sources tab: pick a source; show where it came from, when it was checked, and the
+     fingerprint of the exact version used.
+   - Cross-border comparison tab, "Suspicious activity reporting": control C-003 is reused in
+     the UK and Ireland, but Nigeria and the UAE need a local variant (24-hour STR, goAML).
+   - Say: "Every rule, in every country, with its provenance, and we know which controls we can
+     reuse across borders."
 
-STEP 4. One alert from start to finish  [Tab 1, CRO, then Tab 2, CCO]  (5 minutes)
-   THIS IS THE CENTREPIECE.
-   - Tab 1: "Alerts", open "Unscreened high-value transaction: TX-0001348" (a
-     GBP 340,000 payment from Hadejia Trading Ltd to Okoya Bay Holdings in the British
-     Virgin Islands, not yet sanctions-screened).
-   - Show the escalation path, the deadlines and the timeline.
-   - Click "Acknowledge", then "Remediation plan" and write a short plan.
-   - Attach a file. Point at the SHA-256 fingerprint: proof the file is unchanged.
-   - Click "Request closure" and describe the evidence.
-   - Point out there is no sign-off button for you: you requested the closure, so
-     someone else must approve it (four-eyes).
-   - Tab 2 (CCO): open the same alert, click "Sign off closure". Go back to Tab 1:
-     it shows "Closed" by itself, with Daniel Okafor as the approver.
-   - Say: "This is the difference between a ticket system and an assurance system."
+STEP 4. Regulatory change with maker-checker  [Tab 1 as Compliance Officer, Tab 2 CCO]  (6 minutes)
+   Quick version (recommended):
+   - Tab 1: sign out, sign in as Compliance Officer (compliance@). "Regulatory change", open
+     RC-0101 "FATF revision of Recommendation 16" (Awaiting approval). Show the validated
+     requirements, applicability for all five entities, impacted obligations and controls,
+     actions and history. The footer says: "You prepared this assessment, so a different
+     person must approve it."
+   - Tab 2 (CCO): open RC-0101 and click "Approve", then "Approve" again in the dialog.
+     Tab 1 updates to "Approved" by itself.
+   Full version (if the audience is compliance or legal):
+   - Tab 1 (Compliance Officer): open RC-0103 "NDPC General Application and Implementation
+     Directive". Click "Submit for approval" first: it is refused because the extracted
+     requirements are not validated. Then:
+       "Validate" each requirement ("Confirm as validated"),
+       "Triage" as High ("Save priority"),
+       "Assess" each entity: Ajala Bank Nigeria Plc and Ajala Digital Assets Ltd "Applicable",
+         the others "Not applicable", each with a rationale ("Record decision"),
+       "Edit mapping": OB-004 and OB-005, C-016, POL-004, R-003 ("Save mapping"),
+       "Add action": for example "Register with NDPC and file compliance audit return",
+       "Submit for approval".
+   - Tab 2 (CCO): approve RC-0103.
+   - Say: "Automation drafts, a person validates, a different person approves. Every step is in
+     the history and the audit log."
 
-STEP 5. Financial crime  [sign Tab 2 in as MLRO]  (4 minutes)
-   - Sign out of Tab 2 and sign in as the MLRO (mlro@oysterchecks.demo).
-   - "Held payments" tab: "Screen" the GBP 340,000 payment as a hit. A case opens
-     automatically.
-   - Open the new case: the score breakdown explains every point.
-   - Click "Decide to file SAR": the report draft fills itself in, and the 7-day clock
-     starts.
-   - Optional: in Tab 1, sign in as the AML Analyst and open the case: there is no
-     way for them to submit it. Only the MLRO can.
-   - Back as the MLRO: "Confirm NCA submission" with a reference such as
-     NCA-2026-00123.
+STEP 5. The traceability chain  [Tab 2, CCO]  (3 minutes)
+   - "Obligations and returns", open OB-002 "SYSC 6.3: Financial crime systems and controls".
+     Scroll to "Traceability": regulatory source (FCA Handbook, SRC-GB-002), "Changed by RC-0101",
+     legal entities (all five, because RC-0101 applies to all), risks R-001 and R-002, controls
+     C-002 (effective) and C-011 (partially effective), monitoring rule CCM-002 (failing), the
+     open alert, and the assurance conclusion "Partially assured" with the reasons.
+   - Say: "Ask us how we know we comply with any rule, in any entity. This is the answer, in one
+     line."
 
-STEP 6. Risk register  [Tab 1, CRO]  (3 minutes)
-   - Switch the heat map between "Inherent" and "Residual".
-   - Open a risk: linked controls with their tested effectiveness, and its KRIs.
-   - Record a KRI value above its red limit (for example "Unscreened payments >£10k
-     (24h)" on R-001): an alert is raised immediately; the Alerts count goes up.
+STEP 6. Control failure to closure  [Tab 1 back to CRO, Tab 2 CCO]  (5 minutes)
+   - Tab 1: sign back in as CRO. "Alerts", open "Unscreened high-value transaction:
+     TX-0001348" (GBP 340,000 from Hadejia Trading Ltd to Okoya Bay Holdings, BVI).
+   - "Acknowledge", "Remediation plan", attach a file (point at the SHA-256 fingerprint),
+     "Request closure". There is no sign-off button for you: four-eyes.
+   - Tab 2 (CCO): open the same alert, "Sign off closure". Tab 1 shows "Closed" by itself.
 
-STEP 7. Controls and assurance  [Tab 2, sign in as CCO again]  (4 minutes)
-   - "Controls": open C-002 ("Real-time sanctions screening of outbound payments",
-     currently effective). "Record test result" as Fail twice. It drops to
-     "Ineffective".
-   - Tab 1 (CRO), "Risk register": R-001's residual score has gone up (from 5 to 15),
-     and the Overview's top risks update too.
-   - "Assurance map": the three lines of defence side by side. Point at the
-     over-assurance flag (a control checked more often than needed) and explain that
-     a control with no assurance at all would be flagged as a gap the same way.
-     (Self-assessments are shown live in step 10, as the Retail manager.)
-   - "Internal audit": engagements and findings; overdue recommendations escalate
-     through rule CCM-010.
+STEP 7. Transaction monitoring  [Tab 1 as AML Analyst]  (5 minutes)
+   - Sign in as AML Analyst (analyst@): lands on "Transaction monitoring". Point at the
+     "Planned capability" notice.
+   - Alert queue: open TMA-2041 "Money mule indicators" (mobile money, Ajala Bank Nigeria Plc):
+     usual pattern "3 inbound payments a week" against "23 inbound payments in 6 hours, NGN
+     4.85m", then two agent cash-outs in Ikeja and Yaba.
+   - "Escalate to case", give a reason, "Open case". A case opens with an explained score.
+   - Scenarios tab: false-positive rates against the 15 percent target; "Tune" needs a reason.
+   - Channels tab: bank, cards, mobile money, remittance, e-wallets, crypto (planned).
 
-STEP 8. Compliance, policies and incidents  [Tab 2, CCO]  (4 minutes)
-   - "Compliance", Obligations: each linked to controls; download the evidence pack.
-   - "Compliance", Regulatory returns: "Generate" a return, then "Confirm submission"
-     with a reference.
-   - "Policies": open POL-004 (in review, written by the CCO) and click "Approve": it is
-     refused because authors cannot approve their own policy. Show the acknowledgement
-     counts.
-   - "Incidents": open INC-0102 "Customer data emailed to wrong recipient". It is
-     notifiable to the ICO within 72 hours; the deadline is on screen. Explain that
-     "Close incident" is blocked until the root cause, actions and regulator notice
-     are done.
+STEP 8. Digital assets  [Tab 1 as MLRO]  (5 minutes)
+   - Sign in as MLRO (mlro@): lands on "Cases". Go to "Wallets and Travel Rule".
+   - Transfers and tracing: select the 18,400 USDT on Tron: the path runs from a mixing service,
+     through unattributed wallets, to Femi Adebayo's deposit address.
+   - Select the 52,000 USDC on Ethereum (direct sanctioned exposure): "Escalate to case". The
+     case score lists the exposure factors (sanctioned 41 percent direct, ransomware indirect).
+   - Travel Rule tab: Harbour Digital Exchange (UAE): "Release" is refused until "VASP due
+     diligence" is recorded; record it, then "Release".
+   - "Screen a wallet": paste any address; the result is clearly marked illustrative.
 
-STEP 9. The rest of operations  [Tab 2, CCO, then quick role switches]  (2 minutes)
-   - "Third parties": automatic tiering and review schedule.
-   - "ESG": metrics with targets and evidence.
-   - Optional: "Vetting" (as HR) and "Access reviews" (as CISO), one sentence each.
+STEP 9. Cases and the SAR  [Tab 1, MLRO]  (4 minutes)
+   - "Cases": filter by type (Fiat transaction, Digital assets); the SAR pipeline.
+   - Open the new crypto case; show the score breakdown. "Decide to file SAR": the draft fills
+     itself from the case; the 7-day clock starts. "Confirm NCA submission" with a reference.
+   - Optional: sign in as AML Analyst and show there is no way for them to submit it.
 
 STEP 10. Who sees what  [Tab 1, switch accounts]  (2 minutes)
-   - Retail BU manager (retail.manager@): a much shorter menu, and only Retail Banking
-     alerts, controls, self-assessments and incidents.
-     On "Self-assessments", click "Assess" on C-003 ("SAR submission within
-     regulatory timeframe"), choose "Effective" and click "Submit assessment". Testing rated it only partially effective, so it is
-     flagged straight away under "Disagree with tests".
-     Say: "We ask managers, but we check their answers against the evidence."
-   - Admin (admin@): "Cases and screening", Customers tab: names are masked.
-   - Board (board@): read-only, no action buttons.
-   - Say: "Access is checked on every request, not just hidden on screen."
+   - Board (board@): read only; sees Perimeter Intelligence and the board report, but not
+     transaction monitoring or cases.
+   - Retail BU manager (retail.manager@): only Retail Banking; on "Self-assessments" click
+     "Assess" on C-003, choose "Effective", "Submit assessment": it is flagged under "Disagree
+     with tests" straight away.
+   - Admin (admin@): "Customers and screening": customer names are masked.
 
 STEP 11. Board report and audit trail  [Tab 1, CRO]  (2 minutes)
-   - "Board report": written from live figures. Click "Print / save PDF".
-   - "Audit log": click "Verify integrity". Point out that the actions you took during
-     the demo are already listed.
+   - "Board report": written from live figures; "Print / save PDF".
+   - "Audit log": "Verify integrity". The regulatory change approvals, escalations and
+     sign-offs from this demo are already there.
 
 STEP 12. Close  (1 minute)
-   - "Integrations": the systems it connects to.
-   - "Implementation": six phases over 26 weeks with sign-off gates.
-   - Final line: "Real-time, evidence-based assurance, from the first alert to the
-     board pack."
+   - "Integrations": connected systems, plus the Version 1.2 connectors marked "planned".
+   - Final line: "One platform, one chain of records: from the regulation in every country you
+     operate in, to the evidence and the board."
+   - Do not show "Delivery programme (internal)" to a customer audience.
 
 
 B3. SHORTER VERSIONS
 --------------------
-   - Executives (10 minutes): steps 1, 2, 4 (shortened), 10 and 11.
-   - Risk and compliance teams (40+ minutes): all steps, slowing down on 4 to 9.
-   - Financial crime teams (15 minutes): steps 1, 4, 5 and the Customers tab.
-   - IT and security (15 minutes): steps 3, 4, 10, 11, plus Integrations, Access
-     reviews and Vetting.
+   - 20-minute core: steps 1, 2, 3 (Coverage tab only), 4 (quick version), 5, 6, 11.
+   - Executives (10 minutes): steps 1, 2, 5, 11.
+   - Compliance and legal: steps 1, 3, 4 (full version), 5, plus Policies.
+   - Financial crime and crypto teams: steps 1, 7, 8, 9.
+   - Investors or internal governance: steps 1, 2, 3, 5, then sign in as Admin and walk through
+     "Delivery programme (internal)": pre-initiation status, Gates 0 to 4, provisional phases,
+     the five MVP journeys and the success criteria.
 
 
-B4. QUESTIONS YOU WILL GET, AND HONEST ANSWERS
+==========================================================================================
+PART C. REFERENCE
+==========================================================================================
+
+C1. QUESTIONS YOU WILL GET, AND HONEST ANSWERS
 ----------------------------------------------
-   Q: Is this live bank data?
-   A: No. It is realistic demo data. In production it reads from your core banking,
-      CRM, HR and identity systems (the Integrations page shows them as "simulated").
+   Q: Is this live? Are customers using it?
+   A: No. It is a working demonstration of the intended platform on illustrative data. The
+      programme is at pre-initiation: the next step is Gate 0, programme authority.
 
-   Q: Why UK regulators (FCA, PRA, NCA, ICO) and pounds?
-   A: The demo is configured for a UK bank. Regulators, reports, notification
-      deadlines and currency are configuration, and can be set for another country,
-      for example CBN, NFIU, NDPC and naira for Nigeria.
+   Q: Is transaction monitoring or blockchain monitoring operational?
+   A: No, both are planned capabilities. They become operational only after data-provider
+      contracts, integrations, scenarios, thresholds, model governance, testing and regulatory
+      validation are complete.
 
-   Q: Does it send emails or text messages?
-   A: In-app notifications work in the demo. Email and SMS come with production.
+   Q: Which blockchain analytics provider do you use?
+   A: None is selected yet. Wallet attribution and tracing will come from approved providers
+      through APIs; OysterChecks keeps the risk score, alerts, investigation, evidence,
+      decisions and the SAR or STR.
 
-   Q: Single sign-on and two-step verification?
-   A: Planned for production (SAML or OIDC, plus authenticator-app codes). The demo
-      only checks the demo password.
+   Q: Where does the regulatory content come from? Is it legal advice?
+   A: From authoritative sources (legislation, regulator handbooks, standards), curated into
+      version-controlled jurisdiction packs with provenance. In this demo the summaries are
+      simplified and illustrative; they are not legal advice.
 
-   Q: Can we change the rules and thresholds?
-   A: Yes, from "Configure" on Control monitoring, with every change recorded in the
-      audit log with a reason. New rules can be added.
+   Q: Does AI write our obligations?
+   A: Automated extraction drafts requirements from the source text. A person must validate
+      every one before the assessment can be submitted, and a different person approves it.
 
-   Q: Is the AML score AI?
-   A: It is a transparent weighted model on purpose, so analysts and regulators can see
-      why a case scored what it did. A machine-learning model can sit behind the same
-      screen later.
+   Q: Can it handle Nigeria? Other African countries?
+   A: The demo has active packs for the UK, Nigeria (CBN, NFIU, NDPC, SEC Nigeria), the UAE and
+      the EU (Ireland), and available packs for Kenya, Ghana and South Africa. Local reporting
+      rules differ: SAR to the NCA in the UK, STR to the NFIU within 24 hours in Nigeria.
 
-   Q: Where is the data stored?
-   A: In this demo, only in your browser. In production, in your own database, with
-      evidence files in tamper-proof storage.
+   Q: Why are the amounts in the main case flow in pounds?
+   A: The most detailed demo records belong to the UK entity. Monitoring alerts show local
+      currency (naira, dirham, euro), with the pound equivalent.
+
+   Q: Single sign-on, two-step verification, email and SMS?
+   A: Planned for production. The demo only checks the demo password and sends in-app
+      notifications.
+
+   Q: Can we host it ourselves?
+   A: The target architecture supports multi-tenant SaaS, dedicated, private cloud, hybrid and
+      on-premises, with regional hosting and data-residency controls.
 
 
-B5. PRACTICAL TIPS
+C2. GLOSSARY
+------------
+   Perimeter Intelligence  Regulatory intelligence across jurisdictions, inside OysterChecks.
+   Jurisdiction pack       Curated set of a country's regulators, sources and obligations.
+   Provenance              Where a source came from, which version, and when it was checked.
+   Applicability           Whether a rule applies to a given legal entity, and why.
+   Maker-checker           The preparer of a decision cannot also approve it.
+   Legal entity            A separately regulated company within the group.
+   Traceability chain      Source > obligation > entity > risk > control > rule > alert > action
+                           > evidence > assurance conclusion.
+   CCM                     Continuous control monitoring.
+   Scenario                A transaction monitoring rule or behavioural model.
+   False positive          An alert that needed no action.
+   Structuring             Splitting deposits to stay below a reporting threshold.
+   Pass-through            Funds that come in and go straight out again.
+   Money mule              An account used to move other people's illicit funds.
+   SAR / STR               Suspicious activity / transaction report.
+   NCA / NFIU              UK National Crime Agency / Nigerian Financial Intelligence Unit.
+   MLRO                    Money laundering reporting officer.
+   VASP                    Virtual asset service provider (for example a crypto exchange).
+   Travel Rule             Originator and beneficiary information must travel with transfers.
+   Unhosted wallet         A crypto wallet not held at a VASP.
+   Mixer                   A service that obscures where crypto funds came from.
+   Tracing                 Following funds across wallets and blockchains.
+   Cross-chain             A transfer that moves between blockchains through a bridge.
+   KYC / KYB / EDD / PEP   Know your customer / business; enhanced due diligence; politically
+                           exposed person.
+   Inherent / residual     Risk before / after controls (residual uses tested effectiveness).
+   KRI                     Key risk indicator with amber and red limits.
+   Three lines             Management; risk and compliance; internal audit (plus external
+                           audit and regulators).
+   Pre-initiation          The programme has not formally started.
+   Gate                    A governance decision that must be approved before moving on.
+
+
+C3. PRACTICAL TIPS
 ------------------
-   - If something goes wrong in practice, click "Reset demo data": back to the start
-     in a second.
-   - Changes are kept in the browser you used. Another computer starts clean.
+   - "Reset demo data" (sign-in page, or the circular arrow in the top bar) restores the start.
+   - Changes are kept in the browser you used; a different computer starts clean.
+   - If someone already approved RC-0101 during practice, reset before presenting step 4.
    - Uploaded files can be downloaded only in the tab that uploaded them.
-   - Sign in the second tab before step 4 so the four-eyes moment flows without typing.
    - Keep the board report open in a spare tab in case you need to jump to the end.
+   - Do not show "Delivery programme (internal)" to customers.
 
 
-B6. WHAT THE DEMO DOES NOT DO (be upfront if asked)
+C4. WHAT THE DEMO DOES NOT DO (be upfront if asked)
 ---------------------------------------------------
-   - No real data connections: a simulator stands in for them.
+   - No real data connections; connectors are "simulated" or "planned".
+   - Transaction monitoring and digital assets are illustrations of planned capabilities.
+   - Regulatory summaries are simplified; wallet screening results are illustrative.
    - "Run now" on Control monitoring records a run but does not re-check new data.
-   - No email or SMS, no single sign-on or two-step verification.
+   - No email or SMS, single sign-on or two-step verification.
    - Data lives in the browser and resets when browser data is cleared.

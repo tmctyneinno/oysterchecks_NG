@@ -4,7 +4,7 @@
 
     <div v-if="data?.demoSimulator" class="callout warn">
       <i class="bi bi-cone-striped" aria-hidden="true" />
-      <div class="small"><strong>Demo data simulator is on.</strong> Connectors marked “simulated” are fed by a built-in generator so CCM has live data to evaluate. Set <code>NUXT_DEMO_SIMULATOR=false</code> and implement the connector adapters before any real deployment.</div>
+      <div class="small"><strong>Demonstration data.</strong> Connectors marked “simulated” show illustrative data. Connectors marked “planned” are part of the Version 1.2 baseline and have no provider contract or integration yet.</div>
     </div>
 
     <div class="int-grid">
@@ -12,16 +12,16 @@
         <div class="row" style="align-items:flex-start">
           <div style="min-width:0"><h2 style="font-size:15px">{{ i.name }}</h2><div class="small muted">{{ i.method }} · {{ i.direction }}</div></div>
           <span class="spacer" />
-          <UiPill :value="i.status === 'connected' || i.status === 'simulated' ? 'ok' : i.status === 'degraded' ? 'high' : 'critical'" :text="labelize(i.status)" />
+          <UiPill :value="i.status === 'connected' || i.status === 'simulated' ? 'ok' : i.status === 'planned' ? 'neutral' : i.status === 'degraded' ? 'high' : 'critical'" :text="labelize(i.status)" />
         </div>
         <dl class="kv small" style="grid-template-columns:110px 1fr">
           <dt>Frequency</dt><dd>{{ i.frequency }}</dd>
           <dt>Data elements</dt><dd>{{ i.dataElements }}</dd>
           <dt>Last sync</dt><dd>{{ i.lastSyncAt ? fmtRelative(i.lastSyncAt) : 'Never' }}</dd>
-          <dt>Records</dt><dd class="num">{{ fmtNumber(i.recordsIngested) }}</dd>
+          <dt>Records</dt><dd class="num">{{ i.status === 'planned' ? '-' : fmtNumber(i.recordsIngested) }}</dd>
           <dt>Data quality</dt><dd><UiMeter v-if="i.dataQuality !== null" :value="i.dataQuality" :display="`${i.dataQuality}%`" :good="99" :warn="97" /><span v-else class="muted">-</span></dd>
         </dl>
-        <button v-if="allowed('integrations:manage')" class="btn btn-sm" type="button" style="align-self:flex-start" @click="sync(i.id)"><i class="bi bi-arrow-repeat" aria-hidden="true" /> Sync now</button>
+        <button v-if="allowed('integrations:manage') && i.status !== 'planned'" class="btn btn-sm" type="button" style="align-self:flex-start" @click="sync(i.id)"><i class="bi bi-arrow-repeat" aria-hidden="true" /> Sync now</button>
       </article>
     </div>
   </div>

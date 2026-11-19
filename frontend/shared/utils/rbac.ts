@@ -25,12 +25,17 @@ export const PERMISSIONS = [
   'incidents:read', 'incidents:write',
   'esg:read', 'esg:write',
   'programme:read', 'programme:write',
+  // Version 1.2: Perimeter Intelligence (approve = checker in maker-checker), transaction monitoring, digital assets.
+  'perimeter:read', 'perimeter:write', 'perimeter:approve',
+  'tm:read', 'tm:write',
+  'crypto:read', 'crypto:write',
   'integrations:read', 'integrations:manage',
   'auditlog:read', 'users:manage', 'pii:view',
 ] as const
 export type Permission = typeof PERMISSIONS[number]
 
-const ALL_READ = PERMISSIONS.filter(p => p.endsWith(':read')) as Permission[]
+// The delivery programme is an internal view (Version 1.2), so it is not part of general read access.
+const ALL_READ = PERMISSIONS.filter(p => p.endsWith(':read') && p !== 'programme:read') as Permission[]
 const without = (list: Permission[], ...drop: Permission[]) => list.filter(p => !drop.includes(p))
 
 export interface RoleDefinition {
@@ -56,20 +61,25 @@ export const ROLES: Record<RoleKey, RoleDefinition> = {
       ...without(ALL_READ, 'finance:read' as Permission),
       'dashboard:exec', 'reports:board', 'alerts:act', 'alerts:close', 'ccm:manage', 'compliance:write', 'regreport:submit',
       'governance:write', 'policy:approve', 'controls:write', 'incidents:write', 'tprm:write', 'esg:write', 'assurance:write', 'pii:view',
+      'perimeter:write', 'perimeter:approve',
     ],
     restrictedNote: 'Executive financial metrics',
   },
   MLRO: {
-    key: 'MLRO', label: 'MLRO / AML Lead', landing: '/aml', scope: 'all',
+    key: 'MLRO', label: 'MLRO / AML Lead', landing: '/cases', scope: 'all',
     permissions: [
       'alerts:read', 'alerts:act', 'alerts:close', 'ccm:read', 'risk:read', 'controls:read', 'compliance:read', 'governance:read',
       'aml:read', 'aml:write', 'sar:submit', 'incidents:read', 'incidents:write', 'tprm:read', 'pii:view',
+      'perimeter:read', 'tm:read', 'tm:write', 'crypto:read', 'crypto:write',
     ],
     restrictedNote: 'Board-level financials; HR data',
   },
   AML_ANALYST: {
-    key: 'AML_ANALYST', label: 'AML Analyst', landing: '/aml', scope: 'all',
-    permissions: ['alerts:read', 'alerts:act', 'ccm:read', 'aml:read', 'aml:write', 'governance:read', 'incidents:read', 'incidents:write', 'pii:view'],
+    key: 'AML_ANALYST', label: 'AML Analyst', landing: '/transaction-monitoring', scope: 'all',
+    permissions: [
+      'alerts:read', 'alerts:act', 'ccm:read', 'aml:read', 'aml:write', 'governance:read', 'incidents:read', 'incidents:write', 'pii:view',
+      'tm:read', 'tm:write', 'crypto:read', 'crypto:write',
+    ],
     restrictedNote: 'SAR submission; HR data; financials',
   },
   COMPLIANCE_OFFICER: {
@@ -77,13 +87,14 @@ export const ROLES: Record<RoleKey, RoleDefinition> = {
     permissions: [
       'alerts:read', 'alerts:act', 'ccm:read', 'risk:read', 'controls:read', 'compliance:read', 'compliance:write', 'governance:read',
       'assurance:read', 'csa:read', 'aml:read', 'incidents:read', 'incidents:write', 'tprm:read', 'tprm:write', 'esg:read', 'pii:view',
+      'perimeter:read', 'perimeter:write', 'tm:read',
     ],
     restrictedNote: 'Regulatory submission; HR data; financials',
   },
   AUDIT: {
     key: 'AUDIT', label: 'Head of Internal Audit', landing: '/assurance', scope: 'all',
     permissions: [
-      ...without(ALL_READ, 'aml:read', 'hr:read', 'finance:read' as Permission),
+      ...without(ALL_READ, 'aml:read', 'hr:read', 'finance:read', 'tm:read', 'crypto:read'),
       'dashboard:exec', 'reports:board', 'alerts:act', 'assurance:write', 'audit:write',
     ],
     restrictedNote: 'AML case details; HR vetting data',
@@ -108,12 +119,12 @@ export const ROLES: Record<RoleKey, RoleDefinition> = {
   },
   BOARD: {
     key: 'BOARD', label: 'Board / Executive Committee', landing: '/dashboard', scope: 'all',
-    permissions: ['dashboard:exec', 'finance:read', 'reports:board', 'alerts:read', 'risk:read', 'compliance:read', 'assurance:read', 'esg:read', 'programme:read'],
+    permissions: ['dashboard:exec', 'finance:read', 'reports:board', 'alerts:read', 'risk:read', 'compliance:read', 'assurance:read', 'esg:read', 'programme:read', 'perimeter:read'],
     restrictedNote: 'Operational case data; PII',
   },
   ADMIN: {
     key: 'ADMIN', label: 'OysterChecks Admin', landing: '/admin/users', scope: 'all',
-    permissions: [...ALL_READ, 'ccm:manage', 'programme:write', 'integrations:manage', 'users:manage'],
+    permissions: [...ALL_READ, 'ccm:manage', 'programme:read', 'programme:write', 'integrations:manage', 'users:manage'],
     restrictedNote: 'Customer/employee PII (masked)',
   },
 }

@@ -1,38 +1,18 @@
 <template>
   <div class="page">
-    <UiPageHeader title="Financial crime" subtitle="Screening, transaction monitoring and case management" />
+    <UiPageHeader title="Customers and screening" subtitle="KYC and KYB, sanctions and PEP screening, EDD and held payments">
+      <NuxtLink to="/cases" class="btn"><i class="bi bi-search" aria-hidden="true" /> Cases</NuxtLink>
+    </UiPageHeader>
 
     <div v-if="overview" class="kpi-grid">
-      <UiKpiCard label="Open cases" :value="overview.openCases" tone="purple" :sub="`${overview.highScore} high risk`" />
+      <UiKpiCard label="Customers" :value="overview.customers.total" tone="purple" :sub="`${overview.customers.pendingKyc} awaiting KYC`" />
       <UiKpiCard label="Held payments" :value="overview.transactions24h.pendingHighValue" :tone="overview.transactions24h.pendingHighValue ? 'critical' : 'ok'" sub="£10k and over, awaiting screening" />
-      <UiKpiCard label="SARs past 7 days" :value="overview.sarOverdue" :tone="overview.sarOverdue ? 'critical' : 'ok'" :sub="overview.avgDaysToSubmit !== null ? `Average ${overview.avgDaysToSubmit} days from decision to NCA` : 'No submissions yet'" />
       <UiKpiCard label="EDD outstanding" :value="overview.customers.eddOutstanding" :tone="overview.customers.eddOutstanding ? 'high' : 'ok'" :sub="`${overview.customers.high} high-risk customers`" />
       <UiKpiCard label="Transactions (24h)" :value="fmtCompact(overview.transactions24h.count)" tone="medium" :sub="fmtGBP(overview.transactions24h.value, true)" />
-      <UiKpiCard label="False-positive rate" :value="overview.falsePositiveRate ?? '-'" :suffix="overview.falsePositiveRate !== null ? '%' : ''" :tone="(overview.falsePositiveRate ?? 0) > 15 ? 'high' : 'ok'" sub="Target below 15%" />
+      <UiKpiCard label="High-risk customers" :value="overview.customers.high" :tone="overview.customers.high ? 'high' : 'ok'" :sub="`${overview.customers.pep} PEP, ${overview.customers.sanctionsReview} in sanctions review`" />
     </div>
 
-    <UiPanel v-if="overview" title="SAR pipeline">
-      <ol class="pipeline">
-        <li v-for="s in overview.pipeline" :key="s.key" :class="{ active: stage === s.key }">
-          <button type="button" @click="stage = stage === s.key ? null : s.key; tab = 'cases'">
-            <span class="num pipe-count">{{ s.count }}</span><span class="small">{{ s.stage }}</span>
-          </button>
-        </li>
-      </ol>
-    </UiPanel>
-
-    <UiTabs v-model="tab" :tabs="[{ key: 'cases', label: 'Cases', count: cases.length }, { key: 'held', label: 'Held payments', count: held.length }, { key: 'customers', label: 'Customers', count: customers.length }]" />
-
-    <UiPanel v-if="tab === 'cases'" flush>
-      <UiDataTable :columns="caseColumns" :rows="visibleCases" clickable :active-key="caseId" @row-click="r => caseId = r.id">
-        <template #cell-ref="{ row }"><div class="mono">{{ row.ref }}</div><div class="cell-sub">{{ fmtDate(row.openedAt) }}</div></template>
-        <template #cell-customer="{ row }"><div class="cell-title">{{ row.customer.name }}</div><div class="cell-sub"><span class="mono">{{ row.customer.ref }}</span> · {{ row.customer.country }} · {{ labelize(row.customer.riskRating) }}</div></template>
-        <template #cell-type="{ row }"><UiPill tone="neutral" :text="labelize(row.type)" /></template>
-        <template #cell-score="{ row }"><AmlScore :score="row.score" /></template>
-        <template #cell-status="{ row }"><div class="row" style="gap:6px"><UiPill :value="row.status" /><UiPill v-if="row.sarDaysElapsed !== null && row.sarDaysElapsed > 7" value="overdue" :text="`Day ${row.sarDaysElapsed}`" /></div></template>
-        <template #cell-analystName="{ row }">{{ row.analystName ?? 'Unassigned' }}</template>
-      </UiDataTable>
-    </UiPanel>
+    <UiTabs v-model="tab" :tabs="[{ key: 'customers', label: 'Customers', count: customers.length }, { key: 'held', label: 'Held payments', count: held.length }]" />
 
     <UiPanel v-if="tab === 'held'" flush title="Held payments" sub="High-value transactions without a sanctions screening result">
       <UiDataTable :columns="txColumns" :rows="held" empty="No payments awaiting screening">
@@ -63,8 +43,6 @@
       </UiDataTable>
     </UiPanel>
 
-    <AmlCaseDrawer :id="caseId" @close="caseId = null" @changed="refreshAll" />
-
     <UiModal :open="!!screening" :title="screening ? `Screen ${screening.ref}` : ''" submit-label="Record decision" :pending="act.pending.value" @close="screening = null" @submit="screen">
       <template v-if="screening">
         <p class="small text-2">{{ fmtGBP(screening.amount) }} {{ screening.direction === 'out' ? 'to' : 'from' }} {{ screening.counterparty }} ({{ screening.counterpartyCountry }}) for {{ screening.customer.name }}.</p>
@@ -91,32 +69,23 @@
 
 <script setup lang="ts">
 definePageMeta({ permission: 'aml:read' })
-useHead({ title: 'Financial crime' })
+useHead({ title: 'Customers and screening' })
 const { can: allowed, user } = useAccess()
 
+// Cases moved to their own screen; keep old links (/aml?case=12) working.
+const route = useRoute()
+if (route.query.case) await navigateTo({ path: '/cases', query: { case: route.query.case } }, { replace: true })
+
 const { data: overview, refresh: refreshOverview } = await useFetch('/api/aml/overview')
-const { data: caseData, refresh: refreshCases } = await useFetch('/api/aml/cases', { default: () => [] })
 const { data: heldData, refresh: refreshHeld } = await useFetch('/api/aml/transactions', { query: { pending: 1 }, default: () => [] })
 const { data: customerData, refresh: refreshCustomers } = await useFetch('/api/aml/customers', { default: () => [] })
-const refreshAll = () => Promise.all([refreshOverview(), refreshCases(), refreshHeld(), refreshCustomers()])
+const refreshAll = () => Promise.all([refreshOverview(), refreshHeld(), refreshCustomers()])
 useLiveRefresh(['data', 'ccm'], () => Promise.all([refreshOverview(), refreshHeld()]), 2000)
 
-const cases = computed(() => caseData.value)
 const held = computed(() => heldData.value.filter(t => t.amount >= 10_000))
 const customers = computed(() => customerData.value)
-const tab = ref('cases')
-const stage = ref<string | null>(null)
-const visibleCases = computed(() => cases.value.filter(c => !stage.value || c.status === stage.value))
-const caseId = useDrawerQuery('case')
+const tab = ref(route.query.tab === 'held' ? 'held' : 'customers')
 
-const caseColumns = [
-  { key: 'ref', label: 'Case', width: '120px' },
-  { key: 'customer', label: 'Customer', sortValue: (r: any) => r.customer.name },
-  { key: 'type', label: 'Type', width: '130px' },
-  { key: 'score', label: 'Risk score', width: '150px' },
-  { key: 'status', label: 'Status', width: '190px' },
-  { key: 'analystName', label: 'Analyst', width: '150px' },
-]
 const txColumns = [
   { key: 'ref', label: 'Transaction', width: '170px' },
   { key: 'amount', label: 'Amount', width: '130px', align: 'right' as const },
@@ -161,11 +130,3 @@ async function quickCustomer(id: number, action: string) {
   if (await act.run(() => api.post(`/api/aml/customers/${id}/${action}`), 'EDD started')) refreshAll()
 }
 </script>
-
-<style scoped>
-.pipeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
-@media (max-width: 760px) { .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.pipeline button { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; text-align: left; }
-.pipeline li.active button { border-color: var(--purple); background: var(--purple-soft); }
-.pipe-count { font-size: 24px; font-weight: 600; }
-</style>
